@@ -2,13 +2,14 @@
 <html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>CV Herman Kosasi - Professional Web Developer</title>
     <meta name="description" content="Portofolio Resmi Herman Kosasi. Fullstack Developer spesialis Enterprise System, React, Node.js & Realtime Apps.">
     <meta property="og:title" content="Herman Kosasi | Fullstack Developer">
     <meta property="og:description" content="Lihat portofolio dan project terbaru saya. Spesialis Enterprise System & Realtime Apps.">
-    <meta property="og:image" content="https://i.ibb.co.com/bMdSPH3p/IMG-20251223-132047.jpg"> <meta property="og:url" content="https://hermankosasi.com">
+    <meta property="og:image" content="https://i.ibb.co/bMdSPH3p/IMG-20251223-132047.jpg"> 
+    <meta property="og:url" content="https://hermankosasi.com">
     <meta property="og:type" content="website">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -269,7 +270,7 @@
 
     <div class="hero-section" data-aos="fade-down">
         <div class="container">
-            <img src="https://i.ibb.co.com/bMdSPH3p/IMG-20251223-132047.jpg" alt="Profile" class="profile-thumb" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80';">
+            <img src="https://i.ibb.co/bMdSPH3p/IMG-20251223-132047.jpg" alt="Profile" class="profile-thumb" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80';">
             
             <h1 class="display-5 mb-1">Herman Kosasi</h1>
             <p class="fs-5 text-info fw-bold mb-3">
@@ -355,7 +356,7 @@
                                 <p class="text-muted small mb-0" data-i18n="edu_1_desc">Lulus (IPK 3.21).</p>
                             </div>
                             <div class="timeline-item">
-                                <h5 class="mb-1">SD,SMP,SMA Bhinneka Tunggal Ika</h5>
+                                <h5 class="mb-1">SD, SMP, SMA Bhinneka Tunggal Ika</h5>
                                 <div class="text-info small mb-2">Jembatan 5, Jakarta Barat | 1998 - 2010</div>
                                 <p class="text-muted small mb-0" data-i18n="edu_2_desc">SMA Jurusan IPA</p>
                             </div>
@@ -559,7 +560,7 @@
             }
         }
 
-        // --- 3. TAB SWITCHER ---
+        // --- 3. TAB SWITCHER (DENGAN FIX AOS) ---
         function switchTab(tabName) {
             const tabs = ['home', 'services', 'portfolio', 'blog'];
             tabs.forEach(t => {
@@ -580,7 +581,11 @@
 
             if(selectedTab) {
                 selectedTab.classList.remove('d-none');
-                setTimeout(() => selectedTab.classList.add('show', 'active'), 50);
+                setTimeout(() => {
+                    selectedTab.classList.add('show', 'active');
+                    // REVISI PENTING: Refresh AOS agar animasi di tab yang baru dibuka bisa jalan
+                    if(typeof AOS !== 'undefined') AOS.refresh();
+                }, 50);
             }
             if(selectedBtn) selectedBtn.classList.add('active');
             if(selectedDsk) selectedDsk.classList.add('active');
@@ -734,7 +739,7 @@
                 status: "Open to Work", nav_resume: "Resume", nav_services: "Layanan", nav_portfolio: "Portfolio", nav_blog: "Blog", nav_contact: "Kontak",
                 about_title: "Tentang Saya", about_desc: "Pengembang web profesional yang berfokus pada performa dan skalabilitas. Spesialis dalam membangun <strong>Enterprise System</strong> dan <strong>Realtime Apps</strong>.",
                 skills_title: "Keahlian", exp_title: "Pengalaman", exp_1_desc: "Lead developer payroll system & migration.", exp_2_desc: "15+ projects web development.",
-                edu_title: "Pendidikan", edu_1_desc: "Lulus IPK 3.21.", edu_2_desc: "Sertifikasi Fullstack Web Dev.",
+                edu_title: "Pendidikan", edu_1_desc: "Lulus (IPK 3.21).", edu_2_desc: "Sertifikasi Fullstack Web Dev.",
                 serv_1_title: "Web Development", serv_1_desc: "Membangun website responsif dari nol hingga online.",
                 serv_2_title: "System & Backend", serv_2_desc: "Pembuatan API dan integrasi database kompleks.",
                 serv_3_title: "Fix & Optimize", serv_3_desc: "Perbaikan bug dan optimasi performa.",
@@ -750,7 +755,8 @@
                 status: "Open to Work", nav_resume: "Resume", nav_services: "Services", nav_portfolio: "Portfolio", nav_blog: "Blog", nav_contact: "Contact",
                 about_title: "About Me", about_desc: "Professional web developer focused on performance and scalability. Specialist in building <strong>Enterprise Systems</strong> and <strong>Realtime Apps</strong>.",
                 skills_title: "Skills", exp_title: "Experience", exp_1_desc: "Lead developer payroll system & migration.", exp_2_desc: "15+ projects web development.",
-                edu_title: "Education", edu_1_desc: "Graduated Cum Laude (GPA 3.85).", edu_2_desc: "Fullstack Web Dev Certification.",
+                /* REVISI: Menyamakan IPK dengan versi Indonesia agar konsisten */
+                edu_title: "Education", edu_1_desc: "Graduated (GPA 3.21).", edu_2_desc: "Fullstack Web Dev Certification.",
                 serv_1_title: "Web Development", serv_1_desc: "Building responsive websites from scratch.",
                 serv_2_title: "System & Backend", serv_2_desc: "API development and complex database integration.",
                 serv_3_title: "Fix & Optimize", serv_3_desc: "Bug fixing and performance optimization.",
