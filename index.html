@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <title>CV Andi Pratama - Professional Web Developer</title>
-    <meta name="description" content="Portofolio dan CV Andi Pratama. Fullstack Developer spesialis Enterprise System dan Realtime Apps.">
+    <title>CV Herman Kosasi - Professional Web Developer</title>
+    <meta name="description" content="Portofolio dan CV Herman Kosasi. Fullstack Developer spesialis Enterprise System dan Realtime Apps.">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,54 +16,82 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <style>
+        /* --- CSS VARIABLES (THEME CONFIG) --- */
         :root {
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
-            --text-white: #ffffff;
-            --text-gray: #cbd5e1;
+            /* Default Dark Mode */
+            --bg-body: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.8);
+            --bg-glass: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
             --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
             --accent-glow: rgba(56, 189, 248, 0.4);
+            --border-color: rgba(255, 255, 255, 0.1);
             --music-on: #22c55e;
+            --shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Light Mode Overrides */
+        [data-theme="light"] {
+            --bg-body: #f0f4f8;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --bg-glass: rgba(0, 0, 0, 0.05);
+            --text-main: #1e293b; /* Dark Slate */
+            --text-muted: #64748b; /* Gray */
+            --accent: #0284c7; /* Darker Blue */
+            --accent-hover: #0369a1;
+            --accent-glow: rgba(2, 132, 199, 0.15);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         /* --- GLOBAL STYLES --- */
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-body);
             font-family: 'Outfit', sans-serif;
-            color: var(--text-white) !important;
-            padding-bottom: 100px; /* Space for mobile nav */
+            color: var(--text-main) !important;
+            padding-bottom: 100px;
             overflow-x: hidden;
             position: relative;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
         #particles-js {
             position: fixed; width: 100%; height: 100%; top: 0; left: 0;
-            z-index: -1; background-color: var(--bg-dark);
+            z-index: -1; background-color: var(--bg-body);
+            transition: background-color 0.5s ease;
         }
 
-        h1, h2, h3, h4, h5, h6 { color: var(--text-white) !important; font-weight: 700; }
-        p, span, div { color: var(--text-white); }
-        .text-muted { color: var(--text-gray) !important; }
+        h1, h2, h3, h4, h5, h6 { color: var(--text-main) !important; font-weight: 700; }
+        p, span, div { color: var(--text-main); }
+        .text-muted { color: var(--text-muted) !important; }
+        
+        /* Force text colors inside cards to adapt */
+        .bento-card, .project-card, .blog-card-pro, .modal-content-glass {
+            color: var(--text-main);
+        }
 
         /* --- HEADER ACTIONS --- */
         .header-actions {
             position: absolute; top: 20px; right: 20px; z-index: 20;
             display: flex; gap: 8px;
         }
-        .header-lang {
+        .header-left {
             position: absolute; top: 20px; left: 20px; z-index: 20;
+            display: flex; gap: 10px;
         }
 
-        /* Glass Button Style */
+        /* Glass Button Style (Adaptive) */
         .btn-glass {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white; border-radius: 50px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            color: var(--text-main); border-radius: 50px;
             padding: 8px 15px; font-size: 0.85rem;
             backdrop-filter: blur(5px);
             transition: 0.3s; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
         }
-        .btn-glass:hover { background: var(--accent); color: var(--bg-dark); border-color: var(--accent); transform: translateY(-2px); }
+        .btn-glass:hover { background: var(--accent); color: white; border-color: var(--accent); transform: translateY(-2px); }
 
         .lang-text { font-weight: 300; opacity: 0.5; transition: 0.3s; font-size: 0.8rem; }
         .lang-text.active { font-weight: 700; opacity: 1; color: var(--accent); }
@@ -72,10 +100,11 @@
         .music-fab {
             position: fixed; bottom: 100px; right: 20px; z-index: 999;
             width: 50px; height: 50px; border-radius: 50%;
-            background: rgba(30, 41, 59, 0.9); border: 2px solid rgba(255,255,255,0.2);
+            background: var(--bg-card); border: 2px solid var(--border-color);
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: var(--shadow);
+            color: var(--text-main);
         }
         .music-fab.playing { border-color: var(--music-on); box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
         .music-fab.playing i { animation: spin 3s linear infinite; color: var(--music-on); }
@@ -88,8 +117,9 @@
         /* --- HERO SECTION --- */
         .hero-section {
             padding: 90px 20px 40px; text-align: center;
-            background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(5px);
-            border-bottom: 1px solid rgba(255,255,255,0.1); position: relative;
+            background: var(--bg-glass); backdrop-filter: blur(5px);
+            border-bottom: 1px solid var(--border-color); position: relative;
+            transition: background 0.5s ease;
         }
         .profile-thumb {
             width: 140px; height: 140px; border-radius: 40px;
@@ -104,120 +134,102 @@
 
         /* --- BENTO CARDS --- */
         .bento-card {
-            background-color: rgba(30, 41, 59, 0.8) !important; backdrop-filter: blur(10px);
-            border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.1);
+            background-color: var(--bg-card) !important; backdrop-filter: blur(10px);
+            border-radius: 20px; padding: 25px; border: 1px solid var(--border-color);
             height: 100%; transition: 0.3s;
+            box-shadow: var(--shadow);
         }
         .bento-card:hover { border-color: var(--accent); transform: translateY(-3px); }
         .card-icon {
             color: var(--accent); font-size: 1.5rem; margin-bottom: 15px;
-            background: rgba(56, 189, 248, 0.15); width: 50px; height: 50px;
+            background: var(--bg-glass); width: 50px; height: 50px;
             display: flex; align-items: center; justify-content: center; border-radius: 12px;
         }
 
-        /* --- TIMELINE (NEW & IMPROVED) --- */
+        /* --- TIMELINE (Adaptive) --- */
         .timeline-box { position: relative; padding-top: 10px; }
-        .timeline-item {
-            position: relative;
-            padding-left: 35px;
-            margin-bottom: 30px;
-        }
+        .timeline-item { position: relative; padding-left: 35px; margin-bottom: 30px; }
         .timeline-item:last-child { margin-bottom: 0; }
         .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 5px; top: 5px;
-            width: 2px; height: 100%;
-            background: rgba(255,255,255,0.1);
+            content: ''; position: absolute; left: 5px; top: 5px; width: 2px; height: 100%;
+            background: var(--border-color);
         }
-        .timeline-item:last-child::before { height: 0; } /* Remove line for last item */
-        
+        .timeline-item:last-child::before { height: 0; }
         .timeline-dot {
-            position: absolute;
-            left: 1px; top: 6px;
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            background: var(--accent);
-            box-shadow: 0 0 10px var(--accent);
-            z-index: 2;
+            position: absolute; left: 1px; top: 6px; width: 10px; height: 10px;
+            border-radius: 50%; background: var(--accent);
+            box-shadow: 0 0 10px var(--accent); z-index: 2;
         }
 
-        /* --- BLOG CARD PRO (NEW & IMPROVED) --- */
+        /* --- BLOG CARD PRO --- */
         .blog-card-pro {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 15px;
-            padding: 20px;
-            height: 100%;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 15px; padding: 20px; height: 100%;
+            transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden;
+            box-shadow: var(--shadow);
         }
         .blog-card-pro:hover {
-            background: rgba(30, 41, 59, 0.9);
-            border-color: var(--accent);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: var(--accent); transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
         .read-more {
-            font-size: 0.8rem;
-            color: var(--accent);
-            font-weight: 600;
-            margin-top: 15px;
-            display: inline-block;
-            opacity: 0.7;
-            transition: 0.3s;
+            font-size: 0.8rem; color: var(--accent); font-weight: 600;
+            margin-top: 15px; display: inline-block; opacity: 0.7; transition: 0.3s;
         }
         .blog-card-pro:hover .read-more { opacity: 1; transform: translateX(5px); }
 
         /* --- MODAL GLASS STYLE --- */
         .modal-content-glass {
-            background: #1e293b;
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
             backdrop-filter: blur(10px);
         }
-        .modal-header { border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .modal-footer { border-top: 1px solid rgba(255,255,255,0.1); }
-        .btn-close-white { filter: invert(1); }
+        .modal-header { border-bottom: 1px solid var(--border-color); }
+        .modal-footer { border-top: 1px solid var(--border-color); }
+        
+        /* Close button adapt to theme */
+        [data-theme="dark"] .btn-close { filter: invert(1); }
+        [data-theme="light"] .btn-close { filter: none; }
 
-        /* --- PORTFOLIO & FILTER --- */
+        /* --- PORTFOLIO --- */
         .filter-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
         .filter-btn {
-            background: transparent; border: 1px solid rgba(255,255,255,0.2);
-            color: var(--text-gray); padding: 6px 18px; border-radius: 30px;
+            background: transparent; border: 1px solid var(--border-color);
+            color: var(--text-muted); padding: 6px 18px; border-radius: 30px;
             font-size: 0.85rem; cursor: pointer; transition: 0.3s;
         }
-        .filter-btn.active, .filter-btn:hover { background: var(--accent); color: var(--bg-dark); border-color: var(--accent); font-weight: 600; }
+        .filter-btn.active, .filter-btn:hover { background: var(--accent); color: white; border-color: var(--accent); font-weight: 600; }
 
         .project-card {
-            background-color: rgba(30, 41, 59, 0.8); border-radius: 20px;
-            overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
+            background-color: var(--bg-card); border-radius: 20px;
+            overflow: hidden; border: 1px solid var(--border-color);
             margin-bottom: 20px; cursor: pointer; transition: transform 0.3s;
+            box-shadow: var(--shadow);
         }
         .project-card:hover { transform: translateY(-5px); border-color: var(--accent); }
         .project-img { width: 100%; height: 220px; object-fit: cover; }
         .project-content { padding: 20px; }
 
         .skill-pill {
-            background: rgba(255,255,255,0.1); padding: 6px 14px;
+            background: var(--bg-glass); padding: 6px 14px;
             border-radius: 50px; font-size: 0.85rem; display: inline-block;
-            margin: 3px; border: 1px solid rgba(255,255,255,0.2);
-            transition: 0.3s;
+            margin: 3px; border: 1px solid var(--border-color);
+            transition: 0.3s; color: var(--text-main);
         }
         .skill-pill:hover { border-color: var(--accent); color: var(--accent); }
 
         /* --- MOBILE NAV --- */
         .mobile-nav {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: 95%; max-width: 450px; background: #0f172a;
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            width: 95%; max-width: 450px; background: var(--bg-body);
+            border: 1px solid var(--border-color); border-radius: 50px;
             display: flex; justify-content: space-between; padding: 12px 20px;
-            z-index: 9999; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            z-index: 9999; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
         .nav-btn { 
-            background: none; border: none; color: var(--text-gray); 
+            background: none; border: none; color: var(--text-muted); 
             display: flex; flex-direction: column; align-items: center; 
             gap: 4px; flex: 1;
         }
@@ -232,14 +244,17 @@
             body { padding-bottom: 0; }
             .music-fab { bottom: 30px; right: 30px; width: 60px; height: 60px; }
         }
+        
+        /* Nav Link Color Fix for Light Mode */
+        .nav-link { color: var(--text-muted) !important; }
+        .nav-link.active { background-color: var(--accent) !important; color: white !important; }
 
         @media print {
             body { background: white !important; color: black !important; padding-bottom: 0; }
-            #particles-js, .mobile-nav, .desktop-nav, .header-actions, .header-lang, .music-fab, .filter-container { display: none !important; }
+            #particles-js, .mobile-nav, .desktop-nav, .header-actions, .header-left, .music-fab, .filter-container { display: none !important; }
             .hero-section { background: white !important; border-bottom: 2px solid #000; padding: 20px; }
+            .bento-card, .project-card { border: 1px solid #ccc; box-shadow: none; }
             h1, h2, h3, h4, h5, h6, p, span, div { color: black !important; }
-            .timeline-item::before { background: #ccc !important; }
-            .timeline-dot { border: 1px solid #000; }
         }
     </style>
 </head>
@@ -255,7 +270,10 @@
         <i class="fas fa-compact-disc" id="music-icon"></i>
     </div>
 
-    <div class="header-lang">
+    <div class="header-left">
+        <button class="btn-glass" onclick="toggleTheme()" title="Switch Theme">
+            <i class="fas fa-sun" id="theme-icon"></i>
+        </button>
         <button class="btn-glass" onclick="toggleLanguage()">
             <i class="fas fa-globe me-2"></i> 
             <span id="lang-id" class="lang-text active">ID</span>
@@ -278,9 +296,9 @@
 
     <div class="hero-section" data-aos="fade-down">
         <div class="container">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Profile" class="profile-thumb">
+            <img src="https://i.ibb.co.com/bMdSPH3p/IMG-20251223-132047.jpg" alt="Profile" class="profile-thumb" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80';">
             
-            <h1 class="mb-1 display-5">Andi Pratama</h1>
+            <h1 class="mb-1 display-5">Herman Kosasi</h1>
             <p class="fs-5 text-info fw-bold mb-3">
                 <span id="typewriter"></span><span class="typed-cursor">|</span>
             </p>
@@ -294,9 +312,9 @@
 
             <ul class="nav nav-pills justify-content-center desktop-nav mt-4">
                 <li class="nav-item"><button class="nav-link active rounded-pill px-4" onclick="switchTab('home')" data-i18n="nav_resume">Resume</button></li>
-                <li class="nav-item ms-2"><button class="nav-link text-white rounded-pill px-4" onclick="switchTab('services')" data-i18n="nav_services">Layanan</button></li>
-                <li class="nav-item ms-2"><button class="nav-link text-white rounded-pill px-4" onclick="switchTab('portfolio')" data-i18n="nav_portfolio">Portfolio</button></li>
-                <li class="nav-item ms-2"><button class="nav-link text-white rounded-pill px-4" onclick="switchTab('blog')" data-i18n="nav_blog">Blog</button></li>
+                <li class="nav-item ms-2"><button class="nav-link rounded-pill px-4" onclick="switchTab('services')" data-i18n="nav_services">Layanan</button></li>
+                <li class="nav-item ms-2"><button class="nav-link rounded-pill px-4" onclick="switchTab('portfolio')" data-i18n="nav_portfolio">Portfolio</button></li>
+                <li class="nav-item ms-2"><button class="nav-link rounded-pill px-4" onclick="switchTab('blog')" data-i18n="nav_blog">Blog</button></li>
             </ul>
         </div>
     </div>
@@ -329,7 +347,6 @@
                                 <span class="skill-pill">React JS</span>
                                 <span class="skill-pill border-success text-success bg-success bg-opacity-10">Supabase</span>
                                 <span class="skill-pill">Node.js</span>
-                                <span class="skill-pill">Git & GitHub</span>
                             </div>
                         </div>
                     </div>
@@ -340,13 +357,13 @@
                             <div class="timeline-box">
                                 <div class="timeline-item">
                                     <div class="timeline-dot"></div>
-                                    <h5 class="mb-1 text-white">Senior Web Dev</h5>
+                                    <h5 class="mb-1">Senior Web Dev</h5>
                                     <div class="text-info small mb-2">PT Inovasi Teknologi | 2023 - Now</div>
                                     <p class="text-muted small mb-0" data-i18n="exp_1_desc">Lead developer payroll system & migration.</p>
                                 </div>
                                 <div class="timeline-item">
                                     <div class="timeline-dot"></div>
-                                    <h5 class="mb-1 text-white">Freelancer</h5>
+                                    <h5 class="mb-1">Freelancer</h5>
                                     <div class="text-info small mb-2">Upwork | 2021 - 2023</div>
                                     <p class="text-muted small mb-0" data-i18n="exp_2_desc">15+ projects web development.</p>
                                 </div>
@@ -360,15 +377,15 @@
                             <div class="timeline-box">
                                 <div class="timeline-item">
                                     <div class="timeline-dot"></div>
-                                    <h5 class="mb-1 text-white">S1 Informatika</h5>
-                                    <div class="text-info small mb-2">Univ. Teknologi | 2017 - 2021</div>
-                                    <p class="text-muted small mb-0" data-i18n="edu_1_desc">Lulus Cum Laude (IPK 3.85).</p>
+                                    <h5 class="mb-1">S1 Teknik Informatika</h5>
+                                    <div class="text-info small mb-2">Universitas Tarumanagara | 2011 - 2016</div>
+                                    <p class="text-muted small mb-0" data-i18n="edu_1_desc">Lulus (IPK 3.21).</p>
                                 </div>
                                 <div class="timeline-item">
                                     <div class="timeline-dot"></div>
-                                    <h5 class="mb-1 text-white">Bootcamp JS</h5>
-                                    <div class="text-info small mb-2">Coding ID | 2022</div>
-                                    <p class="text-muted small mb-0" data-i18n="edu_2_desc">Sertifikasi Fullstack Web Dev.</p>
+                                    <h5 class="mb-1">SD,SMP,SMA Bhinneka Tunggal Ika</h5>
+                                    <div class="text-info small mb-2">Jembatan 5, Jakarta Barat | 1998 - 2010</div>
+                                    <p class="text-muted small mb-0" data-i18n="edu_2_desc">SMA Jurusan IPA</p>
                                 </div>
                             </div>
                         </div>
@@ -537,7 +554,7 @@
             <div class="modal-content modal-content-glass">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitle">Judul Artikel</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4" id="modalBody" style="line-height: 1.8;">
                     </div>
@@ -553,14 +570,35 @@
 
     <script>
         AOS.init({ duration: 600, once: true });
-        particlesJS("particles-js", {
+        
+        // Setup Particles config
+        const particlesConfig = {
             "particles": {
                 "number": { "value": 50 }, "color": { "value": "#38bdf8" },
                 "opacity": { "value": 0.3, "random": true }, "size": { "value": 3 },
                 "line_linked": { "enable": true, "distance": 150, "color": "#38bdf8", "opacity": 0.2 },
                 "move": { "enable": true, "speed": 2 }
             }
-        });
+        };
+        particlesJS("particles-js", particlesConfig);
+
+        // --- THEME SWITCHER LOGIC ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const icon = document.getElementById('theme-icon');
+            
+            if (currentTheme === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                // Optional: Update particles color for light mode
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
 
         // --- TAB SWITCHER LOGIC ---
         function switchTab(tabName) {
@@ -594,11 +632,9 @@
             if (isPlaying) {
                 audio.pause();
                 musicBtn.classList.remove('playing');
-                Swal.fire({ toast: true, position: 'bottom-end', showConfirmButton: false, timer: 1500, icon: 'info', title: 'Music Paused', background: '#1e293b', color: '#fff' });
             } else {
                 audio.play().catch(e => { console.log("Audio play failed:", e); });
                 musicBtn.classList.add('playing');
-                Swal.fire({ toast: true, position: 'bottom-end', showConfirmButton: false, timer: 1500, icon: 'success', title: 'Playing LoFi', background: '#1e293b', color: '#fff' });
             }
             isPlaying = !isPlaying;
         }
@@ -613,14 +649,10 @@
                 serv_1_title: "Web Development", serv_1_desc: "Membangun website responsif dari nol hingga online.",
                 serv_2_title: "System & Backend", serv_2_desc: "Pembuatan API dan integrasi database kompleks.",
                 serv_3_title: "Fix & Optimize", serv_3_desc: "Perbaikan bug dan optimasi performa.",
-                
-                // --- BLOG BARU ---
-                blog_title: "Tulisan Terbaru", 
-                blog_1_title: "Debugging HTML", blog_1_desc: "Trik memperbaiki layout rusak.",
+                blog_title: "Tulisan Terbaru", blog_1_title: "Debugging HTML", blog_1_desc: "Trik memperbaiki layout rusak.",
                 blog_2_title: "Kenapa Supabase?", blog_2_desc: "Backend realtime modern.",
                 blog_3_title: "Optimasi Speed", blog_3_desc: "Cara loading di bawah 1 detik.",
                 blog_4_title: "Tips Freelance", blog_4_desc: "Mendapatkan klien pertama.",
-
                 filter_all: "Semua", filter_sys: "Sistem Web", filter_ui: "UI/UX",
                 proj_1_desc: "Manajemen gaji otomatis & pajak.", proj_2_desc: "Sistem antrian loket suara.", proj_3_desc: "Desain aplikasi booking tiket modern.",
                 contact_title: "Hubungi Saya", contact_wa: "Chat WhatsApp", contact_email: "Kirim Email", email_sent: "Pesan terkirim!"
@@ -633,14 +665,10 @@
                 serv_1_title: "Web Development", serv_1_desc: "Building responsive websites from scratch.",
                 serv_2_title: "System & Backend", serv_2_desc: "API development and complex database integration.",
                 serv_3_title: "Fix & Optimize", serv_3_desc: "Bug fixing and performance optimization.",
-                
-                // --- BLOG BARU ---
-                blog_title: "Latest Articles", 
-                blog_1_title: "HTML Debugging", blog_1_desc: "Tricks to fix broken layouts.",
+                blog_title: "Latest Articles", blog_1_title: "HTML Debugging", blog_1_desc: "Tricks to fix broken layouts.",
                 blog_2_title: "Why Supabase?", blog_2_desc: "Modern realtime backend.",
                 blog_3_title: "Speed Optimization", blog_3_desc: "Loading in under 1 second.",
                 blog_4_title: "Freelance Tips", blog_4_desc: "Getting your first client.",
-
                 filter_all: "All", filter_sys: "Web Systems", filter_ui: "UI/UX",
                 proj_1_desc: "Automated payroll management & taxes.", proj_2_desc: "Voice queue ticketing system.", proj_3_desc: "Modern ticket booking app design.",
                 contact_title: "Get in Touch", contact_wa: "Chat WhatsApp", contact_email: "Send Email", email_sent: "Message Sent!"
@@ -693,20 +721,21 @@
 
         function shareCV() {
             if (navigator.share) navigator.share({ title: 'CV Andi', text: 'Lihat portofolio Andi.', url: window.location.href });
-            else { Swal.fire({ icon: 'info', title: 'Link Disalin', timer: 1500, showConfirmButton: false, background: '#1e293b', color: '#fff' }); navigator.clipboard.writeText(window.location.href); }
+            else { Swal.fire({ icon: 'info', title: 'Link Disalin', timer: 1500, showConfirmButton: false, background: 'var(--bg-card)', color: 'var(--text-main)' }); navigator.clipboard.writeText(window.location.href); }
         }
 
         function showQRCode() {
-            const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.href)}&bgcolor=1e293b&color=38bdf8&margin=10`;
-            Swal.fire({ title: 'Scan to Connect', imageUrl: qrApi, imageWidth: 200, imageHeight: 200, background: '#1e293b', color: '#fff', confirmButtonColor: '#38bdf8' });
+            // Adjust QR colors based on theme if needed, but standard dark on white is safest for scanning
+            const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.href)}&bgcolor=fff&color=000&margin=10`;
+            Swal.fire({ title: 'Scan to Connect', imageUrl: qrApi, imageWidth: 200, imageHeight: 200, background: 'var(--bg-card)', color: 'var(--text-main)', confirmButtonColor: '#38bdf8' });
         }
 
         function contactMe() {
             const t = translations[currentLang];
             Swal.fire({
                 title: t.contact_title,
-                html: `<div class="d-grid gap-2"><button onclick="window.open('https://wa.me/6281234567890', '_blank')" class="btn btn-success btn-lg"><i class="fab fa-whatsapp me-2"></i> ${t.contact_wa}</button><button onclick="showEmailForm()" class="btn btn-outline-light btn-lg"><i class="fas fa-envelope me-2"></i> ${t.contact_email}</button></div>`,
-                showConfirmButton: false, background: '#1e293b', color: '#fff', showCloseButton: true
+                html: `<div class="d-grid gap-2"><button onclick="window.open('https://wa.me/6285760035568', '_blank')" class="btn btn-success btn-lg"><i class="fab fa-whatsapp me-2"></i> ${t.contact_wa}</button><button onclick="showEmailForm()" class="btn btn-outline-secondary btn-lg"><i class="fas fa-envelope me-2"></i> ${t.contact_email}</button></div>`,
+                showConfirmButton: false, background: 'var(--bg-card)', color: 'var(--text-main)', showCloseButton: true
             });
         }
 
@@ -714,52 +743,37 @@
             const t = translations[currentLang];
             Swal.fire({
                 title: t.contact_email, html: `<input type="email" id="email" class="swal2-input" placeholder="Email"><textarea id="msg" class="swal2-textarea" placeholder="Pesan"></textarea>`,
-                confirmButtonText: 'Kirim', confirmButtonColor: '#38bdf8', background: '#1e293b', color: '#fff',
+                confirmButtonText: 'Kirim', confirmButtonColor: '#38bdf8', background: 'var(--bg-card)', color: 'var(--text-main)',
                 preConfirm: () => { if(!document.getElementById('email').value || !document.getElementById('msg').value) Swal.showValidationMessage('Isi semua field'); }
-            }).then((res) => { if(res.isConfirmed) Swal.fire({ icon: 'success', title: t.email_sent, background: '#1e293b', color: '#fff', confirmButtonColor: '#38bdf8' }); });
+            }).then((res) => { if(res.isConfirmed) Swal.fire({ icon: 'success', title: t.email_sent, background: 'var(--bg-card)', color: 'var(--text-main)', confirmButtonColor: '#38bdf8' }); });
         }
 
-        function downloadCV() { Swal.fire({ title: 'Loading...', timer: 1000, didOpen: () => Swal.showLoading(), background: '#1e293b', color: '#fff' }).then(() => Swal.fire({ icon: 'success', title: 'Success', background: '#1e293b', color: '#fff', confirmButtonColor: '#38bdf8' })); }
+        function downloadCV() { Swal.fire({ title: 'Loading...', timer: 1000, didOpen: () => Swal.showLoading(), background: 'var(--bg-card)', color: 'var(--text-main)' }).then(() => Swal.fire({ icon: 'success', title: 'Success', background: 'var(--bg-card)', color: 'var(--text-main)', confirmButtonColor: '#38bdf8' })); }
 
         function showDetail(id) {
             let d = { title: 'Yarch QMS', desc: 'Sistem antrian' };
             if(id === 'payroll') d = { title: 'Payroll App', desc: 'Sistem Gaji' };
             if(id === 'travel') d = { title: 'Travel UI', desc: 'Desain Travel' };
-            Swal.fire({ title: d.title, text: d.desc, background: '#1e293b', color: '#fff', confirmButtonColor: '#38bdf8' });
+            Swal.fire({ title: d.title, text: d.desc, background: 'var(--bg-card)', color: 'var(--text-main)', confirmButtonColor: '#38bdf8' });
         }
 
-        // --- DATA & LOGIC ARTIKEL BLOG (BARU) ---
+        // --- BLOG DATA & LOGIC ---
         const articles = {
             'html': {
                 title: "Debugging HTML & CSS Efektif",
                 content: `
-                    <p>Seringkali kita mengalami masalah di mana layout HTML berantakan atau elemen tidak muncul semestinya. Berikut adalah langkah debugging yang saya gunakan:</p>
+                    <p>Seringkali kita mengalami masalah di mana layout HTML berantakan. Berikut langkah debugging:</p>
                     <ul>
-                        <li><strong>Gunakan Border Merah:</strong> Tambahkan <code>* { border: 1px solid red; }</code> untuk melihat struktur elemen.</li>
-                        <li><strong>Chrome DevTools:</strong> Tekan F12 dan gunakan fitur 'Select Element' untuk melihat padding dan margin.</li>
-                        <li><strong>Validasi HTML:</strong> Gunakan W3C Validator untuk mengecek tag yang lupa ditutup.</li>
-                    </ul>
-                    <p>Dengan cara ini, 90% masalah layout bisa diselesaikan dalam hitungan menit.</p>`
+                        <li><strong>Border Merah:</strong> Tambahkan <code>* { border: 1px solid red; }</code>.</li>
+                        <li><strong>Chrome DevTools:</strong> Tekan F12 untuk inspect element.</li>
+                    </ul>`
             },
             'supabase': {
                 title: "Kenapa Memilih Supabase?",
-                content: `
-                    <p>Supabase adalah alternatif Firebase yang open-source (BaaS). Kelebihan utamanya:</p>
-                    <ol>
-                        <li>Menggunakan PostgreSQL yang sangat powerful.</li>
-                        <li>Fitur Realtime subscription yang mudah diimplementasikan.</li>
-                        <li>Tidak ada vendor lock-in karena basisnya SQL standar.</li>
-                    </ol>
-                    <p>Untuk proyek skala menengah hingga besar, Supabase memberikan fleksibilitas query yang jauh lebih baik daripada NoSQL biasa.</p>`
+                content: `<p>Supabase adalah alternatif Firebase open-source dengan PostgreSQL.</p>`
             },
-            'speed': {
-                title: "Optimasi Web Speed < 1 Detik",
-                content: `<p>Website lambat membunuh konversi. Fokus pada:</p><ul><li>Convert gambar ke WebP.</li><li>Gunakan Lazy Loading untuk gambar di bawah fold.</li><li>Minify CSS dan JS.</li></ul>`
-            },
-            'freelance': {
-                title: "Mulai Karir Freelance 2025",
-                content: `<p>Kunci sukses di Upwork bukan hanya skill coding, tapi komunikasi. Pastikan proposal Anda menjawab 'masalah klien' bukan hanya memamerkan 'siapa Anda'.</p>`
-            }
+            'speed': { title: "Optimasi Speed", content: `<p>Gunakan WebP dan Lazy Loading.</p>` },
+            'freelance': { title: "Tips Freelance", content: `<p>Fokus pada solusi masalah klien di proposal.</p>` }
         };
 
         function openArticle(id) {
