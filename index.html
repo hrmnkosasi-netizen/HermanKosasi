@@ -11,251 +11,201 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <style>
-        /* --- CSS VARIABLES (THEME CONFIG) --- */
+        /* --- 1. CONFIG VARIABLES (CYBER THEME) --- */
         :root {
-            /* Default Dark Mode */
-            --bg-body: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.8);
-            --bg-glass: rgba(255, 255, 255, 0.1);
+            /* DARK MODE */
+            --bg-body-1: #0f172a;
+            --bg-body-2: #1e1b4b; 
+            --bg-card: rgba(15, 23, 42, 0.7);
+            --bg-glass: rgba(255, 255, 255, 0.05);
+            --bg-modal: #1e293b; 
+            
             --text-main: #ffffff;
-            --text-muted: #cbd5e1;
-            --accent: #38bdf8;
+            --text-muted: #94a3b8;
+            
+            --accent: #38bdf8; 
             --accent-hover: #0ea5e9;
-            --accent-glow: rgba(56, 189, 248, 0.4);
-            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-glow: 0 0 20px rgba(56, 189, 248, 0.5);
+            
+            --border-color: rgba(255, 255, 255, 0.15);
+            --input-bg: #0f172a; 
             --music-on: #22c55e;
-            --shadow: 0 10px 30px rgba(0,0,0,0.5);
+            --shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
-        /* Light Mode Overrides */
+        /* LIGHT MODE */
         [data-theme="light"] {
-            --bg-body: #f0f4f8;
+            --bg-body-1: #f8fafc;
+            --bg-body-2: #e2e8f0;
             --bg-card: rgba(255, 255, 255, 0.85);
-            --bg-glass: rgba(0, 0, 0, 0.05);
-            --text-main: #1e293b; /* Dark Slate */
-            --text-muted: #64748b; /* Gray */
-            --accent: #0284c7; /* Darker Blue */
+            --bg-glass: rgba(0, 0, 0, 0.03);
+            --bg-modal: #ffffff;
+            
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            
+            --accent: #0284c7;
             --accent-hover: #0369a1;
-            --accent-glow: rgba(2, 132, 199, 0.15);
+            --accent-glow: 0 0 15px rgba(2, 132, 199, 0.2);
+            
             --border-color: rgba(0, 0, 0, 0.1);
+            --input-bg: #f1f5f9;
             --shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
-        /* --- GLOBAL STYLES --- */
+        /* --- 2. GLOBAL STYLES --- */
         body {
-            background-color: var(--bg-body);
+            background: linear-gradient(135deg, var(--bg-body-1) 0%, var(--bg-body-2) 100%);
+            background-attachment: fixed;
             font-family: 'Outfit', sans-serif;
             color: var(--text-main) !important;
             padding-bottom: 100px;
             overflow-x: hidden;
             position: relative;
-            transition: background-color 0.5s ease, color 0.5s ease;
+            min-height: 100vh;
+            transition: color 0.3s ease;
         }
 
         #particles-js {
             position: fixed; width: 100%; height: 100%; top: 0; left: 0;
-            z-index: -1; background-color: var(--bg-body);
-            transition: background-color 0.5s ease;
+            z-index: -1;
         }
 
-        h1, h2, h3, h4, h5, h6 { color: var(--text-main) !important; font-weight: 700; }
+        h1, h2, h3, h4, h5, h6 { color: var(--text-main) !important; font-weight: 700; letter-spacing: -0.5px; }
         p, span, div { color: var(--text-main); }
         .text-muted { color: var(--text-muted) !important; }
-        
-        /* Force text colors inside cards to adapt */
-        .bento-card, .project-card, .blog-card-pro, .modal-content-glass {
-            color: var(--text-main);
-        }
+        [data-theme="light"] .text-info { color: var(--accent) !important; }
 
-        /* --- HEADER ACTIONS --- */
-        .header-actions {
-            position: absolute; top: 20px; right: 20px; z-index: 20;
-            display: flex; gap: 8px;
-        }
-        .header-left {
-            position: absolute; top: 20px; left: 20px; z-index: 20;
-            display: flex; gap: 10px;
-        }
-
-        /* Glass Button Style (Adaptive) */
+        /* --- 3. COMPONENT STYLES --- */
         .btn-glass {
             background: var(--bg-glass);
             border: 1px solid var(--border-color);
             color: var(--text-main); border-radius: 50px;
-            padding: 8px 15px; font-size: 0.85rem;
-            backdrop-filter: blur(5px);
-            transition: 0.3s; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+            padding: 8px 16px; font-size: 0.85rem;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            transition: all 0.3s ease; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
         }
-        .btn-glass:hover { background: var(--accent); color: white; border-color: var(--accent); transform: translateY(-2px); }
+        .btn-glass:hover { 
+            background: var(--accent); color: white; 
+            border-color: var(--accent); box-shadow: var(--accent-glow); transform: translateY(-2px); 
+        }
 
-        .lang-text { font-weight: 300; opacity: 0.5; transition: 0.3s; font-size: 0.8rem; }
-        .lang-text.active { font-weight: 700; opacity: 1; color: var(--accent); }
-
-        /* --- MUSIC PLAYER FLOATING BUTTON --- */
-        .music-fab {
-            position: fixed; bottom: 100px; right: 20px; z-index: 999;
-            width: 50px; height: 50px; border-radius: 50%;
-            background: var(--bg-card); border: 2px solid var(--border-color);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.3s;
+        .bento-card {
+            background-color: var(--bg-card); 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px; padding: 25px; 
+            border: 1px solid var(--border-color);
+            height: 100%; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: var(--shadow);
-            color: var(--text-main);
+            overflow: hidden; position: relative;
         }
-        .music-fab.playing { border-color: var(--music-on); box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
-        .music-fab.playing i { animation: spin 3s linear infinite; color: var(--music-on); }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .bento-card:hover { 
+            border-color: var(--accent); 
+            transform: translateY(-5px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
         
-        @media (max-width: 991px) {
-            .music-fab { bottom: 90px; right: 15px; width: 45px; height: 45px; }
+        .card-icon {
+            color: var(--accent); font-size: 1.5rem; margin-bottom: 15px;
+            background: rgba(56, 189, 248, 0.1); width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center; border-radius: 14px;
         }
 
-        /* --- HERO SECTION --- */
+        /* --- 4. POPUP & FORM STYLE IMPROVEMENT --- */
+        div:where(.swal2-container) div:where(.swal2-popup) {
+            background: var(--bg-modal) !important;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 24px;
+            padding: 2em;
+        }
+        .swal2-title, .swal2-html-container { color: var(--text-main) !important; }
+        
+        /* Custom Input Style */
+        .custom-input {
+            width: 100%; padding: 12px 15px; margin: 10px 0;
+            background: var(--input-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; color: var(--text-main); font-size: 1rem;
+            transition: 0.3s; outline: none;
+        }
+        .custom-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+        .custom-label {
+            display: block; text-align: left; font-size: 0.85rem; 
+            color: var(--text-muted); margin-top: 10px; margin-left: 5px;
+        }
+
+        /* --- 5. NAVIGATION & HERO --- */
         .hero-section {
-            padding: 90px 20px 40px; text-align: center;
-            background: var(--bg-glass); backdrop-filter: blur(5px);
-            border-bottom: 1px solid var(--border-color); position: relative;
-            transition: background 0.5s ease;
+            padding: 100px 20px 40px; text-align: center;
+            background: rgba(255,255,255,0.01);
+            border-bottom: 1px solid var(--border-color);
         }
         .profile-thumb {
             width: 140px; height: 140px; border-radius: 40px;
             border: 3px solid var(--accent); padding: 4px; object-fit: cover;
-            box-shadow: 0 0 30px var(--accent-glow); margin-bottom: 15px;
+            box-shadow: var(--accent-glow); margin-bottom: 15px;
             animation: float 6s ease-in-out infinite;
         }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
 
-        .typed-cursor { color: var(--accent); font-weight: 300; animation: blink 1s infinite; margin-left: 3px; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        /* --- BENTO CARDS --- */
-        .bento-card {
-            background-color: var(--bg-card) !important; backdrop-filter: blur(10px);
-            border-radius: 20px; padding: 25px; border: 1px solid var(--border-color);
-            height: 100%; transition: 0.3s;
-            box-shadow: var(--shadow);
-        }
-        .bento-card:hover { border-color: var(--accent); transform: translateY(-3px); }
-        .card-icon {
-            color: var(--accent); font-size: 1.5rem; margin-bottom: 15px;
-            background: var(--bg-glass); width: 50px; height: 50px;
-            display: flex; align-items: center; justify-content: center; border-radius: 12px;
-        }
-
-        /* --- TIMELINE (Adaptive) --- */
-        .timeline-box { position: relative; padding-top: 10px; }
-        .timeline-item { position: relative; padding-left: 35px; margin-bottom: 30px; }
-        .timeline-item:last-child { margin-bottom: 0; }
-        .timeline-item::before {
-            content: ''; position: absolute; left: 5px; top: 5px; width: 2px; height: 100%;
-            background: var(--border-color);
-        }
-        .timeline-item:last-child::before { height: 0; }
-        .timeline-dot {
-            position: absolute; left: 1px; top: 6px; width: 10px; height: 10px;
-            border-radius: 50%; background: var(--accent);
-            box-shadow: 0 0 10px var(--accent); z-index: 2;
-        }
-
-        /* --- BLOG CARD PRO --- */
-        .blog-card-pro {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 15px; padding: 20px; height: 100%;
-            transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-        .blog-card-pro:hover {
-            border-color: var(--accent); transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        }
-        .read-more {
-            font-size: 0.8rem; color: var(--accent); font-weight: 600;
-            margin-top: 15px; display: inline-block; opacity: 0.7; transition: 0.3s;
-        }
-        .blog-card-pro:hover .read-more { opacity: 1; transform: translateX(5px); }
-
-        /* --- MODAL GLASS STYLE --- */
-        .modal-content-glass {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            backdrop-filter: blur(10px);
-        }
-        .modal-header { border-bottom: 1px solid var(--border-color); }
-        .modal-footer { border-top: 1px solid var(--border-color); }
-        
-        /* Close button adapt to theme */
-        [data-theme="dark"] .btn-close { filter: invert(1); }
-        [data-theme="light"] .btn-close { filter: none; }
-
-        /* --- PORTFOLIO --- */
-        .filter-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
-        .filter-btn {
-            background: transparent; border: 1px solid var(--border-color);
-            color: var(--text-muted); padding: 6px 18px; border-radius: 30px;
-            font-size: 0.85rem; cursor: pointer; transition: 0.3s;
-        }
-        .filter-btn.active, .filter-btn:hover { background: var(--accent); color: white; border-color: var(--accent); font-weight: 600; }
-
-        .project-card {
-            background-color: var(--bg-card); border-radius: 20px;
-            overflow: hidden; border: 1px solid var(--border-color);
-            margin-bottom: 20px; cursor: pointer; transition: transform 0.3s;
-            box-shadow: var(--shadow);
-        }
-        .project-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .project-img { width: 100%; height: 220px; object-fit: cover; }
-        .project-content { padding: 20px; }
-
-        .skill-pill {
-            background: var(--bg-glass); padding: 6px 14px;
-            border-radius: 50px; font-size: 0.85rem; display: inline-block;
-            margin: 3px; border: 1px solid var(--border-color);
-            transition: 0.3s; color: var(--text-main);
-        }
-        .skill-pill:hover { border-color: var(--accent); color: var(--accent); }
-
-        /* --- MOBILE NAV --- */
+        /* Mobile Nav */
         .mobile-nav {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: 95%; max-width: 450px; background: var(--bg-body);
+            width: 92%; max-width: 450px; 
+            background: var(--bg-modal);
             border: 1px solid var(--border-color); border-radius: 50px;
-            display: flex; justify-content: space-between; padding: 12px 20px;
-            z-index: 9999; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: flex; justify-content: space-between; padding: 12px 25px;
+            z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .nav-btn { 
-            background: none; border: none; color: var(--text-muted); 
-            display: flex; flex-direction: column; align-items: center; 
-            gap: 4px; flex: 1;
-        }
-        .nav-btn span { font-size: 0.65rem; white-space: nowrap; }
-        .nav-btn.active { color: var(--accent); font-weight: bold; }
-        .nav-btn i { font-size: 1.1rem; }
+        .nav-btn { background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 0.7rem; cursor: pointer; flex: 1; }
+        .nav-btn i { font-size: 1.2rem; margin-bottom: 2px; transition: 0.3s; }
+        .nav-btn.active { color: var(--accent); font-weight: 600; }
+        .nav-btn.active i { transform: translateY(-3px); }
 
         .desktop-nav { display: none; }
         @media (min-width: 992px) {
             .mobile-nav { display: none; }
             .desktop-nav { display: block; margin-top: 20px; }
             body { padding-bottom: 0; }
-            .music-fab { bottom: 30px; right: 30px; width: 60px; height: 60px; }
         }
-        
-        /* Nav Link Color Fix for Light Mode */
-        .nav-link { color: var(--text-muted) !important; }
-        .nav-link.active { background-color: var(--accent) !important; color: white !important; }
 
-        @media print {
-            body { background: white !important; color: black !important; padding-bottom: 0; }
-            #particles-js, .mobile-nav, .desktop-nav, .header-actions, .header-left, .music-fab, .filter-container { display: none !important; }
-            .hero-section { background: white !important; border-bottom: 2px solid #000; padding: 20px; }
-            .bento-card, .project-card { border: 1px solid #ccc; box-shadow: none; }
-            h1, h2, h3, h4, h5, h6, p, span, div { color: black !important; }
+        /* --- 6. EXTRAS --- */
+        .skill-pill {
+            background: rgba(255,255,255,0.03); padding: 6px 14px;
+            border-radius: 50px; font-size: 0.85rem; display: inline-block;
+            margin: 3px; border: 1px solid var(--border-color);
+            transition: 0.3s; color: var(--text-main);
         }
+        .skill-pill:hover { border-color: var(--accent); color: var(--accent); background: rgba(56, 189, 248, 0.1); }
+
+        .timeline-item { position: relative; padding-left: 30px; margin-bottom: 25px; border-left: 2px solid var(--border-color); }
+        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 5px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
+
+        .music-fab {
+            position: fixed; bottom: 100px; right: 20px; z-index: 998;
+            width: 45px; height: 45px; border-radius: 50%;
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s; color: var(--text-main); backdrop-filter: blur(5px);
+        }
+        .music-fab.playing { border-color: var(--music-on); color: var(--music-on); box-shadow: 0 0 15px rgba(34, 197, 94, 0.3); }
+        .music-fab.playing i { animation: spin 3s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .modal-content-glass { background: var(--bg-modal); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 20px; }
+        .modal-header, .modal-footer { border-color: var(--border-color); }
+        .btn-close { filter: invert(1); } [data-theme="light"] .btn-close { filter: none; }
+
+        .header-left { position: absolute; top: 20px; left: 20px; z-index: 20; display: flex; gap: 10px; }
+        .header-actions { position: absolute; top: 20px; right: 20px; z-index: 20; display: flex; gap: 8px; }
+
     </style>
 </head>
 <body>
@@ -265,9 +215,8 @@
     <audio id="bg-music" loop>
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
-
     <div class="music-fab" onclick="toggleMusic()" title="Play Focus Music">
-        <i class="fas fa-compact-disc" id="music-icon"></i>
+        <i class="fas fa-compact-disc"></i>
     </div>
 
     <div class="header-left">
@@ -276,9 +225,9 @@
         </button>
         <button class="btn-glass" onclick="toggleLanguage()">
             <i class="fas fa-globe me-2"></i> 
-            <span id="lang-id" class="lang-text active">ID</span>
+            <span id="lang-id" class="fw-bold text-info">ID</span>
             <span class="mx-1 opacity-50">|</span>
-            <span id="lang-en" class="lang-text">EN</span>
+            <span id="lang-en" class="opacity-50">EN</span>
         </button>
     </div>
 
@@ -296,38 +245,38 @@
 
     <div class="hero-section" data-aos="fade-down">
         <div class="container">
-            <img src="https://i.ibb.co.com/bMdSPH3p/IMG-20251223-132047.jpg" alt="Profile" class="profile-thumb" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80';">
+            <img src="https://i.ibb.co.com/bMdSPH3p/IMG-20251223-132047.jpg" alt="Profile" class="profile-thumb" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80';">
             
-            <h1 class="mb-1 display-5">Herman Kosasi</h1>
+            <h1 class="display-5 mb-1">Herman Kosasi</h1>
             <p class="fs-5 text-info fw-bold mb-3">
                 <span id="typewriter"></span><span class="typed-cursor">|</span>
             </p>
             
             <div class="d-flex justify-content-center gap-2 mt-3">
-                <span class="skill-pill bg-success bg-opacity-25 border-success text-success">
+                <span class="skill-pill" style="border-color: #22c55e; color: #22c55e; background: rgba(34, 197, 94, 0.1);">
                     <i class="fas fa-circle me-1" style="font-size: 8px;"></i> <span data-i18n="status">Open to Work</span>
                 </span>
                 <span class="skill-pill"><i class="fas fa-map-marker-alt me-1"></i> Jakarta</span>
             </div>
 
             <ul class="nav nav-pills justify-content-center desktop-nav mt-4">
-                <li class="nav-item"><button class="nav-link active rounded-pill px-4" onclick="switchTab('home')" data-i18n="nav_resume">Resume</button></li>
-                <li class="nav-item ms-2"><button class="nav-link rounded-pill px-4" onclick="switchTab('services')" data-i18n="nav_services">Layanan</button></li>
-                <li class="nav-item ms-2"><button class="nav-link rounded-pill px-4" onclick="switchTab('portfolio')" data-i18n="nav_portfolio">Portfolio</button></li>
-                <li class="nav-item ms-2"><button class="nav-link rounded-pill px-4" onclick="switchTab('blog')" data-i18n="nav_blog">Blog</button></li>
+                <li class="nav-item"><button class="nav-link active rounded-pill px-4" id="dsk-home" onclick="switchTab('home')" data-i18n="nav_resume">Resume</button></li>
+                <li class="nav-item ms-2"><button class="nav-link rounded-pill px-4" id="dsk-services" onclick="switchTab('services')" data-i18n="nav_services">Layanan</button></li>
+                <li class="nav-item ms-2"><button class="nav-link rounded-pill px-4" id="dsk-portfolio" onclick="switchTab('portfolio')" data-i18n="nav_portfolio">Portfolio</button></li>
+                <li class="nav-item ms-2"><button class="nav-link rounded-pill px-4" id="dsk-blog" onclick="switchTab('blog')" data-i18n="nav_blog">Blog</button></li>
             </ul>
         </div>
     </div>
 
-    <div class="container mt-4">
+    <div class="container mt-4 mb-5">
         <div class="tab-content" id="mainContent">
             
             <div id="tab-home" class="tab-pane fade show active">
                 <div class="row g-4">
                     <div class="col-12 col-lg-8" data-aos="fade-up">
-                        <div class="bento-card h-100">
+                        <div class="bento-card">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="card-icon me-3"><i class="fas fa-user-astronaut"></i></div>
+                                <div class="card-icon me-3"><i class="fas fa-user-tie"></i></div>
                                 <h4 class="mb-0" data-i18n="about_title">Tentang Saya</h4>
                             </div>
                             <p class="text-muted" style="line-height: 1.8;" data-i18n="about_desc">
@@ -338,55 +287,47 @@
                     </div>
 
                     <div class="col-12 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                        <div class="bento-card h-100">
+                        <div class="bento-card">
                             <h4 class="mb-4"><i class="fas fa-bolt text-info me-2"></i> <span data-i18n="skills_title">Keahlian</span></h4>
                             <div class="d-flex flex-wrap gap-2">
-                                <span class="skill-pill border-info text-info bg-info bg-opacity-10">HTML5 & CSS3</span>
-                                <span class="skill-pill border-warning text-warning bg-warning bg-opacity-10">JavaScript ES6+</span>
+                                <span class="skill-pill text-info" style="border-color: var(--accent);">HTML5 & CSS3</span>
+                                <span class="skill-pill text-warning" style="border-color: #f59e0b;">JavaScript ES6+</span>
                                 <span class="skill-pill">Bootstrap 5</span>
                                 <span class="skill-pill">React JS</span>
-                                <span class="skill-pill border-success text-success bg-success bg-opacity-10">Supabase</span>
+                                <span class="skill-pill text-success" style="border-color: #22c55e;">Supabase</span>
                                 <span class="skill-pill">Node.js</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                        <div class="bento-card h-100">
+                        <div class="bento-card">
                             <h4 class="mb-4"><i class="fas fa-briefcase text-info me-2"></i> <span data-i18n="exp_title">Pengalaman</span></h4>
-                            <div class="timeline-box">
-                                <div class="timeline-item">
-                                    <div class="timeline-dot"></div>
-                                    <h5 class="mb-1">Senior Web Dev</h5>
-                                    <div class="text-info small mb-2">PT Inovasi Teknologi | 2023 - Now</div>
-                                    <p class="text-muted small mb-0" data-i18n="exp_1_desc">Lead developer payroll system & migration.</p>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-dot"></div>
-                                    <h5 class="mb-1">Freelancer</h5>
-                                    <div class="text-info small mb-2">Upwork | 2021 - 2023</div>
-                                    <p class="text-muted small mb-0" data-i18n="exp_2_desc">15+ projects web development.</p>
-                                </div>
+                            <div class="timeline-item">
+                                <h5 class="mb-1">Senior Web Dev</h5>
+                                <div class="text-info small mb-2">PT Inovasi Teknologi | 2023 - Now</div>
+                                <p class="text-muted small mb-0" data-i18n="exp_1_desc">Lead developer payroll system & migration.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h5 class="mb-1">Freelancer</h5>
+                                <div class="text-info small mb-2">Upwork | 2021 - 2023</div>
+                                <p class="text-muted small mb-0" data-i18n="exp_2_desc">15+ projects web development.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="300">
-                        <div class="bento-card h-100">
+                        <div class="bento-card">
                             <h4 class="mb-4"><i class="fas fa-graduation-cap text-info me-2"></i> <span data-i18n="edu_title">Pendidikan</span></h4>
-                            <div class="timeline-box">
-                                <div class="timeline-item">
-                                    <div class="timeline-dot"></div>
-                                    <h5 class="mb-1">S1 Teknik Informatika</h5>
-                                    <div class="text-info small mb-2">Universitas Tarumanagara | 2011 - 2016</div>
-                                    <p class="text-muted small mb-0" data-i18n="edu_1_desc">Lulus (IPK 3.21).</p>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-dot"></div>
-                                    <h5 class="mb-1">SD,SMP,SMA Bhinneka Tunggal Ika</h5>
-                                    <div class="text-info small mb-2">Jembatan 5, Jakarta Barat | 1998 - 2010</div>
-                                    <p class="text-muted small mb-0" data-i18n="edu_2_desc">SMA Jurusan IPA</p>
-                                </div>
+                            <div class="timeline-item">
+                                <h5 class="mb-1">S1 Teknik Informatika</h5>
+                                <div class="text-info small mb-2">Universitas Tarumanagara | 2011 - 2016</div>
+                                <p class="text-muted small mb-0" data-i18n="edu_1_desc">Lulus (IPK 3.21).</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h5 class="mb-1">SD,SMP,SMA Bhinneka Tunggal Ika</h5>
+                                <div class="text-info small mb-2">Jembatan 5, Jakarta Barat | 1998 - 2010</div>
+                                <p class="text-muted small mb-0" data-i18n="edu_2_desc">SMA Jurusan IPA</p>
                             </div>
                         </div>
                     </div>
@@ -399,21 +340,21 @@
                         <h4 class="mb-2"><i class="fas fa-laptop-code text-info me-2"></i> <span data-i18n="nav_services">Layanan</span></h4>
                     </div>
                     <div class="col-12 col-md-4" data-aos="fade-up">
-                        <div class="bento-card text-center h-100">
+                        <div class="bento-card text-center">
                             <div class="card-icon mx-auto"><i class="fas fa-globe"></i></div>
                             <h5 data-i18n="serv_1_title">Web Development</h5>
                             <p class="text-muted small mb-0" data-i18n="serv_1_desc">Membangun website responsif dari nol hingga online.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="100">
-                        <div class="bento-card text-center h-100">
+                        <div class="bento-card text-center">
                             <div class="card-icon mx-auto"><i class="fas fa-database"></i></div>
                             <h5 data-i18n="serv_2_title">System & Backend</h5>
                             <p class="text-muted small mb-0" data-i18n="serv_2_desc">Pembuatan API dan integrasi database kompleks.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="200">
-                        <div class="bento-card text-center h-100">
+                        <div class="bento-card text-center">
                             <div class="card-icon mx-auto"><i class="fas fa-bug"></i></div>
                             <h5 data-i18n="serv_3_title">Fix & Optimize</h5>
                             <p class="text-muted small mb-0" data-i18n="serv_3_desc">Perbaikan bug dan optimasi performa.</p>
@@ -423,17 +364,17 @@
             </div>
 
             <div id="tab-portfolio" class="tab-pane fade d-none">
-                <div class="filter-container">
-                    <button class="filter-btn active" onclick="filterProjects('all', this)" data-i18n="filter_all">Semua</button>
-                    <button class="filter-btn" onclick="filterProjects('system', this)" data-i18n="filter_sys">Sistem Web</button>
-                    <button class="filter-btn" onclick="filterProjects('uiux', this)" data-i18n="filter_ui">UI/UX</button>
+                <div class="filter-container d-flex justify-content-center gap-2 mb-4">
+                    <button class="btn-glass active" onclick="filterProjects('all', this)" data-i18n="filter_all">Semua</button>
+                    <button class="btn-glass" onclick="filterProjects('system', this)" data-i18n="filter_sys">Sistem Web</button>
+                    <button class="btn-glass" onclick="filterProjects('uiux', this)" data-i18n="filter_ui">UI/UX</button>
                 </div>
 
                 <div class="row g-3">
                     <div class="col-12 col-md-6 project-item" data-category="system" data-aos="zoom-in">
-                        <div class="project-card" onclick="showDetail('payroll')">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="project-img" alt="Payroll">
-                            <div class="project-content">
+                        <div class="bento-card p-0" onclick="showDetail('payroll')" style="cursor:pointer;">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" style="width:100%; height:200px; object-fit:cover;">
+                            <div class="p-3">
                                 <span class="badge bg-primary mb-2">Supabase</span>
                                 <h5>Payroll Super App</h5>
                                 <p class="text-muted small mb-0" data-i18n="proj_1_desc">Manajemen gaji otomatis & pajak.</p>
@@ -441,9 +382,9 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6 project-item" data-category="system" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="project-card" onclick="showDetail('qms')">
-                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="project-img" alt="QMS">
-                            <div class="project-content">
+                        <div class="bento-card p-0" onclick="showDetail('qms')" style="cursor:pointer;">
+                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" style="width:100%; height:200px; object-fit:cover;">
+                            <div class="p-3">
                                 <span class="badge bg-success mb-2">Realtime DB</span>
                                 <h5>Yarch QMS v69</h5>
                                 <p class="text-muted small mb-0" data-i18n="proj_2_desc">Sistem antrian loket suara.</p>
@@ -451,9 +392,9 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6 project-item" data-category="uiux" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="project-card" onclick="showDetail('travel')">
-                            <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="project-img" alt="Travel App">
-                            <div class="project-content">
+                        <div class="bento-card p-0" onclick="showDetail('travel')" style="cursor:pointer;">
+                            <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" style="width:100%; height:200px; object-fit:cover;">
+                            <div class="p-3">
                                 <span class="badge bg-warning text-dark mb-2">Figma Design</span>
                                 <h5>Nusantara Travel UI</h5>
                                 <p class="text-muted small mb-0" data-i18n="proj_3_desc">Desain aplikasi booking tiket modern.</p>
@@ -464,65 +405,40 @@
             </div>
 
             <div id="tab-blog" class="tab-pane fade d-none">
-                <div class="row g-4"> 
-                    <div class="col-12" data-aos="fade-up">
+                <div class="row g-3"> <div class="col-12" data-aos="fade-up">
                         <h4 class="mb-2"><i class="fas fa-newspaper text-info me-2"></i> <span data-i18n="blog_title">Tulisan Terbaru</span></h4>
-                        <p class="text-muted small">Klik artikel untuk membaca selengkapnya.</p>
                     </div>
                     
-                    <div class="col-12 col-md-6" data-aos="fade-up">
-                        <div class="blog-card-pro" onclick="openArticle('html')">
-                            <div class="d-flex align-items-start justify-content-between mb-3">
-                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
-                                    <i class="fas fa-bug text-primary fs-4"></i>
-                                </div>
-                                <small class="text-muted">Dec 20</small>
+                    <div class="col-6 col-md-6" data-aos="fade-up">
+                        <div class="bento-card h-100 p-3" onclick="openArticle('html')" style="cursor:pointer;">
+                            <div class="mb-2">
+                                <i class="fas fa-bug text-primary fs-5"></i>
+                                <small class="text-muted d-block" style="font-size: 0.7rem;">Dec 20</small>
                             </div>
-                            <h5 class="mb-2" data-i18n="blog_1_title">Debugging HTML Efektif</h5>
-                            <p class="text-muted small mb-0" data-i18n="blog_1_desc">Trik memperbaiki layout rusak dengan cepat.</p>
-                            <span class="read-more">Baca Artikel <i class="fas fa-arrow-right ms-1"></i></span>
+                            <h6 class="mb-1" style="font-size: 0.95rem;" data-i18n="blog_1_title">Debugging HTML</h6>
+                            <p class="text-muted small mb-0 d-none d-md-block" data-i18n="blog_1_desc">Trik memperbaiki layout rusak dengan cepat.</p>
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="blog-card-pro" onclick="openArticle('supabase')">
-                            <div class="d-flex align-items-start justify-content-between mb-3">
-                                <div class="bg-success bg-opacity-10 p-3 rounded-circle">
-                                    <i class="fas fa-database text-success fs-4"></i>
-                                </div>
-                                <small class="text-muted">Dec 18</small>
+                    <div class="col-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="bento-card h-100 p-3" onclick="openArticle('supabase')" style="cursor:pointer;">
+                            <div class="mb-2">
+                                <i class="fas fa-database text-success fs-5"></i>
+                                <small class="text-muted d-block" style="font-size: 0.7rem;">Dec 18</small>
                             </div>
-                            <h5 class="mb-2" data-i18n="blog_2_title">Kenapa Supabase?</h5>
-                            <p class="text-muted small mb-0" data-i18n="blog_2_desc">Backend realtime modern.</p>
-                            <span class="read-more">Baca Artikel <i class="fas fa-arrow-right ms-1"></i></span>
+                            <h6 class="mb-1" style="font-size: 0.95rem;" data-i18n="blog_2_title">Kenapa Supabase?</h6>
+                            <p class="text-muted small mb-0 d-none d-md-block" data-i18n="blog_2_desc">Backend realtime modern.</p>
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                        <div class="blog-card-pro" onclick="openArticle('speed')">
-                            <div class="d-flex align-items-start justify-content-between mb-3">
-                                <div class="bg-warning bg-opacity-10 p-3 rounded-circle">
-                                    <i class="fas fa-bolt text-warning fs-4"></i>
-                                </div>
-                                <small class="text-muted">Dec 10</small>
+                    <div class="col-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="bento-card h-100 p-3" onclick="openArticle('speed')" style="cursor:pointer;">
+                            <div class="mb-2">
+                                <i class="fas fa-bolt text-warning fs-5"></i>
+                                <small class="text-muted d-block" style="font-size: 0.7rem;">Dec 10</small>
                             </div>
-                            <h5 class="mb-2" data-i18n="blog_3_title">Optimasi Web Speed</h5>
-                            <p class="text-muted small mb-0" data-i18n="blog_3_desc">Cara loading di bawah 1 detik.</p>
-                            <span class="read-more">Baca Artikel <i class="fas fa-arrow-right ms-1"></i></span>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                        <div class="blog-card-pro" onclick="openArticle('freelance')">
-                            <div class="d-flex align-items-start justify-content-between mb-3">
-                                <div class="bg-info bg-opacity-10 p-3 rounded-circle">
-                                    <i class="fas fa-briefcase text-info fs-4"></i>
-                                </div>
-                                <small class="text-muted">Nov 28</small>
-                            </div>
-                            <h5 class="mb-2" data-i18n="blog_4_title">Tips Freelance 2025</h5>
-                            <p class="text-muted small mb-0" data-i18n="blog_4_desc">Mendapatkan klien pertama.</p>
-                            <span class="read-more">Baca Artikel <i class="fas fa-arrow-right ms-1"></i></span>
+                            <h6 class="mb-1" style="font-size: 0.95rem;" data-i18n="blog_3_title">Optimasi Speed</h6>
+                            <p class="text-muted small mb-0 d-none d-md-block" data-i18n="blog_3_desc">Cara loading di bawah 1 detik.</p>
                         </div>
                     </div>
                 </div>
@@ -533,7 +449,7 @@
 
     <nav class="mobile-nav">
         <button class="nav-btn active" id="btn-home" onclick="switchTab('home')">
-            <i class="fas fa-user-astronaut"></i> <span data-i18n="nav_resume">Resume</span>
+            <i class="fas fa-user-tie"></i> <span data-i18n="nav_resume">Resume</span>
         </button>
         <button class="nav-btn" id="btn-services" onclick="switchTab('services')">
             <i class="fas fa-laptop-code"></i> <span data-i18n="nav_services">Layanan</span>
@@ -548,7 +464,7 @@
             <i class="fas fa-paper-plane"></i> <span data-i18n="nav_contact">Kontak</span>
         </button>
     </nav>
-
+    
     <div class="modal fade" id="articleModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content modal-content-glass">
@@ -556,8 +472,7 @@
                     <h5 class="modal-title" id="modalTitle">Judul Artikel</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body p-4" id="modalBody" style="line-height: 1.8;">
-                    </div>
+                <div class="modal-body p-4" id="modalBody" style="line-height: 1.8;"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm rounded-pill" data-bs-dismiss="modal">Tutup</button>
                 </div>
@@ -569,20 +484,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        AOS.init({ duration: 600, once: true });
+        AOS.init({ duration: 800, once: true });
         
-        // Setup Particles config
-        const particlesConfig = {
+        // --- 1. PARTIKEL ---
+        particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 50 }, "color": { "value": "#38bdf8" },
-                "opacity": { "value": 0.3, "random": true }, "size": { "value": 3 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#38bdf8", "opacity": 0.2 },
-                "move": { "enable": true, "speed": 2 }
-            }
-        };
-        particlesJS("particles-js", particlesConfig);
+                "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#38bdf8" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.8, "random": true }, 
+                "size": { "value": 3, "random": true }, 
+                "line_linked": { 
+                    "enable": true, "distance": 150, 
+                    "color": "#38bdf8", "opacity": 0.5, "width": 1.5 
+                },
+                "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
+                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.8 } } }
+            },
+            "retina_detect": true
+        });
 
-        // --- THEME SWITCHER LOGIC ---
+        // --- 2. THEME SWITCHER ---
         function toggleTheme() {
             const html = document.documentElement;
             const currentTheme = html.getAttribute('data-theme');
@@ -590,29 +516,29 @@
             
             if (currentTheme === 'dark') {
                 html.setAttribute('data-theme', 'light');
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-                // Optional: Update particles color for light mode
+                icon.classList.remove('fa-sun'); icon.classList.add('fa-moon');
             } else {
                 html.setAttribute('data-theme', 'dark');
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
+                icon.classList.remove('fa-moon'); icon.classList.add('fa-sun');
             }
         }
 
-        // --- TAB SWITCHER LOGIC ---
+        // --- 3. TAB SWITCHER ---
         function switchTab(tabName) {
             const tabs = ['home', 'services', 'portfolio', 'blog'];
-            
             tabs.forEach(t => {
                 const content = document.getElementById('tab-' + t);
                 const btn = document.getElementById('btn-' + t);
+                const dsk = document.getElementById('dsk-' + t);
+                
                 if(content) { content.classList.remove('show', 'active'); content.classList.add('d-none'); }
                 if(btn) btn.classList.remove('active');
+                if(dsk) dsk.classList.remove('active');
             });
 
             const selectedTab = document.getElementById('tab-' + tabName);
             const selectedBtn = document.getElementById('btn-' + tabName);
+            const selectedDsk = document.getElementById('dsk-' + tabName);
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -621,25 +547,219 @@
                 setTimeout(() => selectedTab.classList.add('show', 'active'), 50);
             }
             if(selectedBtn) selectedBtn.classList.add('active');
+            if(selectedDsk) selectedDsk.classList.add('active');
         }
 
-        // --- MUSIC PLAYER ---
-        const audio = document.getElementById('bg-music');
-        const musicBtn = document.querySelector('.music-fab');
-        let isPlaying = false;
+        // --- 4. SHARE (FIXED: FALLBACK UNTUK WHATSAPP) ---
+        async function shareCV() {
+            const shareData = {
+                title: 'CV Herman Kosasi',
+                text: 'Cek portofolio dan CV Herman Kosasi disini: ',
+                url: window.location.href
+            };
 
-        function toggleMusic() {
-            if (isPlaying) {
-                audio.pause();
-                musicBtn.classList.remove('playing');
+            // Coba fitur Share Bawaan HP dulu
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    // Jika user cancel atau error, buka manual popup
+                    openManualShare();
+                }
             } else {
-                audio.play().catch(e => { console.log("Audio play failed:", e); });
-                musicBtn.classList.add('playing');
+                // Jika di Desktop/Browser tdk dukung, buka manual popup
+                openManualShare();
             }
-            isPlaying = !isPlaying;
         }
 
-        // --- I18N / TRANSLATION ---
+        function openManualShare() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent("Cek CV Herman Kosasi: ");
+            
+            Swal.fire({
+                title: 'Bagikan CV',
+                html: `
+                    <div class="d-grid gap-2">
+                        <a href="https://wa.me/?text=${text}${url}" target="_blank" class="btn btn-success">
+                            <i class="fab fa-whatsapp me-2"></i> Kirim ke WhatsApp
+                        </a>
+                        <button onclick="copyLink()" class="btn btn-secondary">
+                            <i class="fas fa-copy me-2"></i> Salin Link
+                        </button>
+                    </div>
+                `,
+                showConfirmButton: false,
+                showCloseButton: true,
+                background: 'var(--bg-modal)', color: 'var(--text-main)'
+            });
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            Swal.fire({ 
+                icon: 'success', title: 'Link Disalin', 
+                showConfirmButton: false, timer: 1500, 
+                background: 'var(--bg-modal)', color: 'var(--text-main)' 
+            });
+        }
+
+        function downloadCV() {
+            Swal.fire({
+                title: 'Download CV?',
+                text: "Pastikan file 'cv-herman.pdf' sudah ada di folder.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Unduh',
+                confirmButtonColor: 'var(--accent)',
+                cancelButtonColor: '#64748b',
+                background: 'var(--bg-modal)', color: 'var(--text-main)'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const link = document.createElement('a');
+                    link.href = 'cv-herman.pdf'; 
+                    link.download = 'CV_Herman_Kosasi.pdf'; 
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    Swal.fire({ 
+                        title: 'Memproses...', 
+                        text: 'File sedang diunduh.', 
+                        icon: 'success', 
+                        background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)',
+                        timer: 2000, showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        function showQRCode() {
+            const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.href)}&bgcolor=fff&color=000&margin=10`;
+            Swal.fire({
+                title: 'Scan Me', imageUrl: qrApi, imageWidth: 200, imageHeight: 200,
+                background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)',
+                backdrop: `rgba(0,0,0,0.8)` 
+            });
+        }
+
+        function contactMe() {
+            const t = translations[currentLang];
+            Swal.fire({
+                title: t.contact_title,
+                html: `<div class="d-grid gap-2"><button onclick="window.open('https://wa.me/6285760035568', '_blank')" class="btn btn-success"><i class="fab fa-whatsapp me-2"></i> ${t.contact_wa}</button><button onclick="showEmailForm()" class="btn btn-outline-secondary"><i class="fas fa-envelope me-2"></i> ${t.contact_email}</button></div>`,
+                showConfirmButton: false, showCloseButton: true,
+                background: 'var(--bg-modal)', color: 'var(--text-main)'
+            });
+        }
+
+        // --- 5. EMAIL FORM ---
+        function showEmailForm() {
+            Swal.fire({
+                title: 'Kirim Email',
+                html: `
+                    <label class="custom-label">Nama Anda</label>
+                    <input type="text" id="name" class="custom-input" placeholder="Nama Anda...">
+                    <label class="custom-label">Pesan</label>
+                    <textarea id="msg" class="custom-input" rows="3" placeholder="Tulis pesan..."></textarea>
+                `,
+                confirmButtonText: 'Kirim Pesan',
+                confirmButtonColor: 'var(--accent)',
+                background: 'var(--bg-modal)',
+                color: 'var(--text-main)',
+                showCloseButton: true,
+                preConfirm: () => {
+                    const name = document.getElementById('name').value;
+                    const msg = document.getElementById('msg').value;
+                    if (!name || !msg) {
+                        Swal.showValidationMessage('Mohon isi nama dan pesan');
+                    }
+                    return { name: name, msg: msg };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const name = result.value.name;
+                    const msg = result.value.msg;
+                    
+                    const subject = `Pesan dari Website: ${name}`;
+                    const body = `Halo Herman,\n\n${msg}\n\nDari: ${name}`;
+                    const mailtoLink = `mailto:hrmnkosasi@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    
+                    window.location.href = mailtoLink;
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Membuka Email...',
+                        text: 'Silakan klik tombol kirim di aplikasi email Anda.',
+                        background: 'var(--bg-modal)', color: 'var(--text-main)',
+                        confirmButtonColor: 'var(--accent)'
+                    });
+                }
+            });
+        }
+
+        function showDetail(id) {
+            let t = "Detail Project";
+            if(id==='payroll') t="Payroll System";
+            if(id==='qms') t="Queue System";
+            Swal.fire({ title: t, text: "Deskripsi detail project ada di sini.", background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)' });
+        }
+
+        // --- 6. BLOG CONTENT ---
+        const articles = {
+            'html': {
+                title: "Debugging HTML & CSS Efektif",
+                content: `
+                    <p>Seringkali kita mengalami masalah di mana layout HTML berantakan. Berikut langkah debugging:</p>
+                    <ul>
+                        <li><strong>Border Merah:</strong> Tambahkan <code>* { border: 1px solid red; }</code> untuk melihat batas elemen.</li>
+                        <li><strong>Chrome DevTools:</strong> Tekan F12 untuk inspect element secara real-time.</li>
+                        <li><strong>Validasi HTML:</strong> Gunakan W3C Validator untuk cek error tag yang tidak tertutup.</li>
+                    </ul>`
+            },
+            'supabase': {
+                title: "Kenapa Memilih Supabase?",
+                content: `
+                    <p>Supabase adalah alternatif Firebase open-source yang semakin populer. Kelebihannya:</p>
+                    <ul>
+                        <li><strong>PostgreSQL:</strong> Menggunakan database SQL relasional yang powerful.</li>
+                        <li><strong>Realtime:</strong> Langganan perubahan data secara instan via WebSocket.</li>
+                        <li><strong>Auth:</strong> Fitur login (Google, GitHub, Email) yang siap pakai.</li>
+                    </ul>`
+            },
+            'speed': { 
+                title: "Optimasi Web Speed", 
+                content: `
+                    <p>Loading website di bawah 1 detik adalah kunci SEO. Caranya:</p>
+                    <ul>
+                        <li>Gunakan format gambar WebP.</li>
+                        <li>Implementasi Lazy Loading.</li>
+                        <li>Minify CSS dan JavaScript.</li>
+                    </ul>` 
+            }
+        };
+
+        function openArticle(id) {
+            const data = articles[id];
+            if(data) {
+                document.getElementById('modalTitle').innerText = data.title;
+                document.getElementById('modalBody').innerHTML = data.content;
+                const myModal = new bootstrap.Modal(document.getElementById('articleModal'));
+                myModal.show();
+            } else {
+                 Swal.fire({ title: "Artikel", text: "Konten belum tersedia.", background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)' });
+            }
+        }
+        
+        function filterProjects(cat, btn) {
+            document.querySelectorAll('.filter-container button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.project-item').forEach(el => {
+                if(cat === 'all' || el.dataset.category === cat) { el.style.display = 'block'; }
+                else { el.style.display = 'none'; }
+            });
+        }
+
+        // --- 7. I18N & TYPEWRITER ---
         const translations = {
             id: {
                 status: "Open to Work", nav_resume: "Resume", nav_services: "Layanan", nav_portfolio: "Portfolio", nav_blog: "Blog", nav_contact: "Kontak",
@@ -675,26 +795,23 @@
             }
         };
 
-        const typeWriterTexts = {
-            id: ['Fullstack Developer', 'System Analyst', 'Supabase Expert'],
-            en: ['Fullstack Developer', 'System Analyst', 'Supabase Expert']
-        };
-
+        const typeWriterTexts = { id: ['Fullstack Developer', 'System Analyst', 'Supabase Expert'], en: ['Fullstack Developer', 'System Analyst', 'Supabase Expert'] };
         let currentLang = 'id';
+
         function toggleLanguage() {
             currentLang = currentLang === 'id' ? 'en' : 'id';
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
             });
-            document.getElementById('lang-id').classList.toggle('active');
-            document.getElementById('lang-en').classList.toggle('active');
+            const enBtn = document.getElementById('lang-en');
+            const idBtn = document.getElementById('lang-id');
+            if(currentLang === 'en') { enBtn.classList.add('fw-bold', 'text-info'); enBtn.classList.remove('opacity-50'); idBtn.classList.remove('fw-bold', 'text-info'); idBtn.classList.add('opacity-50'); }
+            else { idBtn.classList.add('fw-bold', 'text-info'); idBtn.classList.remove('opacity-50'); enBtn.classList.remove('fw-bold', 'text-info'); enBtn.classList.add('opacity-50'); }
         }
 
-        // --- TYPEWRITER ---
         const textElement = document.getElementById('typewriter');
-        let count = 0, index = 0, currentText = '', letter = '';
-        let isDeleting = false;
+        let count = 0, index = 0, currentText = '', letter = '', isDeleting = false;
         (function type() {
             const texts = typeWriterTexts[currentLang];
             if (count === texts.length) count = 0;
@@ -706,84 +823,15 @@
             else if (isDeleting && letter.length === 0) { isDeleting = false; count++; typeSpeed = 500; }
             setTimeout(type, typeSpeed);
         }());
-
-        // --- ACTIONS ---
-        function filterProjects(category, btn) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelectorAll('.project-item').forEach(item => {
-                if (category === 'all' || item.getAttribute('data-category') === category) {
-                    item.style.display = 'block'; item.classList.remove('aos-animate');
-                    setTimeout(() => item.classList.add('aos-animate'), 50);
-                } else { item.style.display = 'none'; }
-            });
-        }
-
-        function shareCV() {
-            if (navigator.share) navigator.share({ title: 'CV Andi', text: 'Lihat portofolio Andi.', url: window.location.href });
-            else { Swal.fire({ icon: 'info', title: 'Link Disalin', timer: 1500, showConfirmButton: false, background: 'var(--bg-card)', color: 'var(--text-main)' }); navigator.clipboard.writeText(window.location.href); }
-        }
-
-        function showQRCode() {
-            // Adjust QR colors based on theme if needed, but standard dark on white is safest for scanning
-            const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.href)}&bgcolor=fff&color=000&margin=10`;
-            Swal.fire({ title: 'Scan to Connect', imageUrl: qrApi, imageWidth: 200, imageHeight: 200, background: 'var(--bg-card)', color: 'var(--text-main)', confirmButtonColor: '#38bdf8' });
-        }
-
-        function contactMe() {
-            const t = translations[currentLang];
-            Swal.fire({
-                title: t.contact_title,
-                html: `<div class="d-grid gap-2"><button onclick="window.open('https://wa.me/6285760035568', '_blank')" class="btn btn-success btn-lg"><i class="fab fa-whatsapp me-2"></i> ${t.contact_wa}</button><button onclick="showEmailForm()" class="btn btn-outline-secondary btn-lg"><i class="fas fa-envelope me-2"></i> ${t.contact_email}</button></div>`,
-                showConfirmButton: false, background: 'var(--bg-card)', color: 'var(--text-main)', showCloseButton: true
-            });
-        }
-
-        function showEmailForm() {
-            const t = translations[currentLang];
-            Swal.fire({
-                title: t.contact_email, html: `<input type="email" id="email" class="swal2-input" placeholder="Email"><textarea id="msg" class="swal2-textarea" placeholder="Pesan"></textarea>`,
-                confirmButtonText: 'Kirim', confirmButtonColor: '#38bdf8', background: 'var(--bg-card)', color: 'var(--text-main)',
-                preConfirm: () => { if(!document.getElementById('email').value || !document.getElementById('msg').value) Swal.showValidationMessage('Isi semua field'); }
-            }).then((res) => { if(res.isConfirmed) Swal.fire({ icon: 'success', title: t.email_sent, background: 'var(--bg-card)', color: 'var(--text-main)', confirmButtonColor: '#38bdf8' }); });
-        }
-
-        function downloadCV() { Swal.fire({ title: 'Loading...', timer: 1000, didOpen: () => Swal.showLoading(), background: 'var(--bg-card)', color: 'var(--text-main)' }).then(() => Swal.fire({ icon: 'success', title: 'Success', background: 'var(--bg-card)', color: 'var(--text-main)', confirmButtonColor: '#38bdf8' })); }
-
-        function showDetail(id) {
-            let d = { title: 'Yarch QMS', desc: 'Sistem antrian' };
-            if(id === 'payroll') d = { title: 'Payroll App', desc: 'Sistem Gaji' };
-            if(id === 'travel') d = { title: 'Travel UI', desc: 'Desain Travel' };
-            Swal.fire({ title: d.title, text: d.desc, background: 'var(--bg-card)', color: 'var(--text-main)', confirmButtonColor: '#38bdf8' });
-        }
-
-        // --- BLOG DATA & LOGIC ---
-        const articles = {
-            'html': {
-                title: "Debugging HTML & CSS Efektif",
-                content: `
-                    <p>Seringkali kita mengalami masalah di mana layout HTML berantakan. Berikut langkah debugging:</p>
-                    <ul>
-                        <li><strong>Border Merah:</strong> Tambahkan <code>* { border: 1px solid red; }</code>.</li>
-                        <li><strong>Chrome DevTools:</strong> Tekan F12 untuk inspect element.</li>
-                    </ul>`
-            },
-            'supabase': {
-                title: "Kenapa Memilih Supabase?",
-                content: `<p>Supabase adalah alternatif Firebase open-source dengan PostgreSQL.</p>`
-            },
-            'speed': { title: "Optimasi Speed", content: `<p>Gunakan WebP dan Lazy Loading.</p>` },
-            'freelance': { title: "Tips Freelance", content: `<p>Fokus pada solusi masalah klien di proposal.</p>` }
-        };
-
-        function openArticle(id) {
-            const data = articles[id];
-            if(data) {
-                document.getElementById('modalTitle').innerText = data.title;
-                document.getElementById('modalBody').innerHTML = data.content;
-                const myModal = new bootstrap.Modal(document.getElementById('articleModal'));
-                myModal.show();
-            }
+        
+        // --- 8. MUSIC PLAYER ---
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.querySelector('.music-fab');
+        let isPlaying = false;
+        function toggleMusic() {
+            if (isPlaying) { audio.pause(); musicBtn.classList.remove('playing'); } 
+            else { audio.play().catch(e => console.log(e)); musicBtn.classList.add('playing'); }
+            isPlaying = !isPlaying;
         }
     </script>
 </body>
