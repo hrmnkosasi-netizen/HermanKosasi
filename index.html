@@ -6,6 +6,7 @@
     
     <title>CV Herman Kosasi - Professional Web Developer</title>
     <meta name="description" content="Portofolio Resmi Herman Kosasi. Fullstack Developer spesialis Enterprise System, React, Node.js & Realtime Apps.">
+    
     <meta property="og:title" content="Herman Kosasi | Fullstack Developer">
     <meta property="og:description" content="Lihat portofolio dan project terbaru saya. Spesialis Enterprise System & Realtime Apps.">
     <meta property="og:image" content="https://i.ibb.co/bMdSPH3p/IMG-20251223-132047.jpg"> 
@@ -16,6 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
@@ -120,7 +122,7 @@
             display: flex; align-items: center; justify-content: center; border-radius: 14px;
         }
 
-        /* --- 4. POPUP & FORM STYLE IMPROVEMENT --- */
+        /* --- 4. POPUP & FORM STYLE --- */
         div:where(.swal2-container) div:where(.swal2-popup) {
             background: var(--bg-modal) !important;
             border: 1px solid var(--border-color);
@@ -130,7 +132,6 @@
         }
         .swal2-title, .swal2-html-container { color: var(--text-main) !important; }
         
-        /* Custom Input Style */
         .custom-input {
             width: 100%; padding: 12px 15px; margin: 10px 0;
             background: var(--input-bg); border: 1px solid var(--border-color);
@@ -160,7 +161,6 @@
         }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
 
-        /* Social Icons in Hero */
         .social-links { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
         .social-btn {
             width: 45px; height: 45px; border-radius: 50%;
@@ -171,7 +171,6 @@
         }
         .social-btn:hover { background: var(--accent); color: white; transform: translateY(-3px); box-shadow: var(--accent-glow); }
 
-        /* Mobile Nav */
         .mobile-nav {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             width: 92%; max-width: 450px; 
@@ -228,7 +227,7 @@
 
         /* FOOTER STYLE */
         .footer {
-            text-align: center; padding: 30px 20px 100px; /* Padding bottom for mobile nav */
+            text-align: center; padding: 30px 20px 100px; 
             border-top: 1px solid var(--border-color);
             margin-top: 50px;
             background: rgba(0,0,0,0.2);
@@ -597,7 +596,7 @@
             }
         }
 
-        // --- 3. TAB SWITCHER (FIXED SCROLL & AOS) ---
+        // --- 3. TAB SWITCHER (FIXED) ---
         function switchTab(tabName) {
             const tabs = ['home', 'services', 'portfolio', 'blog'];
             tabs.forEach(t => {
@@ -613,10 +612,8 @@
             const selectedTab = document.getElementById('tab-' + tabName);
             const selectedBtn = document.getElementById('btn-' + tabName);
             const selectedDsk = document.getElementById('dsk-' + tabName);
-            
-            // HAPUS SCROLL PAKSA: window.scrollTo(...) 
-            // agar user tidak kaget saat pindah tab di HP.
 
+            // Removed window.scrollTo to prevent jump on mobile
             if(selectedTab) {
                 selectedTab.classList.remove('d-none');
                 setTimeout(() => {
@@ -628,7 +625,7 @@
             if(selectedDsk) selectedDsk.classList.add('active');
         }
 
-        // --- 4. SHARE ---
+        // --- 4. SHARE CV (FIXED LOGIC) ---
         async function shareCV() {
             const shareData = {
                 title: 'CV Herman Kosasi',
@@ -636,14 +633,23 @@
                 url: window.location.href
             };
 
+            // Use native share if available
             if (navigator.share) {
-                try { await navigator.share(shareData); } catch (err) { openManualShare(); }
-            } else { openManualShare(); }
+                try { 
+                    await navigator.share(shareData); 
+                } catch (err) { 
+                    // Only open manual if error is NOT "AbortError" (User cancel)
+                    if (err.name !== 'AbortError') openManualShare();
+                }
+            } else { 
+                openManualShare(); 
+            }
         }
 
         function openManualShare() {
             const url = encodeURIComponent(window.location.href);
             const text = encodeURIComponent("Cek CV Herman Kosasi: ");
+            
             Swal.fire({
                 title: 'Bagikan CV',
                 html: `
@@ -656,26 +662,37 @@
                         </button>
                     </div>
                 `,
-                showConfirmButton: false, showCloseButton: true,
-                background: 'var(--bg-modal)', color: 'var(--text-main)'
+                showConfirmButton: false, 
+                showCloseButton: true,
+                background: 'var(--bg-modal)', 
+                color: 'var(--text-main)'
             });
         }
 
         function copyLink() {
             navigator.clipboard.writeText(window.location.href);
-            Swal.fire({ icon: 'success', title: 'Link Disalin', showConfirmButton: false, timer: 1500, background: 'var(--bg-modal)', color: 'var(--text-main)' });
+            Swal.fire({ 
+                icon: 'success', 
+                title: 'Link Disalin', 
+                showConfirmButton: false, 
+                timer: 1500, 
+                background: 'var(--bg-modal)', 
+                color: 'var(--text-main)' 
+            });
         }
 
+        // --- 5. DOWNLOAD CV (SEPARATE FUNCTION) ---
         function downloadCV() {
             Swal.fire({
                 title: 'Download CV?',
-                text: "Silahkan unduh file 'cv-herman.pdf' dibawah ini.",
+                text: "Silahkan undeh file 'cv-herman.pdf' dibawah ini.",
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Unduh',
                 confirmButtonColor: 'var(--accent)',
                 cancelButtonColor: '#64748b',
-                background: 'var(--bg-modal)', color: 'var(--text-main)'
+                background: 'var(--bg-modal)', 
+                color: 'var(--text-main)'
             }).then((result) => {
                 if (result.isConfirmed) {
                     const link = document.createElement('a');
@@ -685,7 +702,16 @@
                     link.click();
                     document.body.removeChild(link);
                     
-                    Swal.fire({ title: 'Memproses...', text: 'File sedang diunduh.', icon: 'success', background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)', timer: 2000, showConfirmButton: false });
+                    Swal.fire({ 
+                        title: 'Memproses...', 
+                        text: 'File sedang diunduh.', 
+                        icon: 'success', 
+                        background: 'var(--bg-modal)', 
+                        color: 'var(--text-main)', 
+                        confirmButtonColor: 'var(--accent)', 
+                        timer: 2000, 
+                        showConfirmButton: false 
+                    });
                 }
             });
         }
@@ -779,7 +805,7 @@
             });
         }
 
-        // --- 7. I18N & TYPEWRITER (UPDATED) ---
+        // --- 7. I18N & TYPEWRITER ---
         const translations = {
             id: {
                 status: "Open to Work", nav_resume: "Resume", nav_services: "Layanan", nav_portfolio: "Portfolio", nav_blog: "Blog", nav_contact: "Kontak", hire_me: "Hire Me Now",
