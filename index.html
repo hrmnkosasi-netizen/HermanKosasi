@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <title>CV Herman Kosasi - Professional Web Developer</title>
-    <meta name="description" content="Portofolio dan CV Herman Kosasi. Fullstack Developer spesialis Enterprise System dan Realtime Apps.">
+    <meta name="description" content="Portofolio Resmi Herman Kosasi. Fullstack Developer spesialis Enterprise System, React, Node.js & Realtime Apps.">
+    <meta property="og:title" content="Herman Kosasi | Fullstack Developer">
+    <meta property="og:description" content="Lihat portofolio dan project terbaru saya. Spesialis Enterprise System & Realtime Apps.">
+    <meta property="og:image" content="https://i.ibb.co.com/bMdSPH3p/IMG-20251223-132047.jpg"> <meta property="og:url" content="https://hermankosasi.com">
+    <meta property="og:type" content="website">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -155,6 +159,17 @@
         }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
 
+        /* Social Icons in Hero */
+        .social-links { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .social-btn {
+            width: 45px; height: 45px; border-radius: 50%;
+            background: var(--bg-glass); border: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted); font-size: 1.2rem; transition: 0.3s;
+            text-decoration: none;
+        }
+        .social-btn:hover { background: var(--accent); color: white; transform: translateY(-3px); box-shadow: var(--accent-glow); }
+
         /* Mobile Nav */
         .mobile-nav {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
@@ -206,6 +221,15 @@
         .header-left { position: absolute; top: 20px; left: 20px; z-index: 20; display: flex; gap: 10px; }
         .header-actions { position: absolute; top: 20px; right: 20px; z-index: 20; display: flex; gap: 8px; }
 
+        /* FOOTER STYLE */
+        .footer {
+            text-align: center; padding: 30px 20px 100px; /* Padding bottom for mobile nav */
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+            background: rgba(0,0,0,0.2);
+        }
+        @media (min-width: 992px) { .footer { padding-bottom: 30px; } }
+
     </style>
 </head>
 <body>
@@ -252,11 +276,17 @@
                 <span id="typewriter"></span><span class="typed-cursor">|</span>
             </p>
             
-            <div class="d-flex justify-content-center gap-2 mt-3">
+            <div class="d-flex justify-content-center gap-2 mt-3 mb-4">
                 <span class="skill-pill" style="border-color: #22c55e; color: #22c55e; background: rgba(34, 197, 94, 0.1);">
                     <i class="fas fa-circle me-1" style="font-size: 8px;"></i> <span data-i18n="status">Open to Work</span>
                 </span>
                 <span class="skill-pill"><i class="fas fa-map-marker-alt me-1"></i> Jakarta</span>
+            </div>
+
+            <div class="social-links">
+                <a href="https://github.com/hrmnkosasi-netizen" target="_blank" class="social-btn" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/herman-kosasi-493279235?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://instagram.com/hrmnkosasi" target="_blank" class="social-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
 
             <ul class="nav nav-pills justify-content-center desktop-nav mt-4">
@@ -268,7 +298,7 @@
         </div>
     </div>
 
-    <div class="container mt-4 mb-5">
+    <div class="container mt-4">
         <div class="tab-content" id="mainContent">
             
             <div id="tab-home" class="tab-pane fade show active">
@@ -405,7 +435,8 @@
             </div>
 
             <div id="tab-blog" class="tab-pane fade d-none">
-                <div class="row g-3"> <div class="col-12" data-aos="fade-up">
+                <div class="row g-3"> 
+                    <div class="col-12" data-aos="fade-up">
                         <h4 class="mb-2"><i class="fas fa-newspaper text-info me-2"></i> <span data-i18n="blog_title">Tulisan Terbaru</span></h4>
                     </div>
                     
@@ -446,6 +477,11 @@
 
         </div>
     </div>
+
+    <footer class="footer">
+        <p class="text-muted mb-0 small">&copy; 2025 Herman Kosasi. All Rights Reserved.</p>
+        <div class="small text-muted mt-1 opacity-50">Jakarta, Indonesia</div>
+    </footer>
 
     <nav class="mobile-nav">
         <button class="nav-btn active" id="btn-home" onclick="switchTab('home')">
@@ -550,7 +586,7 @@
             if(selectedDsk) selectedDsk.classList.add('active');
         }
 
-        // --- 4. SHARE (FIXED: FALLBACK UNTUK WHATSAPP) ---
+        // --- 4. SHARE (FALLBACK WHATSAPP) ---
         async function shareCV() {
             const shareData = {
                 title: 'CV Herman Kosasi',
@@ -558,24 +594,14 @@
                 url: window.location.href
             };
 
-            // Coba fitur Share Bawaan HP dulu
             if (navigator.share) {
-                try {
-                    await navigator.share(shareData);
-                } catch (err) {
-                    // Jika user cancel atau error, buka manual popup
-                    openManualShare();
-                }
-            } else {
-                // Jika di Desktop/Browser tdk dukung, buka manual popup
-                openManualShare();
-            }
+                try { await navigator.share(shareData); } catch (err) { openManualShare(); }
+            } else { openManualShare(); }
         }
 
         function openManualShare() {
             const url = encodeURIComponent(window.location.href);
             const text = encodeURIComponent("Cek CV Herman Kosasi: ");
-            
             Swal.fire({
                 title: 'Bagikan CV',
                 html: `
@@ -588,19 +614,14 @@
                         </button>
                     </div>
                 `,
-                showConfirmButton: false,
-                showCloseButton: true,
+                showConfirmButton: false, showCloseButton: true,
                 background: 'var(--bg-modal)', color: 'var(--text-main)'
             });
         }
 
         function copyLink() {
             navigator.clipboard.writeText(window.location.href);
-            Swal.fire({ 
-                icon: 'success', title: 'Link Disalin', 
-                showConfirmButton: false, timer: 1500, 
-                background: 'var(--bg-modal)', color: 'var(--text-main)' 
-            });
+            Swal.fire({ icon: 'success', title: 'Link Disalin', showConfirmButton: false, timer: 1500, background: 'var(--bg-modal)', color: 'var(--text-main)' });
         }
 
         function downloadCV() {
@@ -622,13 +643,7 @@
                     link.click();
                     document.body.removeChild(link);
                     
-                    Swal.fire({ 
-                        title: 'Memproses...', 
-                        text: 'File sedang diunduh.', 
-                        icon: 'success', 
-                        background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)',
-                        timer: 2000, showConfirmButton: false
-                    });
+                    Swal.fire({ title: 'Memproses...', text: 'File sedang diunduh.', icon: 'success', background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)', timer: 2000, showConfirmButton: false });
                 }
             });
         }
@@ -652,7 +667,7 @@
             });
         }
 
-        // --- 5. EMAIL FORM ---
+        // --- 5. EMAIL FORM (To hrmnkosasi@gmail.com) ---
         function showEmailForm() {
             Swal.fire({
                 title: 'Kirim Email',
@@ -662,37 +677,20 @@
                     <label class="custom-label">Pesan</label>
                     <textarea id="msg" class="custom-input" rows="3" placeholder="Tulis pesan..."></textarea>
                 `,
-                confirmButtonText: 'Kirim Pesan',
-                confirmButtonColor: 'var(--accent)',
-                background: 'var(--bg-modal)',
-                color: 'var(--text-main)',
-                showCloseButton: true,
+                confirmButtonText: 'Kirim Pesan', confirmButtonColor: 'var(--accent)',
+                background: 'var(--bg-modal)', color: 'var(--text-main)', showCloseButton: true,
                 preConfirm: () => {
                     const name = document.getElementById('name').value;
                     const msg = document.getElementById('msg').value;
-                    if (!name || !msg) {
-                        Swal.showValidationMessage('Mohon isi nama dan pesan');
-                    }
+                    if (!name || !msg) Swal.showValidationMessage('Mohon isi nama dan pesan');
                     return { name: name, msg: msg };
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const name = result.value.name;
-                    const msg = result.value.msg;
-                    
-                    const subject = `Pesan dari Website: ${name}`;
-                    const body = `Halo Herman,\n\n${msg}\n\nDari: ${name}`;
-                    const mailtoLink = `mailto:hrmnkosasi@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                    
-                    window.location.href = mailtoLink;
-                    
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Membuka Email...',
-                        text: 'Silakan klik tombol kirim di aplikasi email Anda.',
-                        background: 'var(--bg-modal)', color: 'var(--text-main)',
-                        confirmButtonColor: 'var(--accent)'
-                    });
+                    const subject = `Pesan dari Website: ${result.value.name}`;
+                    const body = `Halo Herman,\n\n${result.value.msg}\n\nDari: ${result.value.name}`;
+                    window.location.href = `mailto:hrmnkosasi@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    Swal.fire({ icon: 'success', title: 'Membuka Email...', text: 'Silakan klik tombol kirim di aplikasi email Anda.', background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)' });
                 }
             });
         }
@@ -706,36 +704,9 @@
 
         // --- 6. BLOG CONTENT ---
         const articles = {
-            'html': {
-                title: "Debugging HTML & CSS Efektif",
-                content: `
-                    <p>Seringkali kita mengalami masalah di mana layout HTML berantakan. Berikut langkah debugging:</p>
-                    <ul>
-                        <li><strong>Border Merah:</strong> Tambahkan <code>* { border: 1px solid red; }</code> untuk melihat batas elemen.</li>
-                        <li><strong>Chrome DevTools:</strong> Tekan F12 untuk inspect element secara real-time.</li>
-                        <li><strong>Validasi HTML:</strong> Gunakan W3C Validator untuk cek error tag yang tidak tertutup.</li>
-                    </ul>`
-            },
-            'supabase': {
-                title: "Kenapa Memilih Supabase?",
-                content: `
-                    <p>Supabase adalah alternatif Firebase open-source yang semakin populer. Kelebihannya:</p>
-                    <ul>
-                        <li><strong>PostgreSQL:</strong> Menggunakan database SQL relasional yang powerful.</li>
-                        <li><strong>Realtime:</strong> Langganan perubahan data secara instan via WebSocket.</li>
-                        <li><strong>Auth:</strong> Fitur login (Google, GitHub, Email) yang siap pakai.</li>
-                    </ul>`
-            },
-            'speed': { 
-                title: "Optimasi Web Speed", 
-                content: `
-                    <p>Loading website di bawah 1 detik adalah kunci SEO. Caranya:</p>
-                    <ul>
-                        <li>Gunakan format gambar WebP.</li>
-                        <li>Implementasi Lazy Loading.</li>
-                        <li>Minify CSS dan JavaScript.</li>
-                    </ul>` 
-            }
+            'html': { title: "Debugging HTML & CSS Efektif", content: `<p>Seringkali kita mengalami masalah di mana layout HTML berantakan. Berikut langkah debugging:</p><ul><li><strong>Border Merah:</strong> Tambahkan <code>* { border: 1px solid red; }</code>.</li><li><strong>Chrome DevTools:</strong> Tekan F12 untuk inspect element.</li></ul>` },
+            'supabase': { title: "Kenapa Memilih Supabase?", content: `<p>Supabase adalah alternatif Firebase open-source yang semakin populer. Kelebihannya:</p><ul><li><strong>PostgreSQL:</strong> Database SQL relasional yang powerful.</li><li><strong>Realtime:</strong> Langganan perubahan data via WebSocket.</li></ul>` },
+            'speed': { title: "Optimasi Web Speed", content: `<p>Loading website di bawah 1 detik adalah kunci SEO. Caranya:</p><ul><li>Gunakan format gambar WebP.</li><li>Implementasi Lazy Loading.</li><li>Minify CSS dan JavaScript.</li></ul>` }
         };
 
         function openArticle(id) {
@@ -745,9 +716,7 @@
                 document.getElementById('modalBody').innerHTML = data.content;
                 const myModal = new bootstrap.Modal(document.getElementById('articleModal'));
                 myModal.show();
-            } else {
-                 Swal.fire({ title: "Artikel", text: "Konten belum tersedia.", background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)' });
-            }
+            } else { Swal.fire({ title: "Artikel", text: "Konten belum tersedia.", background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)' }); }
         }
         
         function filterProjects(cat, btn) {
@@ -765,7 +734,7 @@
                 status: "Open to Work", nav_resume: "Resume", nav_services: "Layanan", nav_portfolio: "Portfolio", nav_blog: "Blog", nav_contact: "Kontak",
                 about_title: "Tentang Saya", about_desc: "Pengembang web profesional yang berfokus pada performa dan skalabilitas. Spesialis dalam membangun <strong>Enterprise System</strong> dan <strong>Realtime Apps</strong>.",
                 skills_title: "Keahlian", exp_title: "Pengalaman", exp_1_desc: "Lead developer payroll system & migration.", exp_2_desc: "15+ projects web development.",
-                edu_title: "Pendidikan", edu_1_desc: "Lulus Cum Laude (IPK 3.85).", edu_2_desc: "Sertifikasi Fullstack Web Dev.",
+                edu_title: "Pendidikan", edu_1_desc: "Lulus IPK 3.21.", edu_2_desc: "Sertifikasi Fullstack Web Dev.",
                 serv_1_title: "Web Development", serv_1_desc: "Membangun website responsif dari nol hingga online.",
                 serv_2_title: "System & Backend", serv_2_desc: "Pembuatan API dan integrasi database kompleks.",
                 serv_3_title: "Fix & Optimize", serv_3_desc: "Perbaikan bug dan optimasi performa.",
