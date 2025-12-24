@@ -100,6 +100,11 @@
             background: var(--accent); color: white; 
             border-color: var(--accent); box-shadow: var(--accent-glow); transform: translateY(-2px); 
         }
+        .btn-glass.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
 
         .bento-card {
             background-color: var(--bg-card); 
@@ -233,6 +238,100 @@
             background: rgba(0,0,0,0.2);
         }
         @media (min-width: 992px) { .footer { padding-bottom: 30px; } }
+
+        /* --- 7. NEW: APP STYLE PORTFOLIO (Mirip Referensi) --- */
+        .project-app-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            align-items: center;
+            margin-bottom: 5px; /* Sedikit spasi antar item */
+        }
+        .project-app-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .project-thumb-small {
+            width: 90px;
+            height: 90px;
+            border-radius: 15px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .tech-pill {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 5px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        /* Modal Style ala Bottom Sheet (Seperti bagian bawah foto) */
+        .modal-bottom-sheet .modal-content {
+            background: #151922; /* Warna gelap solid */
+            border-radius: 25px 25px 0 0; /* Sudut atas bulat */
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+        }
+        @media (min-width: 768px) {
+            .modal-bottom-sheet .modal-content {
+                border-radius: 25px; /* Full rounded di desktop */
+            }
+        }
+        .action-btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .btn-action-primary {
+            background: #10b981; /* Hijau seperti di foto */
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 0;
+            width: 100%;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-action-primary:hover { background: #059669; color: white; }
+        .btn-action-outline {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            padding: 12px 0;
+            width: 100%;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-action-outline:hover { border-color: white; background: rgba(255,255,255,0.05); color: white; }
+        .category-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .btn-close-white { filter: invert(1) grayscale(100%) brightness(200%); }
 
     </style>
 </head>
@@ -433,41 +532,57 @@
             <div id="tab-portfolio" class="tab-pane fade d-none">
                 <div class="filter-container d-flex justify-content-center gap-2 mb-4">
                     <button class="btn-glass active" onclick="filterProjects('all', this)" data-i18n="filter_all">Semua</button>
-                    <button class="btn-glass" onclick="filterProjects('system', this)" data-i18n="filter_sys">Sistem Web</button>
+                    <button class="btn-glass" onclick="filterProjects('system', this)" data-i18n="filter_sys">Sistem</button>
                     <button class="btn-glass" onclick="filterProjects('uiux', this)" data-i18n="filter_ui">UI/UX</button>
                 </div>
 
                 <div class="row g-3">
-                    <div class="col-12 col-md-6 project-item" data-category="system" data-aos="zoom-in">
-                        <div class="bento-card p-0" onclick="showDetail('payroll')" style="cursor:pointer;">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" style="width:100%; height:200px; object-fit:cover;">
-                            <div class="p-3">
-                                <span class="badge bg-primary mb-2">Supabase</span>
-                                <h5>Payroll Super App</h5>
-                                <p class="text-muted small mb-0" data-i18n="proj_1_desc">Manajemen gaji otomatis & pajak.</p>
+                    
+                    <div class="col-12 col-md-6 project-item" data-category="system" data-aos="fade-up">
+                        <div class="project-app-card" onclick="openProjectModal('payroll')">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small">
+                            <div>
+                                <span class="category-label">System</span>
+                                <h6 class="mb-1 fw-bold">Payroll Super App</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
+                                    Aplikasi penggajian karyawan otomatis dengan perhitungan PPh 21.
+                                </p>
+                                <small class="text-muted" style="font-size: 0.7rem;">20 Nov 2025</small>
                             </div>
+                            <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 project-item" data-category="system" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="bento-card p-0" onclick="showDetail('qms')" style="cursor:pointer;">
-                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" style="width:100%; height:200px; object-fit:cover;">
-                            <div class="p-3">
-                                <span class="badge bg-success mb-2">Realtime DB</span>
-                                <h5>Yarch QMS v69</h5>
-                                <p class="text-muted small mb-0" data-i18n="proj_2_desc">Sistem antrian loket suara.</p>
+
+                    <div class="col-12 col-md-6 project-item" data-category="system" data-aos="fade-up" data-aos-delay="100">
+                        <div class="project-app-card" onclick="openProjectModal('qms')">
+                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small">
+                            <div>
+                                <span class="category-label">Realtime</span>
+                                <h6 class="mb-1 fw-bold">Yarch QMS v69</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
+                                    Sistem antrian loket dengan pemanggil suara otomatis (Text-to-Speech).
+                                </p>
+                                <small class="text-muted" style="font-size: 0.7rem;">18 Nov 2025</small>
                             </div>
+                            <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 project-item" data-category="uiux" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="bento-card p-0" onclick="showDetail('travel')" style="cursor:pointer;">
-                            <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" style="width:100%; height:200px; object-fit:cover;">
-                            <div class="p-3">
-                                <span class="badge bg-warning text-dark mb-2">Figma Design</span>
-                                <h5>Nusantara Travel UI</h5>
-                                <p class="text-muted small mb-0" data-i18n="proj_3_desc">Desain aplikasi booking tiket modern.</p>
+
+                    <div class="col-12 col-md-6 project-item" data-category="uiux" data-aos="fade-up" data-aos-delay="200">
+                        <div class="project-app-card" onclick="openProjectModal('travel')">
+                            <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small">
+                            <div>
+                                <span class="category-label">Design</span>
+                                <h6 class="mb-1 fw-bold">Nusantara Travel UI</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
+                                    Desain aplikasi booking tiket pesawat & hotel yang ramah lansia.
+                                </p>
+                                <small class="text-muted" style="font-size: 0.7rem;">10 Nov 2025</small>
                             </div>
+                            <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -553,6 +668,42 @@
         </div>
     </div>
 
+    <div class="modal fade modal-bottom-sheet" id="projectModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content text-white">
+                <div class="modal-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <span class="category-label" id="p-category">CATEGORY</span>
+                            <h4 class="fw-bold mb-0" id="p-title">Project Title</h4>
+                        </div>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="mb-4">
+                        <img id="p-image" src="" class="w-100 rounded-4 mb-3" style="height: 200px; object-fit: cover;">
+                        <p class="text-muted" id="p-desc" style="line-height: 1.6;">Description here...</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h6 class="fw-bold mb-2 text-white">Teknologi:</h6>
+                        <div id="p-techs">
+                            </div>
+                    </div>
+
+                    <div class="action-btn-group">
+                        <a href="#" id="btn-demo" class="btn-action-primary" target="_blank">
+                            <i class="fas fa-play"></i> Live Demo
+                        </a>
+                        <a href="#" id="btn-code" class="btn-action-outline" target="_blank">
+                            <i class="fab fa-github"></i> Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -625,93 +776,45 @@
             if(selectedDsk) selectedDsk.classList.add('active');
         }
 
-        // --- 4. SHARE CV (FIXED LOGIC) ---
+        // --- 4. SHARE CV ---
         async function shareCV() {
             const shareData = {
                 title: 'CV Herman Kosasi',
                 text: 'Cek portofolio dan CV Herman Kosasi disini: ',
                 url: window.location.href
             };
-
-            // Use native share if available
             if (navigator.share) {
-                try { 
-                    await navigator.share(shareData); 
-                } catch (err) { 
-                    // Only open manual if error is NOT "AbortError" (User cancel)
-                    if (err.name !== 'AbortError') openManualShare();
-                }
-            } else { 
-                openManualShare(); 
-            }
+                try { await navigator.share(shareData); } catch (err) { if (err.name !== 'AbortError') openManualShare(); }
+            } else { openManualShare(); }
         }
 
         function openManualShare() {
             const url = encodeURIComponent(window.location.href);
             const text = encodeURIComponent("Cek CV Herman Kosasi: ");
-            
             Swal.fire({
                 title: 'Bagikan CV',
-                html: `
-                    <div class="d-grid gap-2">
-                        <a href="https://wa.me/?text=${text}${url}" target="_blank" class="btn btn-success">
-                            <i class="fab fa-whatsapp me-2"></i> Kirim ke WhatsApp
-                        </a>
-                        <button onclick="copyLink()" class="btn btn-secondary">
-                            <i class="fas fa-copy me-2"></i> Salin Link
-                        </button>
-                    </div>
-                `,
-                showConfirmButton: false, 
-                showCloseButton: true,
-                background: 'var(--bg-modal)', 
-                color: 'var(--text-main)'
+                html: `<div class="d-grid gap-2"><a href="https://wa.me/?text=${text}${url}" target="_blank" class="btn btn-success"><i class="fab fa-whatsapp me-2"></i> Kirim ke WhatsApp</a><button onclick="copyLink()" class="btn btn-secondary"><i class="fas fa-copy me-2"></i> Salin Link</button></div>`,
+                showConfirmButton: false, showCloseButton: true, background: 'var(--bg-modal)', color: 'var(--text-main)'
             });
         }
 
         function copyLink() {
             navigator.clipboard.writeText(window.location.href);
-            Swal.fire({ 
-                icon: 'success', 
-                title: 'Link Disalin', 
-                showConfirmButton: false, 
-                timer: 1500, 
-                background: 'var(--bg-modal)', 
-                color: 'var(--text-main)' 
-            });
+            Swal.fire({ icon: 'success', title: 'Link Disalin', showConfirmButton: false, timer: 1500, background: 'var(--bg-modal)', color: 'var(--text-main)' });
         }
 
-        // --- 5. DOWNLOAD CV (SEPARATE FUNCTION) ---
+        // --- 5. DOWNLOAD CV ---
         function downloadCV() {
             Swal.fire({
-                title: 'Download CV?',
-                text: "Silahkan undeh file 'cv-herman.pdf' dibawah ini.",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Unduh',
-                confirmButtonColor: 'var(--accent)',
-                cancelButtonColor: '#64748b',
-                background: 'var(--bg-modal)', 
-                color: 'var(--text-main)'
+                title: 'Download CV?', text: "Silahkan undeh file 'cv-herman.pdf' dibawah ini.", icon: 'question',
+                showCancelButton: true, confirmButtonText: 'Unduh', confirmButtonColor: 'var(--accent)', cancelButtonColor: '#64748b',
+                background: 'var(--bg-modal)', color: 'var(--text-main)'
             }).then((result) => {
                 if (result.isConfirmed) {
                     const link = document.createElement('a');
-                    link.href = 'cv-herman.pdf'; 
-                    link.download = 'CV_Herman_Kosasi.pdf'; 
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    
-                    Swal.fire({ 
-                        title: 'Memproses...', 
-                        text: 'File sedang diunduh.', 
-                        icon: 'success', 
-                        background: 'var(--bg-modal)', 
-                        color: 'var(--text-main)', 
-                        confirmButtonColor: 'var(--accent)', 
-                        timer: 2000, 
-                        showConfirmButton: false 
-                    });
+                    link.href = 'cv-herman.pdf'; link.download = 'CV_Herman_Kosasi.pdf'; 
+                    document.body.appendChild(link); link.click(); document.body.removeChild(link);
+                    Swal.fire({ title: 'Memproses...', text: 'File sedang diunduh.', icon: 'success', background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)', timer: 2000, showConfirmButton: false });
                 }
             });
         }
@@ -738,12 +841,7 @@
         function showEmailForm() {
             Swal.fire({
                 title: 'Kirim Email',
-                html: `
-                    <label class="custom-label">Nama Anda</label>
-                    <input type="text" id="name" class="custom-input" placeholder="Nama Anda...">
-                    <label class="custom-label">Pesan</label>
-                    <textarea id="msg" class="custom-input" rows="3" placeholder="Tulis pesan..."></textarea>
-                `,
+                html: `<label class="custom-label">Nama Anda</label><input type="text" id="name" class="custom-input" placeholder="Nama Anda..."><label class="custom-label">Pesan</label><textarea id="msg" class="custom-input" rows="3" placeholder="Tulis pesan..."></textarea>`,
                 confirmButtonText: 'Kirim Pesan', confirmButtonColor: 'var(--accent)',
                 background: 'var(--bg-modal)', color: 'var(--text-main)', showCloseButton: true,
                 preConfirm: () => {
@@ -762,24 +860,71 @@
             });
         }
 
-        function showDetail(id) {
-            let t = "Detail Project";
-            let d = "Deskripsi detail project ada di sini.";
-            let link = "#";
+        // --- 6. PROJECT DATA & MODAL (NEW APP STYLE) ---
+        const projectsData = {
+            'payroll': {
+                title: "Payroll Super App",
+                category: "System Web",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                desc: "Sistem penggajian end-to-end untuk perusahaan dengan 500+ karyawan. Fitur mencakup absensi biometrik, perhitungan PPh 21 otomatis, BPJS, dan generasi slip gaji digital PDF.",
+                techs: ["Laravel", "Bootstrap 5", "MySQL", "jQuery"],
+                demo: "#",
+                code: "https://github.com/hrmnkosasi-netizen"
+            },
+            'qms': {
+                title: "Yarch QMS v69",
+                category: "Realtime App",
+                image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                desc: "Aplikasi manajemen antrian rumah sakit/bank. Menggunakan WebSocket untuk update nomor antrian secara realtime tanpa refresh halaman. Dilengkapi fitur pemanggilan suara.",
+                techs: ["Node.js", "Socket.io", "React", "Express"],
+                demo: "#",
+                code: "#"
+            },
+            'travel': {
+                title: "Nusantara Travel UI",
+                category: "UI/UX Design",
+                image: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                desc: "Studi kasus perancangan antarmuka aplikasi travel. Fokus pada kemudahan navigasi, kontras warna yang baik, dan alur pemesanan yang ringkas.",
+                techs: ["Figma", "Prototyping", "User Research"],
+                demo: "#",
+                code: "#"
+            }
+        };
 
-            if(id==='payroll') { t="Payroll Super App"; d="Aplikasi ini menggunakan Supabase untuk manajemen 500+ karyawan. Fitur: Absensi, Pajak Otomatis (PPh 21), dan Slip Gaji Digital."; }
-            if(id==='qms') { t="Yarch QMS v69"; d="Sistem antrian real-time menggunakan WebSocket. Mendukung pemanggilan suara (Text-to-Speech) dan multi-loket."; }
-            if(id==='travel') { t="Nusantara Travel UI"; d="Studi kasus desain UI/UX untuk aplikasi travel agent lokal. Fokus pada kemudahan pemesanan tiket lansia."; }
+        function openProjectModal(id) {
+            const data = projectsData[id];
+            if(!data) return;
 
-            Swal.fire({ 
-                title: t, 
-                text: d, 
-                footer: '<a href="'+link+'" target="_blank">Lihat Source Code / Demo</a>',
-                background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)' 
+            document.getElementById('p-title').innerText = data.title;
+            document.getElementById('p-category').innerText = data.category;
+            document.getElementById('p-desc').innerText = data.desc;
+            document.getElementById('p-image').src = data.image;
+            document.getElementById('btn-demo').href = data.demo;
+            document.getElementById('btn-code').href = data.code;
+
+            const techContainer = document.getElementById('p-techs');
+            techContainer.innerHTML = ''; 
+            data.techs.forEach(tech => {
+                const span = document.createElement('span');
+                span.className = 'tech-pill';
+                span.innerText = tech;
+                techContainer.appendChild(span);
+            });
+
+            const myModal = new bootstrap.Modal(document.getElementById('projectModal'));
+            myModal.show();
+        }
+
+        function filterProjects(cat, btn) {
+            document.querySelectorAll('.filter-container button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.project-item').forEach(el => {
+                if(cat === 'all' || el.dataset.category === cat) { el.style.display = 'block'; }
+                else { el.style.display = 'none'; }
             });
         }
 
-        // --- 6. BLOG CONTENT ---
+        // --- 7. BLOG CONTENT ---
         const articles = {
             'html': { title: "Debugging HTML & CSS Efektif", content: `<p>Seringkali kita mengalami masalah di mana layout HTML berantakan. Berikut langkah debugging:</p><ul><li><strong>Border Merah:</strong> Tambahkan <code>* { border: 1px solid red; }</code> untuk melihat batas elemen.</li><li><strong>Chrome DevTools:</strong> Gunakan 'Inspect Element' (F12) untuk memodifikasi CSS secara live.</li><li><strong>Cek Penutup Tag:</strong> Pastikan setiap <code>&lt;div&gt;</code> memiliki penutup yang pas.</li></ul>` },
             'supabase': { title: "Kenapa Memilih Supabase?", content: `<p>Supabase adalah alternatif Firebase open-source yang semakin populer. Kelebihannya:</p><ul><li><strong>PostgreSQL:</strong> Database SQL relasional yang powerful dan familiar.</li><li><strong>Realtime:</strong> Langganan perubahan data via WebSocket sangat mudah diimplementasikan.</li><li><strong>Auth:</strong> Sudah termasuk autentikasi via Google, GitHub, dll.</li></ul>` },
@@ -796,16 +941,7 @@
             } else { Swal.fire({ title: "Artikel", text: "Konten belum tersedia.", background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)' }); }
         }
         
-        function filterProjects(cat, btn) {
-            document.querySelectorAll('.filter-container button').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelectorAll('.project-item').forEach(el => {
-                if(cat === 'all' || el.dataset.category === cat) { el.style.display = 'block'; }
-                else { el.style.display = 'none'; }
-            });
-        }
-
-        // --- 7. I18N & TYPEWRITER ---
+        // --- 8. I18N & TYPEWRITER ---
         const translations = {
             id: {
                 status: "Open to Work", nav_resume: "Resume", nav_services: "Layanan", nav_portfolio: "Portfolio", nav_blog: "Blog", nav_contact: "Kontak", hire_me: "Hire Me Now",
@@ -870,7 +1006,7 @@
             setTimeout(type, typeSpeed);
         }());
         
-        // --- 8. MUSIC PLAYER ---
+        // --- 9. MUSIC PLAYER ---
         const audio = document.getElementById('bg-music');
         const musicBtn = document.querySelector('.music-fab');
         let isPlaying = false;
