@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <meta name="theme-color" content="#0f172a">
+
     <title>CV Herman Kosasi - Professional Web Developer</title>
     <meta name="description" content="Portofolio Resmi Herman Kosasi. Fullstack Developer spesialis Enterprise System, React, Node.js & Realtime Apps.">
     
@@ -239,7 +241,7 @@
         }
         @media (min-width: 992px) { .footer { padding-bottom: 30px; } }
 
-        /* --- 7. NEW: APP STYLE PORTFOLIO (Mirip Referensi) --- */
+        /* --- 7. NEW: APP STYLE PORTFOLIO --- */
         .project-app-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -250,7 +252,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
             align-items: center;
-            margin-bottom: 5px; /* Sedikit spasi antar item */
+            margin-bottom: 5px; 
         }
         .project-app-card:hover {
             transform: translateY(-3px);
@@ -275,25 +277,42 @@
             margin-right: 5px;
             border: 1px solid rgba(255,255,255,0.05);
         }
-        /* Modal Style ala Bottom Sheet (Seperti bagian bawah foto) */
+        
+        /* Modal Style ala Bottom Sheet */
         .modal-bottom-sheet .modal-content {
-            background: #151922; /* Warna gelap solid */
-            border-radius: 25px 25px 0 0; /* Sudut atas bulat */
+            background: #151922; 
+            border-radius: 25px 25px 0 0; 
             border: 1px solid rgba(255,255,255,0.1);
             color: white;
         }
         @media (min-width: 768px) {
             .modal-bottom-sheet .modal-content {
-                border-radius: 25px; /* Full rounded di desktop */
+                border-radius: 25px; 
             }
         }
+
+        /* PERBAIKAN POINT 3: Tampilan Mobile Bottom Sheet yang Benar */
+        @media (max-width: 767px) {
+            .modal-bottom-sheet .modal-dialog {
+                align-items: flex-end; /* Paksa posisi ke bawah */
+                min-height: calc(100% - 1rem); /* Agar tidak nanggung */
+                margin: 0 auto;
+                padding-bottom: 0;
+            }
+            .modal-bottom-sheet .modal-content {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                border-bottom: none;
+            }
+        }
+
         .action-btn-group {
             display: flex;
             gap: 15px;
             margin-top: 20px;
         }
         .btn-action-primary {
-            background: #10b981; /* Hijau seperti di foto */
+            background: #10b981; 
             color: white;
             border: none;
             border-radius: 50px;
@@ -941,7 +960,7 @@
             } else { Swal.fire({ title: "Artikel", text: "Konten belum tersedia.", background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)' }); }
         }
         
-        // --- 8. I18N & TYPEWRITER ---
+        // --- 8. I18N & TYPEWRITER (PERBAIKAN POINT 5) ---
         const translations = {
             id: {
                 status: "Open to Work", nav_resume: "Resume", nav_services: "Layanan", nav_portfolio: "Portfolio", nav_blog: "Blog", nav_contact: "Kontak", hire_me: "Hire Me Now",
@@ -977,7 +996,11 @@
             }
         };
 
-        const typeWriterTexts = { id: ['Fullstack Developer', 'System Analyst', 'Supabase Expert'], en: ['Fullstack Developer', 'System Analyst', 'Supabase Expert'] };
+        // PERBAIKAN POINT 5: Teks Typewriter menyesuaikan bahasa
+        const typeWriterTexts = { 
+            id: ['Pengembang Fullstack', 'Analis Sistem', 'Spesialis Supabase'], 
+            en: ['Fullstack Developer', 'System Analyst', 'Supabase Expert'] 
+        };
         let currentLang = 'id';
 
         function toggleLanguage() {
@@ -994,15 +1017,29 @@
 
         const textElement = document.getElementById('typewriter');
         let count = 0, index = 0, currentText = '', letter = '', isDeleting = false;
+        
         (function type() {
+            // Mengambil teks berdasarkan bahasa yang aktif saat ini
             const texts = typeWriterTexts[currentLang];
-            if (count === texts.length) count = 0;
+            
+            if (count >= texts.length) count = 0; // Reset count jika melebihi array
             currentText = texts[count];
+            
             letter = isDeleting ? currentText.slice(0, --index) : currentText.slice(0, ++index);
             textElement.textContent = letter;
+            
             let typeSpeed = isDeleting ? 50 : 100;
-            if (!isDeleting && letter.length === currentText.length) { typeSpeed = 2000; isDeleting = true; } 
-            else if (isDeleting && letter.length === 0) { isDeleting = false; count++; typeSpeed = 500; }
+            
+            if (!isDeleting && letter.length === currentText.length) { 
+                typeSpeed = 2000; 
+                isDeleting = true; 
+            } else if (isDeleting && letter.length === 0) { 
+                isDeleting = false; 
+                count++; 
+                if (count >= texts.length) count = 0; // Pastikan loop kembali ke awal
+                typeSpeed = 500; 
+            }
+            
             setTimeout(type, typeSpeed);
         }());
         
