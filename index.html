@@ -2,7 +2,7 @@
 <html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <meta name="theme-color" content="#0f172a">
 
@@ -184,7 +184,9 @@
             background: var(--bg-modal);
             border: 1px solid var(--border-color); border-radius: 50px;
             display: flex; justify-content: space-between; padding: 12px 25px;
-            z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            /* FIX 1: Z-Index diturunkan agar di bawah Modal */
+            z-index: 990; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .nav-btn { background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 0.7rem; cursor: pointer; flex: 1; }
         .nav-btn i { font-size: 1.2rem; margin-bottom: 2px; transition: 0.3s; }
@@ -211,7 +213,7 @@
         .timeline-item::before { content: ''; position: absolute; left: -6px; top: 5px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
 
         .music-fab {
-            position: fixed; bottom: 100px; right: 20px; z-index: 998;
+            position: fixed; bottom: 100px; right: 20px; z-index: 900;
             width: 45px; height: 45px; border-radius: 50%;
             background: var(--bg-card); border: 1px solid var(--border-color);
             display: flex; align-items: center; justify-content: center;
@@ -291,11 +293,11 @@
             }
         }
 
-        /* PERBAIKAN POINT 3: Tampilan Mobile Bottom Sheet yang Benar */
+        /* --- FIX PENTING MOBILE --- */
         @media (max-width: 767px) {
             .modal-bottom-sheet .modal-dialog {
                 align-items: flex-end; /* Paksa posisi ke bawah */
-                min-height: calc(100% - 1rem); /* Agar tidak nanggung */
+                min-height: calc(100% - 1rem); 
                 margin: 0 auto;
                 padding-bottom: 0;
             }
@@ -305,6 +307,26 @@
                 border-bottom: none;
             }
         }
+        
+        /* FIX Z-INDEX MODAL AGAR MUNCUL DI ATAS NAV */
+        .modal {
+            z-index: 10000 !important;
+        }
+        .modal-backdrop {
+            z-index: 9999 !important;
+        }
+
+        /* FIX SCROLL DALAM MODAL */
+        .modal-bottom-sheet .modal-body {
+            max-height: 75vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 100px !important; /* Ruang extra di bawah */
+        }
+
+        /* Custom Scrollbar Modal */
+        .modal-bottom-sheet .modal-body::-webkit-scrollbar { width: 5px; }
+        .modal-bottom-sheet .modal-body::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 10px; }
 
         .action-btn-group {
             display: flex;
@@ -352,6 +374,11 @@
         }
         .btn-close-white { filter: invert(1) grayscale(100%) brightness(200%); }
 
+        /* Safe area for tabs */
+        .tab-pane {
+            min-height: 60vh;
+        }
+
     </style>
 </head>
 <body>
@@ -391,7 +418,7 @@
 
     <div class="hero-section" data-aos="fade-down">
         <div class="container">
-            <img src="https://i.ibb.co/bMdSPH3p/IMG-20251223-132047.jpg" alt="Profile" class="profile-thumb" onerror="this.src='https://i.ibb.co/bMdSPH3p/IMG-20251223-132047.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80';">
+            <img src="https://i.ibb.co/bMdSPH3p/IMG-20251223-132047.jpg" alt="Profile" class="profile-thumb" onerror="this.src='https://ui-avatars.com/api/?name=Herman+Kosasi&background=random';">
             
             <h1 class="display-5 mb-1">Herman Kosasi</h1>
             <p class="fs-5 text-info fw-bold mb-3">
@@ -783,12 +810,18 @@
             const selectedBtn = document.getElementById('btn-' + tabName);
             const selectedDsk = document.getElementById('dsk-' + tabName);
 
-            // Removed window.scrollTo to prevent jump on mobile
             if(selectedTab) {
                 selectedTab.classList.remove('d-none');
                 setTimeout(() => {
                     selectedTab.classList.add('show', 'active');
+                    // FIX AOS REFRESH
                     if(typeof AOS !== 'undefined') AOS.refresh();
+                    
+                    // FIX SCROLL KE ATAS SAAT PINDAH TAB
+                    const heroHeight = document.querySelector('.hero-section').offsetHeight;
+                    const scrollTarget = window.innerWidth < 992 ? (heroHeight - 50) : 0;
+                    window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+
                 }, 50);
             }
             if(selectedBtn) selectedBtn.classList.add('active');
@@ -825,7 +858,7 @@
         // --- 5. DOWNLOAD CV ---
         function downloadCV() {
             Swal.fire({
-                title: 'Download CV?', text: "Silahkan undeh file 'cv-herman.pdf' dibawah ini.", icon: 'question',
+                title: 'Download CV?', text: "Silahkan unduh file 'cv-herman.pdf' dibawah ini.", icon: 'question',
                 showCancelButton: true, confirmButtonText: 'Unduh', confirmButtonColor: 'var(--accent)', cancelButtonColor: '#64748b',
                 background: 'var(--bg-modal)', color: 'var(--text-main)'
             }).then((result) => {
@@ -941,6 +974,8 @@
                 if(cat === 'all' || el.dataset.category === cat) { el.style.display = 'block'; }
                 else { el.style.display = 'none'; }
             });
+            // Refresh AOS agar layout tidak berantakan setelah filter
+            setTimeout(() => AOS.refresh(), 100);
         }
 
         // --- 7. BLOG CONTENT ---
@@ -960,7 +995,7 @@
             } else { Swal.fire({ title: "Artikel", text: "Konten belum tersedia.", background: 'var(--bg-modal)', color: 'var(--text-main)', confirmButtonColor: 'var(--accent)' }); }
         }
         
-        // --- 8. I18N & TYPEWRITER (PERBAIKAN POINT 5) ---
+        // --- 8. I18N & TYPEWRITER ---
         const translations = {
             id: {
                 status: "Open to Work", nav_resume: "Resume", nav_services: "Layanan", nav_portfolio: "Portfolio", nav_blog: "Blog", nav_contact: "Kontak", hire_me: "Hire Me Now",
@@ -996,7 +1031,6 @@
             }
         };
 
-        // PERBAIKAN POINT 5: Teks Typewriter menyesuaikan bahasa
         const typeWriterTexts = { 
             id: ['Pengembang Fullstack', 'Analis Sistem', 'Spesialis Supabase'], 
             en: ['Fullstack Developer', 'System Analyst', 'Supabase Expert'] 
@@ -1019,10 +1053,8 @@
         let count = 0, index = 0, currentText = '', letter = '', isDeleting = false;
         
         (function type() {
-            // Mengambil teks berdasarkan bahasa yang aktif saat ini
             const texts = typeWriterTexts[currentLang];
-            
-            if (count >= texts.length) count = 0; // Reset count jika melebihi array
+            if (count >= texts.length) count = 0; 
             currentText = texts[count];
             
             letter = isDeleting ? currentText.slice(0, --index) : currentText.slice(0, ++index);
@@ -1036,7 +1068,7 @@
             } else if (isDeleting && letter.length === 0) { 
                 isDeleting = false; 
                 count++; 
-                if (count >= texts.length) count = 0; // Pastikan loop kembali ke awal
+                if (count >= texts.length) count = 0; 
                 typeSpeed = 500; 
             }
             
