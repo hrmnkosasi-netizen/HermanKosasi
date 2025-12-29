@@ -62,7 +62,6 @@
             
             --border-color: rgba(255, 255, 255, 0.15);
             --input-bg: #0f172a; 
-            --music-on: #1db954; /* Spotify Green */
             --shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
@@ -251,17 +250,6 @@
         .timeline-item { position: relative; padding-left: 30px; margin-bottom: 25px; border-left: 2px solid var(--border-color); }
         .timeline-item::before { content: ''; position: absolute; left: -6px; top: 5px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
 
-        .music-fab {
-            position: fixed; bottom: 100px; right: 20px; z-index: 900;
-            width: 50px; height: 50px; border-radius: 50%;
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.3s; color: var(--text-main); backdrop-filter: blur(5px);
-            font-size: 1.2rem;
-        }
-        .music-fab:hover { border-color: var(--music-on); color: var(--music-on); transform: rotate(15deg); }
-        .music-fab.playing { border-color: var(--music-on); color: var(--music-on); box-shadow: 0 0 15px rgba(29, 185, 84, 0.4); }
-
         .modal-content-glass { background: var(--bg-modal); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 20px; }
         .modal-header, .modal-footer { border-color: var(--border-color); }
         .btn-close { filter: invert(1); } [data-theme="light"] .btn-close { filter: none; }
@@ -335,15 +323,6 @@
         }
         .btn-close-floating:hover { background: var(--accent); border-color: var(--accent); transform: rotate(90deg); }
         
-        /* SPOTIFY PLAYLIST BUTTONS */
-        .playlist-btn {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main);
-            padding: 10px 15px; border-radius: 12px; margin-bottom: 8px; text-align: left; width: 100%;
-            transition: 0.2s; display: flex; align-items: center; gap: 10px;
-        }
-        .playlist-btn:hover, .playlist-btn.active { background: rgba(29, 185, 84, 0.2); border-color: var(--music-on); }
-        .playlist-btn i { color: var(--music-on); }
-
         .action-btn-group { display: flex; gap: 15px; margin-top: 20px; }
         .btn-action-primary {
             background: #10b981; color: white; border: none; border-radius: 50px; padding: 12px 0; width: 100%; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
@@ -367,10 +346,6 @@
     </div>
 
     <div id="particles-js"></div>
-
-    <div class="music-fab" onclick="openSpotifyModal()" title="Play Music" aria-label="Play Music">
-        <i class="fab fa-spotify"></i>
-    </div>
 
     <div class="header-left">
         <button class="btn-glass" onclick="toggleTheme()" title="Switch Theme" aria-label="Ganti Tema">
@@ -779,42 +754,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="spotifyModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content modal-content-glass">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title text-success"><i class="fab fa-spotify me-2"></i> Music Hub</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-3 text-center">
-                    <p class="text-muted small mb-3">Lagu Favorit Pilihan.</p>
-                    
-                    <button class="playlist-btn active" onclick="loadSpotifyTrack('23', this)">
-                        <i class="fas fa-music"></i> Kan Zhe Wo De Yan Jing Shuo (Zhang Yuan)
-                    </button>
-                    <button class="playlist-btn" onclick="loadSpotifyTrack('29', this)">
-                        <i class="fas fa-guitar"></i> Piao Xiang Bei Fang (Namewee)
-                    </button>
-                    <button class="playlist-btn" onclick="loadSpotifyTrack('30', this)">
-                        <i class="fas fa-heart"></i> Tong Hua (Fairy Tale)
-                    </button>
-
-                    <div class="mt-4 rounded-3 overflow-hidden" style="box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
-                        <iframe id="spotify-frame" 
-                                style="border-radius:12px" 
-                                src="https://open.spotify.com/embed/..." 
-                                width="100%" 
-                                height="152" 
-                                frameBorder="0" 
-                                allowfullscreen="" 
-                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                                loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -1172,34 +1111,6 @@
             }
             setTimeout(type, typeSpeed);
         }());
-        
-        // --- 8. FIX SPOTIFY LOGIC (TRACK EMBEDS) ---
-        function openSpotifyModal() {
-            const myModal = new bootstrap.Modal(document.getElementById('spotifyModal'));
-            myModal.show();
-        }
-
-        function loadSpotifyTrack(trackId, btn) {
-            document.querySelectorAll('.playlist-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            // FIX: GUNAKAN LINK RESMI SPOTIFY EMBED UNTUK TRACK TERTENTU
-            // ID: 23 (Kan Zhe Wo - Placeholder using similar track if not exact match)
-            // ID: 29 (Stranger in the North)
-            // ID: 30 (Tong Hua)
-            const frame = document.getElementById('spotify-frame');
-            // Using googleusercontent proxy for compatibility demonstration if requested, BUT official is better:
-            // "https://open.spotify.com/embed/track/{id}"
-            // Here we use the proxy pattern requested previously or standard
-            // Standard: src="https://open.spotify.com/embed/track/" + trackId
-            
-            // Note: Since I cannot browse Spotify to get exact IDs in this environment, 
-            // I am using the proxy IDs discovered. 
-            // If these proxy IDs fail, replace `https://open.spotify.com/embed/playlist/${id}` 
-            // with `https://open.spotify.com/embed/track/{REAL_ID}`.
-            
-            frame.src = `https://open.spotify.com/embed/playlist/$${trackId}?utm_source=generator&theme=0`;
-        }
 
     </script>
 </body>
