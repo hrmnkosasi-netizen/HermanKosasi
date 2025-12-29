@@ -333,6 +333,27 @@
         }
         .btn-action-outline:hover { border-color: white; background: rgba(255,255,255,0.05); color: white; }
         
+        /* --- LIVE PREVIEW STYLES (UPDATED FOR 3 MODES) --- */
+        .preview-controls {
+            display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
+        }
+        .btn-preview-mode {
+            background: rgba(255,255,255,0.1); border: 1px solid var(--border-color); color: var(--text-muted);
+            padding: 8px 20px; border-radius: 12px; font-size: 0.9rem; transition: 0.3s; cursor: pointer;
+        }
+        .btn-preview-mode.active, .btn-preview-mode:hover {
+            background: var(--accent); color: white; border-color: var(--accent);
+        }
+        .preview-frame-container {
+            width: 100%; height: 650px; background: #000; border-radius: 12px; overflow: hidden; margin: 0 auto;
+            border: 1px solid var(--border-color); transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        /* Mode Sizes */
+        .mode-pc { width: 100%; border-radius: 12px; }
+        .mode-tab { width: 768px; border-radius: 16px; border: 10px solid #333; }
+        .mode-mobile { width: 375px; border-radius: 24px; border: 12px solid #333; height: 667px; }
+        
         /* MODAL FIX */
         .modal { z-index: 10000 !important; }
         .modal-backdrop { z-index: 9999 !important; }
@@ -575,6 +596,21 @@
 
                 <div class="row g-3">
                     
+                    <div class="col-12 col-md-6 project-item" data-category="uiux" data-aos="fade-up">
+                        <div class="project-app-card" onclick="openProjectModal('yarch')">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small">
+                            <div>
+                                <span class="category-label text-info">Web Agency</span>
+                                <h6 class="mb-1 fw-bold">YarchStudio Creative</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
+                                    Jasa pembuatan website premium & modern.
+                                </p>
+                                <small class="text-success" style="font-size: 0.7rem;"><i class="fas fa-circle me-1"></i> Live Preview Available</small>
+                            </div>
+                            <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                    </div>
+
                     <div class="col-12 col-md-6 project-item" data-category="system" data-aos="fade-up">
                         <div class="project-app-card" onclick="openProjectModal('payroll')">
                             <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" onerror="this.src='https://via.placeholder.com/200x200?text=System'">
@@ -722,8 +758,28 @@
                                     <h2 class="fw-bold display-5 mb-0" id="p-title">Project Title</h2>
                                 </div>
 
-                                <img id="p-image" src="" class="w-100 rounded-4 mb-4 shadow-lg" style="height: auto; max-height: 500px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/800x500?text=No+Image'">
+                                <img id="p-image" src="" class="w-100 rounded-4 mb-4 shadow-lg" style="height: auto; max-height: 500px; object-fit: cover; display: block;" onerror="this.src='https://via.placeholder.com/800x500?text=No+Image'">
                                 
+                                <div id="live-preview-section" style="display: none;">
+                                    <div class="preview-controls">
+                                        <button class="btn-preview-mode" onclick="setPreviewMode('mobile')">
+                                            <i class="fas fa-mobile-alt me-2"></i> Mobile
+                                        </button>
+                                        <button class="btn-preview-mode" onclick="setPreviewMode('tab')">
+                                            <i class="fas fa-tablet-alt me-2"></i> Tablet
+                                        </button>
+                                        <button class="btn-preview-mode active" onclick="setPreviewMode('pc')">
+                                            <i class="fas fa-desktop me-2"></i> Desktop
+                                        </button>
+                                    </div>
+                                    <div class="preview-frame-container mode-pc" id="preview-container">
+                                        <iframe id="p-iframe" src="" width="100%" height="100%" frameborder="0"></iframe>
+                                    </div>
+                                    <div class="text-center mt-3 mb-4">
+                                        <small class="text-muted"><i class="fas fa-info-circle"></i> Mode preview interaktif</small>
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-12 col-md-8">
                                         <h5 class="mb-3">Deskripsi Project</h5>
@@ -737,7 +793,7 @@
                                             <h6 class="fw-bold mb-3 text-white">Action</h6>
                                             <div class="d-grid gap-2">
                                                 <a href="#" id="btn-demo" class="btn-action-primary" target="_blank">
-                                                    <i class="fas fa-play"></i> Live Demo
+                                                    <i class="fas fa-external-link-alt"></i> Buka Full Site
                                                 </a>
                                                 <a href="#" id="btn-code" class="btn-action-outline" target="_blank">
                                                     <i class="fab fa-github"></i> Source Code
@@ -955,8 +1011,19 @@
             });
         }
 
-        // --- 6. PROJECTS & MODAL ---
+        // --- 6. PROJECTS & MODAL (Updated with Live Preview) ---
         const projectsData = {
+            'yarch': {
+                title: "YarchStudio Creative",
+                category: "Web Agency Portfolio",
+                // Placeholder image until user clicks live preview
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&w=800&q=80", 
+                desc: "Website profil untuk digital agency. Dibangun dengan Bootstrap 5 dan AOS animation. Memiliki fitur Dark Mode, layout responsif, dan CTA WhatsApp terintegrasi.",
+                techs: ["HTML5", "Bootstrap 5", "AOS.js", "CSS3"],
+                demo: "https://hrmnkosasi-netizen.github.io/YarchStudio/",
+                code: "https://github.com/hrmnkosasi-netizen/YarchStudio",
+                hasPreview: true // Special flag for live preview
+            },
             'payroll': {
                 title: "Payroll Super App",
                 category: "System Web",
@@ -990,12 +1057,12 @@
             document.getElementById('p-title').innerText = data.title;
             document.getElementById('p-category').innerText = data.category;
             document.getElementById('p-desc').innerText = data.desc;
-            const img = document.getElementById('p-image');
-            img.src = data.image;
             
+            // Setup Links
             document.getElementById('btn-demo').href = data.demo;
             document.getElementById('btn-code').href = data.code;
 
+            // Setup Tech Pills
             const techContainer = document.getElementById('p-techs');
             techContainer.innerHTML = ''; 
             data.techs.forEach(tech => {
@@ -1005,8 +1072,49 @@
                 techContainer.appendChild(span);
             });
 
+            // HANDLE LIVE PREVIEW LOGIC
+            const staticImg = document.getElementById('p-image');
+            const liveSection = document.getElementById('live-preview-section');
+            const iframe = document.getElementById('p-iframe');
+
+            if (data.hasPreview) {
+                // If project has live preview capability
+                staticImg.style.display = 'none';
+                liveSection.style.display = 'block';
+                iframe.src = data.demo; // Load the website
+                setPreviewMode('pc'); // Default to PC
+            } else {
+                // Standard project
+                staticImg.style.display = 'block';
+                staticImg.src = data.image;
+                liveSection.style.display = 'none';
+                iframe.src = ''; // Clear iframe to save memory
+            }
+
             const myModal = new bootstrap.Modal(document.getElementById('projectModal'));
             myModal.show();
+        }
+
+        function setPreviewMode(mode) {
+            const container = document.getElementById('preview-container');
+            const btns = document.querySelectorAll('.btn-preview-mode');
+            
+            // Reset buttons
+            btns.forEach(b => b.classList.remove('active'));
+
+            // Remove all specific mode classes first
+            container.classList.remove('mode-pc', 'mode-tab', 'mode-mobile');
+
+            if (mode === 'mobile') {
+                container.classList.add('mode-mobile');
+                btns[0].classList.add('active'); // Assuming mobile btn is first
+            } else if (mode === 'tab') {
+                container.classList.add('mode-tab');
+                btns[1].classList.add('active');
+            } else {
+                container.classList.add('mode-pc');
+                btns[2].classList.add('active');
+            }
         }
 
         function filterProjects(cat, btn) {
