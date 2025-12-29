@@ -333,7 +333,7 @@
         }
         .btn-action-outline:hover { border-color: white; background: rgba(255,255,255,0.05); color: white; }
         
-        /* --- LIVE PREVIEW STYLES (UPDATED) --- */
+        /* --- LIVE PREVIEW STYLES (NO PC MODE) --- */
         .preview-controls {
             display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
         }
@@ -349,7 +349,7 @@
             border: 1px solid var(--border-color); transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        /* Mode Sizes - Updated to focus on Mobile/Tab */
+        /* Mode Sizes - Mobile & Tablet Only */
         .mode-tab { width: 768px; border-radius: 16px; border: 10px solid #333; }
         .mode-mobile { width: 375px; border-radius: 24px; border: 12px solid #333; height: 667px; }
         
@@ -587,69 +587,145 @@
             </div>
 
             <div id="tab-portfolio" class="tab-pane fade d-none">
-                <div class="filter-container d-flex justify-content-center gap-2 mb-4">
-                    <button class="btn-glass active" onclick="filterProjects('all', this)" data-i18n="filter_all">Semua</button>
-                    <button class="btn-glass" onclick="filterProjects('system', this)" data-i18n="filter_sys">Sistem</button>
-                    <button class="btn-glass" onclick="filterProjects('uiux', this)" data-i18n="filter_ui">UI/UX</button>
+                <div class="filter-container d-flex justify-content-center gap-2 mb-4 flex-wrap">
+                    <button class="btn-glass active" onclick="filterProjects('all', this)">Semua</button>
+                    <button class="btn-glass" onclick="filterProjects('js', this)">JavaScript / React</button>
+                    <button class="btn-glass" onclick="filterProjects('php', this)">PHP / Backend</button>
+                    <button class="btn-glass" onclick="filterProjects('design', this)">HTML / Design</button>
                 </div>
 
                 <div class="row g-3">
                     
-                    <div class="col-12 col-md-6 project-item" data-category="uiux" data-aos="fade-up">
-                        <div class="project-app-card" onclick="openProjectModal('yarch')">
-                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small">
+                    <div class="col-12 col-md-6 project-item" data-category="js" data-aos="fade-up">
+                        <div class="project-app-card" onclick="openProjectModal('yarchqms')">
+                            <img src="https://images.unsplash.com/photo-1555421689-491a97ff2040?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" alt="Queue System">
                             <div>
-                                <span class="category-label text-info">Web Agency</span>
+                                <span class="category-label text-warning">Realtime</span>
+                                <h6 class="mb-1 fw-bold">Yarch QMS (Queue System)</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
+                                    Sistem antrian realtime dengan Voice Announcement.
+                                </p>
+                                <small class="text-success" style="font-size: 0.7rem;"><i class="fas fa-circle me-1"></i> Live Preview</small>
+                            </div>
+                            <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 project-item" data-category="php" data-aos="fade-up" data-aos-delay="50">
+                        <div class="project-app-card" onclick="openProjectModal('pos')">
+                            <img src="https://i.ibb.co.com/jvS2hXVb/Pay-Pal-2.png?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" alt="POS System">
+                            <div>
+                                <span class="category-label text-success">Backend</span>
+                                <h6 class="mb-1 fw-bold">Smart POS & Invoice</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
+                                    Sistem Point of Sale (POS) dan manajemen invoice.
+                                </p>
+                                <small class="text-success" style="font-size: 0.7rem;"><i class="fas fa-circle me-1"></i> Live Preview</small>
+                            </div>
+                            <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 project-item" data-category="js" data-aos="fade-up" data-aos-delay="100">
+                        <div class="project-app-card" onclick="openProjectModal('taskmgr')">
+                            <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" alt="Task Manager">
+                            <div>
+                                <span class="category-label text-info">Productivity</span>
+                                <h6 class="mb-1 fw-bold">Yarch Task Manager</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
+                                    Aplikasi manajemen tugas harian yang efisien.
+                                </p>
+                                <small class="text-success" style="font-size: 0.7rem;"><i class="fas fa-circle me-1"></i> Live Preview</small>
+                            </div>
+                            <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 project-item" data-category="js" data-aos="fade-up" data-aos-delay="150">
+                        <div class="project-app-card" onclick="openProjectModal('karaoke')">
+                            <img src="https://i.ibb.co.com/G4yjVwQs/karaoke-app.webp?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" alt="Karaoke App">
+                            <div>
+                                <span class="category-label text-danger">Entertainment</span>
+                                <h6 class="mb-1 fw-bold">YarchKaraoke Web</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
+                                    Aplikasi karaoke online dengan lirik berjalan.
+                                </p>
+                                <small class="text-success" style="font-size: 0.7rem;"><i class="fas fa-circle me-1"></i> Live Preview</small>
+                            </div>
+                            <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 project-item" data-category="design" data-aos="fade-up" data-aos-delay="200">
+                        <div class="project-app-card" onclick="openProjectModal('properti')">
+                            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" alt="Real Estate">
+                            <div>
+                                <span class="category-label text-warning">Real Estate</span>
+                                <h6 class="mb-1 fw-bold">Herman Properti</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
+                                    Platform jual beli rumah & properti modern.
+                                </p>
+                                <small class="text-success" style="font-size: 0.7rem;"><i class="fas fa-circle me-1"></i> Live Preview</small>
+                            </div>
+                            <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 project-item" data-category="design" data-aos="fade-up" data-aos-delay="250">
+                        <div class="project-app-card" onclick="openProjectModal('yarch')">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" alt="Web Agency">
+                            <div>
+                                <span class="category-label text-primary">Web Agency</span>
                                 <h6 class="mb-1 fw-bold">YarchStudio Creative</h6>
                                 <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
                                     Jasa pembuatan website premium & modern.
                                 </p>
-                                <small class="text-success" style="font-size: 0.7rem;"><i class="fas fa-circle me-1"></i> Live Preview Available</small>
+                                <small class="text-success" style="font-size: 0.7rem;"><i class="fas fa-circle me-1"></i> Live Preview</small>
                             </div>
                             <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6 project-item" data-category="system" data-aos="fade-up">
-                        <div class="project-app-card" onclick="openProjectModal('payroll')">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" onerror="this.src='https://via.placeholder.com/200x200?text=System'">
+                    <div class="col-12 col-md-6 project-item" data-category="design" data-aos="fade-up" data-aos-delay="300">
+                        <div class="project-app-card" onclick="openProjectModal('dazelkidz')">
+                            <img src="https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" alt="Online Store">
                             <div>
-                                <span class="category-label">System</span>
+                                <span class="category-label text-primary">E-Commerce</span>
+                                <h6 class="mb-1 fw-bold">DazelkidZ Store</h6>
+                                <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
+                                    Webstore fashion anak dengan desain modern.
+                                </p>
+                                <small class="text-success" style="font-size: 0.7rem;"><i class="fas fa-circle me-1"></i> Live Preview</small>
+                            </div>
+                            <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 project-item" data-category="php" data-aos="fade-up" data-aos-delay="350">
+                        <div class="project-app-card" onclick="openProjectModal('payroll')">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" alt="System">
+                            <div>
+                                <span class="category-label text-success">Backend</span>
                                 <h6 class="mb-1 fw-bold">Payroll Super App</h6>
                                 <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
-                                    Aplikasi penggajian karyawan otomatis dengan perhitungan PPh 21.
+                                    Aplikasi penggajian karyawan otomatis.
                                 </p>
-                                <small class="text-muted" style="font-size: 0.7rem;">20 Nov 2025</small>
+                                <small class="text-success" style="font-size: 0.7rem;"><i class="fas fa-circle me-1"></i> Coming Soon</small>
                             </div>
                             <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6 project-item" data-category="system" data-aos="fade-up" data-aos-delay="100">
-                        <div class="project-app-card" onclick="openProjectModal('qms')">
-                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" onerror="this.src='https://via.placeholder.com/200x200?text=QMS'">
+                    <div class="col-12 col-md-6 project-item" data-category="js" data-aos="fade-up" data-aos-delay="400">
+                        <div class="project-app-card" onclick="openProjectModal('barcode')">
+                            <img src="https://i.ibb.co.com/Ld80qqFv/21af9492-af1c-4b43-b31f-6ba683acfc10-cover.png?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" alt="Barcode Scanner">
                             <div>
-                                <span class="category-label">Realtime</span>
-                                <h6 class="mb-1 fw-bold">Yarch QMS v69</h6>
+                                <span class="category-label text-info">Utility Tool</span>
+                                <h6 class="mb-1 fw-bold">Autokirim Barcode Scanner</h6>
                                 <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
-                                    Sistem antrian loket dengan pemanggil suara otomatis (Text-to-Speech).
+                                    Aplikasi pemindai barcode web berbasis browser.
                                 </p>
-                                <small class="text-muted" style="font-size: 0.7rem;">18 Nov 2025</small>
-                            </div>
-                            <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-6 project-item" data-category="uiux" data-aos="fade-up" data-aos-delay="200">
-                        <div class="project-app-card" onclick="openProjectModal('travel')">
-                            <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-4.0.3&w=200&q=80" class="project-thumb-small" onerror="this.src='https://via.placeholder.com/200x200?text=Design'">
-                            <div>
-                                <span class="category-label">Design</span>
-                                <h6 class="mb-1 fw-bold">Nusantara Travel UI</h6>
-                                <p class="text-muted small mb-2" style="font-size: 0.8rem; line-height: 1.4;">
-                                    Desain aplikasi booking tiket pesawat & hotel yang ramah lansia.
-                                </p>
-                                <small class="text-muted" style="font-size: 0.7rem;">10 Nov 2025</small>
+                                <small class="text-success" style="font-size: 0.7rem;"><i class="fas fa-circle me-1"></i> Live Preview</small>
                             </div>
                             <div class="ms-auto text-muted"><i class="fas fa-chevron-right"></i></div>
                         </div>
@@ -818,11 +894,11 @@
                 "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
                 "color": { "value": "#38bdf8" },
                 "shape": { "type": "circle" },
-                "opacity": { "value": 0.5, "random": true }, 
-                "size": { "value": 3, "random": true }, 
+                "opacity": { "value": 0.8, "random": true }, 
+                "size": { "value": 4, "random": true }, 
                 "line_linked": { 
                     "enable": true, "distance": 150, 
-                    "color": "#38bdf8", "opacity": 0.3, "width": 1 
+                    "color": "#38bdf8", "opacity": 0.5, "width": 1 
                 },
                 "move": { "enable": true, "speed": 1, "direction": "none", "random": false, "straight": false, "out_mode": "out" }
             },
@@ -1009,40 +1085,87 @@
 
         // --- 6. PROJECTS & MODAL (Updated with Live Preview) ---
         const projectsData = {
+            'yarchqms': {
+                title: "Yarch QMS (Queue System)",
+                category: "Realtime System",
+                image: "https://images.unsplash.com/photo-1555421689-491a97ff2040?ixlib=rb-4.0.3&w=200&q=80", 
+                desc: "Sistem antrian realtime dengan fitur pemanggil suara (Voice Announcement) dan multi-loket. Memungkinkan pemantauan antrian secara langsung tanpa refresh halaman. Ada 3 mode, yang 1 Kiosk, yang bisa dbuka melalui tab. Jadi customer dapat memasukan data dan mengambil antrian. Lalu yang ke 2 ada mode TV dimana bisa menampilkan list antrian. Lalu yang terakhir Aplikasi utamanya untuk coba langsung ja login pakai (username = 'admin') dan (password = 'admin')",
+                techs: ["Node.js", "WebSocket", "Text-to-Speech API", "Bootstrap 5"],
+                demo: "https://hrmnkosasi-netizen.github.io/Yarch-QMS/",
+                code: "https://github.com/hrmnkosasi-netizen/Yarch-QMS",
+                hasPreview: true
+            },
+            'pos': {
+                title: "Smart POS & Invoice",
+                category: "Business System",
+                image: "https://images.unsplash.com/photo-1556742102-409240833249?ixlib=rb-4.0.3&w=200&q=80", 
+                desc: "Sistem Point of Sale (POS) dan manajemen invoice terintegrasi. Memudahkan pencatatan transaksi, stok barang, dan laporan keuangan harian. (Kalau ini terinspirasi dari kantor lama saya 'DealPOS')",
+                techs: ["Laravel", "MySQL", "Bootstrap", "Chart.js"],
+                demo: "https://aplikasi-invoice-production.up.railway.app/",
+                code: "https://github.com/hrmnkosasi-netizen/aplikasi-invoice", // Assuming code is private or standard link
+                hasPreview: true
+            },
+            'taskmgr': {
+                title: "Yarch Task Manager",
+                category: "Productivity App",
+                image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&w=200&q=80", 
+                desc: "Aplikasi manajemen tugas harian yang sederhana dan efisien. Fitur mencakup penambahan tugas, menandai selesai, dan penyimpanan lokal di browser (LocalStorage) sehingga data tidak hilang saat di-refresh. Dilengkapi juga dengan halaman feed interaktif untuk posting project dan fitur chat group. (Jangan lupa Sign Up dulu untuk coba)",
+                techs: ["HTML5", "CSS3", "Vanilla JavaScript", "LocalStorage API"],
+                demo: "https://hrmnkosasi-netizen.github.io/Yarch/",
+                code: "https://github.com/hrmnkosasi-netizen/Yarch",
+                hasPreview: true
+            },
+            'karaoke': {
+                title: "YarchKaraoke Web",
+                category: "Entertainment App",
+                // FIXED IMAGE LINK
+                image: "https://images.unsplash.com/photo-1517263904808-5dc87b2baf20?ixlib=rb-4.0.3&w=200&q=80", 
+                desc: "Aplikasi karaoke berbasis web yang ringan dan interaktif. Memungkinkan pengguna mencari lagu, melihat lirik berjalan, dan bernyanyi langsung dari browser tanpa instalasi tambahan.",
+                techs: ["HTML5 Audio", "CSS3 Animation", "Vanilla JS", "LRC Parser"],
+                demo: "https://hrmnkosasi-netizen.github.io/YarchKaraoke/",
+                code: "https://github.com/hrmnkosasi-netizen/YarchKaraoke",
+                hasPreview: true
+            },
+            'properti': {
+                title: "Herman Properti",
+                category: "Real Estate Website",
+                image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&w=200&q=80", 
+                desc: "Website listing properti yang elegan dan responsif. Memudahkan pengguna mencari rumah impian dengan fitur filter lokasi, harga, dan tipe properti. Desain bersih dengan fokus pada visual properti.",
+                techs: ["Bootstrap 5", "Javascript", "CSS3", "Responsive Design"],
+                demo: "https://hrmnkosasi-netizen.github.io/Herman-properti/",
+                code: "https://github.com/hrmnkosasi-netizen/Herman-properti",
+                hasPreview: true
+            },
             'yarch': {
                 title: "YarchStudio Creative",
                 category: "Web Agency Portfolio",
                 // Placeholder image until user clicks live preview
-                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&w=800&q=80", 
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&w=200&q=80", 
                 desc: "Website profil untuk digital agency. Dibangun dengan Bootstrap 5 dan AOS animation. Memiliki fitur Dark Mode, layout responsif, dan CTA WhatsApp terintegrasi.",
                 techs: ["HTML5", "Bootstrap 5", "AOS.js", "CSS3"],
                 demo: "https://hrmnkosasi-netizen.github.io/YarchStudio/",
                 code: "https://github.com/hrmnkosasi-netizen/YarchStudio",
                 hasPreview: true // Special flag for live preview
             },
-            'payroll': {
-                title: "Payroll Super App",
-                category: "System Web",
-                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&w=800&q=80",
-                desc: "Sistem penggajian end-to-end untuk perusahaan dengan 500+ karyawan. Fitur mencakup absensi biometrik, perhitungan PPh 21 otomatis, BPJS, dan generasi slip gaji digital PDF.",
-                techs: ["Laravel", "Bootstrap 5", "MySQL", "jQuery"],
-                demo: "#", code: "https://github.com/hrmnkosasi-netizen"
+            'dazelkidz': {
+                title: "DazelkidZ Online Store",
+                category: "E-Commerce",
+                image: "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?auto=format&fit=crop&w=500&q=60", 
+                desc: "Toko online fashion anak yang modern dan playful. Dilengkapi fitur Galeri Produk, Filter Produk, Detail Ukuran, Bandingkan Produk, Favorit, Blog dan integrasi E-Commerce checkout.",
+                techs: ["Bootstrap 5", "Responsive Design", "JavaScript", "FontAwesome"],
+                demo: "https://hrmnkosasi-netizen.github.io/DazelkidZ/",
+                code: "https://github.com/hrmnkosasi-netizen/DazelkidZ",
+                hasPreview: true
             },
-            'qms': {
-                title: "Yarch QMS v69",
-                category: "Realtime App",
-                image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&w=800&q=80",
-                desc: "Aplikasi manajemen antrian rumah sakit/bank. Menggunakan WebSocket untuk update nomor antrian secara realtime tanpa refresh halaman.",
-                techs: ["Node.js", "Socket.io", "React", "Express"],
-                demo: "#", code: "#"
-            },
-            'travel': {
-                title: "Nusantara Travel UI",
-                category: "UI/UX Design",
-                image: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-4.0.3&w=800&q=80",
-                desc: "Studi kasus perancangan antarmuka aplikasi travel. Fokus pada kemudahan navigasi, kontras warna yang baik, dan alur pemesanan yang ringkas.",
-                techs: ["Figma", "Prototyping", "User Research"],
-                demo: "#", code: "#"
+            'barcode': {
+                title: "Autokirim Barcode Scanner",
+                category: "Utility Tool",
+                image: "https://images.unsplash.com/photo-1598528827236-47b2c01990c7?ixlib=rb-4.0.3&w=200&q=80", 
+                desc: "Aplikasi pemindai barcode berbasis web yang ringan. Memungkinkan pengguna memindai barcode langsung melalui kamera perangkat tanpa perlu menginstal aplikasi tambahan. Memiliki fitur dashboard interaktif, QR login, sambungan aplikasi web di Hp ke PC melalui IP Laptop dengan sambungan script phyton, Export dan Share laporan, Fitur manifest utk kelola dan print surat jalan. (Untuk Aplikasi Web ini saat ini belum saya share demonya langsung karena masih dipakai pribadi, jika ada yang perlu bisa hubungi saya)",
+                techs: ["HTML5", "JavaScript", "Barcode API", "Camera Access"],
+                demo: "https://hrmnkosasi-netizen.github.io/Autokirim-Barcode/",
+                code: "https://github.com/hrmnkosasi-netizen/Autokirim-Barcode",
+                hasPreview: true
             }
         };
 
