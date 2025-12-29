@@ -197,7 +197,7 @@
             border-bottom: 1px solid var(--border-color);
         }
         
-        /* FIX: Profile Thumb Styles */
+        /* Profile Thumb Styles */
         .profile-thumb {
             width: 140px; height: 140px; border-radius: 40px;
             border: 3px solid var(--accent); padding: 4px; object-fit: cover;
@@ -256,10 +256,6 @@
 
         .header-left { position: absolute; top: 20px; left: 20px; z-index: 20; display: flex; gap: 10px; }
         .header-actions { position: absolute; top: 20px; right: 20px; z-index: 20; display: flex; gap: 8px; }
-
-        /* TESTIMONIAL CAROUSEL */
-        .testimonial-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
-        .carousel-indicators [data-bs-target] { background-color: var(--accent); width: 10px; height: 10px; border-radius: 50%; }
 
         /* FOOTER STYLE */
         .footer {
@@ -468,8 +464,7 @@
                                 <h4 class="mb-0" data-i18n="about_title">Tentang Saya</h4>
                             </div>
                             <p class="text-muted" style="line-height: 1.8;" data-i18n="about_desc">
-                                Memiliki background sebagai support dan sales di perusahaan IT. Kini menjalani freelance dengan mencoba mengembangkan web profesional yang berfokus pada performa dan skalabilitas. 
-                                Memiliki kemampuan dalam membangun <strong>Enterprise System</strong> dan <strong>Realtime Apps</strong>.
+                                Memiliki background sebagai support dan sales di perusahaan IT. Kini menjalani freelance dengan mencoba mengembangkan web profesional yang berfokus pada performa dan skalabilitas. Memiliki kemampuan dalam membangun <strong>Enterprise System</strong> dan <strong>Realtime Apps</strong>.
                             </p>
                             <div class="mt-4">
                                 <img src="https://github-readme-stats.vercel.app/api?username=hrmnkosasi-netizen&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0f172a&hide=stars" 
@@ -500,27 +495,27 @@
                             <div class="timeline-item">
                                 <h5 class="mb-1">Freelance</h5>
                                 <div class="text-info small mb-2">Yarch Studio | 2025 - Now</div>
-                                <p class="text-muted small mb-0" data-i18n="exp_1_desc">Comprehensive web application development, from the user-facing front-end (HTML, CSS, JavaScript), server-side logic (back-end such as Node.js, Python, Java), to database management and ensuring everything runs optimally, securely, and can be accessed on various devices.</p>
+                                <p class="text-muted small mb-0" data-i18n="exp_yarch">Pengembangan aplikasi web komprehensif, dari front-end hingga back-end server dan manajemen database.</p>
                             </div>
                             <div class="timeline-item">
                                 <h5 class="mb-1">Property Advisor</h5>
                                 <div class="text-info small mb-2">Brighton Titanium PIK - Jakarta | 2025 - Now</div>
-                                <p class="text-muted small mb-0" data-i18n="exp_1_desc">Be a bridge between property sellers and buyers, including property marketing online (social media, Brighton application) and offline.</p>
+                                <p class="text-muted small mb-0" data-i18n="exp_brighton">Menjembatani penjual dan pembeli properti, pemasaran online (Medsos, aplikasi) dan offline.</p>
                             </div>
                             <div class="timeline-item">
                                 <h5 class="mb-1">Owner</h5>
                                 <div class="text-info small mb-2">Acai Kopitiam (Seni Budaya Jelambar) | 2024 - Now</div>
-                                <p class="text-muted small mb-0" data-i18n="exp_2_desc">Selling various Chinese food and typical drinks such as coffee and others.</p>
+                                <p class="text-muted small mb-0" data-i18n="exp_acai">Menjual berbagai makanan Chinese food dan minuman khas seperti kopi dan lainnya.</p>
                             </div>
                             <div class="timeline-item">
                                 <h5 class="mb-1">Owner</h5>
                                 <div class="text-info small mb-2">Quinsah Collection | 2018 - Now</div>
-                                <p class="text-muted small mb-0" data-i18n="exp_2_desc">Selling various kinds of kebaya clothes and batik shirts.</p>
+                                <p class="text-muted small mb-0" data-i18n="exp_quinsah">Menjual berbagai macam pakaian kebaya dan kemeja batik.</p>
                             </div>
                             <div class="timeline-item">
                                 <h5 class="mb-1">Sales Executive</h5>
                                 <div class="text-info small mb-2">PT Generasi Inspirasi Informatika (DealPOS) | 2016 - 2018</div>
-                                <p class="text-muted small mb-0" data-i18n="exp_1_desc">Selling Technology solutions (POS Software) by finding clients, understanding their needs, demonstrating products, and closing deals.</p>
+                                <p class="text-muted small mb-0" data-i18n="exp_dealpos">Menjual solusi teknologi (Software POS), mencari klien, demonstrasi produk, dan closing deal.</p>
                             </div>    
                         </div>
                     </div>
@@ -540,35 +535,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-12" data-aos="fade-up" data-aos-delay="400">
-                        <div class="bento-card text-center">
-                            <h4 class="mb-4"><i class="fas fa-star text-warning me-2"></i> <span data-i18n="testi_title">Apa Kata Klien</span></h4>
-                            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="testimonial-img mb-3" alt="Client 1">
-                                        <p class="fst-italic text-muted">"Herman sangat profesional. Sistem payroll kami kini berjalan otomatis tanpa error. Sangat direkomendasikan!"</p>
-                                        <h6 class="text-info">- Budi Santoso, CEO TechInovasi</h6>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="testimonial-img mb-3" alt="Client 2">
-                                        <p class="fst-italic text-muted">"Great work on Upwork! Delivered the React dashboard faster than expected with clean code."</p>
-                                        <h6 class="text-info">- Sarah Jenkins, UK Client</h6>
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
@@ -1117,7 +1083,7 @@
                 desc: "Sistem Point of Sale (POS) dan manajemen invoice terintegrasi. Memudahkan pencatatan transaksi, stok barang, dan laporan keuangan harian. (Kalau ini terinspirasi dari kantor lama saya 'DealPOS')",
                 techs: ["Laravel", "MySQL", "Bootstrap", "Chart.js"],
                 demo: "https://aplikasi-invoice-production.up.railway.app/",
-                code: "https://github.com/hrmnkosasi-netizen/aplikasi-invoice", // Assuming code is private or standard link
+                code: "https://github.com/hrmnkosasi-netizen/aplikasi-invoice", 
                 hasPreview: true
             },
             'taskmgr': {
@@ -1133,7 +1099,6 @@
             'karaoke': {
                 title: "YarchKaraoke Web",
                 category: "Entertainment App",
-                // FIXED IMAGE LINK
                 image: "https://images.unsplash.com/photo-1517263904808-5dc87b2baf20?ixlib=rb-4.0.3&w=200&q=80", 
                 desc: "Aplikasi karaoke berbasis web yang ringan dan interaktif. Memungkinkan pengguna mencari lagu, melihat lirik berjalan, dan bernyanyi langsung dari browser tanpa instalasi tambahan.",
                 techs: ["HTML5 Audio", "CSS3 Animation", "Vanilla JS", "LRC Parser"],
@@ -1154,13 +1119,12 @@
             'yarch': {
                 title: "YarchStudio Creative",
                 category: "Web Agency Portfolio",
-                // Placeholder image until user clicks live preview
                 image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&w=200&q=80", 
                 desc: "Website profil untuk digital agency. Dibangun dengan Bootstrap 5 dan AOS animation. Memiliki fitur Dark Mode, layout responsif, dan CTA WhatsApp terintegrasi.",
                 techs: ["HTML5", "Bootstrap 5", "AOS.js", "CSS3"],
                 demo: "https://hrmnkosasi-netizen.github.io/YarchStudio/",
                 code: "https://github.com/hrmnkosasi-netizen/YarchStudio",
-                hasPreview: true // Special flag for live preview
+                hasPreview: true 
             },
             'dazelkidz': {
                 title: "DazelkidZ Online Store",
@@ -1278,32 +1242,50 @@
         const translations = {
             id: {
                 status: "Open to Work", nav_resume: "Resume", nav_services: "Layanan", nav_portfolio: "Portfolio", nav_blog: "Blog", nav_contact: "Kontak", hire_me: "Hire Me Now",
-                about_title: "Tentang Saya", about_desc: "Pengembang web profesional yang berfokus pada performa dan skalabilitas. Spesialis dalam membangun <strong>Enterprise System</strong> dan <strong>Realtime Apps</strong>.",
-                skills_title: "Keahlian", exp_title: "Pengalaman", exp_1_desc: "Lead developer payroll system & migration.", exp_2_desc: "15+ projects web development.",
+                
+                // PERBAIKAN DISINI: Teks disamakan dengan HTML asli
+                about_title: "Tentang Saya", 
+                about_desc: "Memiliki background sebagai support dan sales di perusahaan IT. Kini menjalani freelance dengan mencoba mengembangkan web profesional yang berfokus pada performa dan skalabilitas. Memiliki kemampuan dalam membangun <strong>Enterprise System</strong> dan <strong>Realtime Apps</strong>.",
+                
+                skills_title: "Keahlian", exp_title: "Pengalaman", 
+                exp_yarch: "Pengembangan aplikasi web komprehensif, dari front-end hingga back-end server dan manajemen database.",
+                exp_brighton: "Menjembatani penjual dan pembeli properti, pemasaran online (Medsos, aplikasi) dan offline.",
+                exp_acai: "Menjual berbagai makanan Chinese food dan minuman khas seperti kopi dan lainnya.",
+                exp_quinsah: "Menjual berbagai macam pakaian kebaya dan kemeja batik.",
+                exp_dealpos: "Menjual solusi teknologi (Software POS), mencari klien, demonstrasi produk, dan closing deal.",
+                
                 edu_title: "Pendidikan", edu_1_desc: "Lulus (IPK 3.21).", edu_2_desc: "SMA Jurusan IPA",
-                testi_title: "Apa Kata Klien",
+                
                 serv_1_title: "Web Development", serv_1_desc: "Membangun website responsif dari nol hingga online.",
                 serv_2_title: "System & Backend", serv_2_desc: "Pembuatan API dan integrasi database kompleks.",
                 serv_3_title: "Fix & Optimize", serv_3_desc: "Perbaikan bug dan optimasi performa.",
                 blog_title: "Tulisan Terbaru", blog_1_title: "Debugging HTML", blog_1_desc: "Trik memperbaiki layout rusak.",
                 blog_2_title: "Kenapa Supabase?", blog_2_desc: "Backend realtime modern.",
                 blog_3_title: "Optimasi Speed", blog_3_desc: "Cara loading di bawah 1 detik.",
-                filter_all: "Semua", filter_sys: "Sistem Web", filter_ui: "UI/UX",
                 contact_title: "Hubungi Saya", contact_wa: "Chat WhatsApp", contact_email: "Kirim Email"
             },
             en: {
                 status: "Open to Work", nav_resume: "Resume", nav_services: "Services", nav_portfolio: "Portfolio", nav_blog: "Blog", nav_contact: "Contact", hire_me: "Hire Me Now",
-                about_title: "About Me", about_desc: "Professional web developer focused on performance and scalability. Specialist in building <strong>Enterprise Systems</strong> and <strong>Realtime Apps</strong>.",
-                skills_title: "Skills", exp_title: "Experience", exp_1_desc: "Lead developer payroll system & migration.", exp_2_desc: "15+ projects web development.",
+                
+                // PERBAIKAN DISINI: Translate versi lengkap
+                about_title: "About Me", 
+                about_desc: "With a background in IT support and sales, I am now freelancing as a professional web developer focused on performance and scalability. Skilled in building <strong>Enterprise Systems</strong> and <strong>Realtime Apps</strong>.",
+                
+                skills_title: "Skills", exp_title: "Experience", 
+                exp_yarch: "Comprehensive web application development, from user-facing front-end to server-side back-end and database management.",
+                exp_brighton: "Bridging property sellers and buyers, including online marketing (Social Media, App) and offline strategies.",
+                exp_acai: "Selling various Chinese foods and signature drinks such as coffee.",
+                exp_quinsah: "Selling various types of Kebaya and Batik shirts.",
+                exp_dealpos: "Selling Technology solutions (POS Software), prospecting clients, product demos, and closing deals.",
+
                 edu_title: "Education", edu_1_desc: "Graduated (GPA 3.21).", edu_2_desc: "High School (Science Major)",
-                testi_title: "Client Testimonials",
-                serv_1_title: "Web Development", serv_1_desc: "Building responsive websites from scratch.",
+                
+                serv_1_title: "Web Development", serv_1_desc: "Building responsive websites from scratch to deployment.",
                 serv_2_title: "System & Backend", serv_2_desc: "API development and complex database integration.",
                 serv_3_title: "Fix & Optimize", serv_3_desc: "Bug fixing and performance optimization.",
                 blog_title: "Latest Articles", blog_1_title: "HTML Debugging", blog_1_desc: "Tricks to fix broken layouts.",
                 blog_2_title: "Why Supabase?", blog_2_desc: "Modern realtime backend.",
                 blog_3_title: "Speed Optimization", blog_3_desc: "Loading in under 1 second.",
-                filter_all: "All", filter_sys: "Web Systems", filter_ui: "UI/UX",
                 contact_title: "Get in Touch", contact_wa: "Chat WhatsApp", contact_email: "Send Email"
             }
         };
