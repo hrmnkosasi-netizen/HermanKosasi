@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Herman Kosasi - Admin Panel</title>
+    <title>Admin Panel - Herman Kosasi</title>
     
     <!-- Bootstrap 5 & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -14,100 +14,303 @@
     <style>
         :root {
             --bg-body: #0f172a;
+            --bg-body-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
             --bg-card: rgba(15, 23, 42, 0.85);
+            --bg-sidebar: rgba(15, 23, 42, 0.95);
             --text-main: #ffffff;
             --text-muted: #94a3b8;
             --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
             --border-color: rgba(255, 255, 255, 0.15);
             --input-bg: #1e293b;
+            --sidebar-width: 260px;
         }
+        
         body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            background: var(--bg-body-gradient);
             background-attachment: fixed;
             font-family: 'Outfit', sans-serif;
             color: var(--text-main);
             min-height: 100vh;
-            padding: 40px 0;
+            margin: 0;
+            overflow-x: hidden;
+            display: flex;
         }
+
+        /* --- SIDEBAR STYLE --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding-left: 10px;
+        }
+        
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item {
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-link:hover, .nav-item.active .nav-link {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        /* --- MAIN CONTENT STYLE --- */
+        .main-content {
+            flex-grow: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            min-height: 100vh;
+        }
+
         .admin-card {
             background: var(--bg-card);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             border-radius: 24px;
-            padding: 30px;
+            padding: 35px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
+
+        /* --- FORM ELEMENTS --- */
+        .form-label {
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
         .custom-input {
-            width: 100%; padding: 12px 15px; margin: 8px 0 20px 0;
-            background: var(--input-bg); border: 1px solid var(--border-color);
-            border-radius: 12px; color: var(--text-main); font-size: 1rem;
-            outline: none; transition: 0.3s;
+            width: 100%; 
+            padding: 12px 18px; 
+            margin-bottom: 20px;
+            background: var(--input-bg); 
+            border: 1px solid var(--border-color);
+            border-radius: 12px; 
+            color: var(--text-main); 
+            font-size: 1rem;
+            outline: none; 
+            transition: 0.3s;
         }
-        .custom-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2); }
+        .custom-input:focus { 
+            border-color: var(--accent); 
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); 
+        }
+        .custom-input::placeholder {
+            color: rgba(148, 163, 184, 0.5);
+        }
+
         .btn-primary-custom {
-            background: var(--accent); color: #0f172a; font-weight: 700;
-            border: none; border-radius: 50px; padding: 12px 30px; width: 100%;
-            transition: 0.3s; cursor: pointer;
+            background: var(--accent); 
+            color: #0f172a; 
+            font-weight: 700;
+            border: none; 
+            border-radius: 50px; 
+            padding: 14px 30px; 
+            width: 100%;
+            transition: 0.3s; 
+            cursor: pointer;
+            font-size: 1.05rem;
         }
-        .btn-primary-custom:hover { background: #0ea5e9; color: white; box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
+        .btn-primary-custom:hover { 
+            background: var(--accent-hover); 
+            color: white; 
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); 
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            color: var(--accent);
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            margin-top: 10px;
+        }
+
+        /* Responsive Fix */
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-8">
-                
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="fw-bold mb-0"><i class="fas fa-tools text-info me-2"></i> Admin Panel Project</h3>
-                    <a href="index.html" class="btn btn-outline-light btn-sm rounded-pill px-3"><i class="fas fa-arrow-left me-1"></i> Kembali ke Web</a>
-                </div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <a href="#" class="sidebar-brand">
+            <i class="fas fa-shield-alt text-info"></i> Yarch Admin
+        </a>
+        
+        <ul class="nav-menu">
+            <li class="nav-item active">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-user-circle"></i> <span>Profil</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-laptop-code"></i> <span>Layanan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-briefcase"></i> <span>Portofolio</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-images"></i> <span>Galeri</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-newspaper"></i> <span>Blog</span>
+                </a>
+            </li>
+        </ul>
 
-                <div class="admin-card">
-                    <form id="uploadForm">
-                        <h5 class="mb-3 text-info"><i class="fas fa-plus-circle me-2"></i> Tambah Project Baru</h5>
-                        
-                        <label class="form-label">Judul Project</label>
-                        <input type="text" id="pTitle" class="custom-input" placeholder="Contoh: Yarch QMS" required>
-
-                        <label class="form-label">Kategori</label>
-                        <select id="pCategory" class="custom-input" required>
-                            <option value="js">JavaScript / React</option>
-                            <option value="php">PHP / Backend</option>
-                            <option value="design">HTML / Design</option>
-                        </select>
-
-                        <label class="form-label">Deskripsi Project</label>
-                        <textarea id="pDesc" class="custom-input" rows="4" placeholder="Tuliskan detail project..." required></textarea>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label class="form-label">Link Demo (URL)</label>
-                                <input type="url" id="pDemo" class="custom-input" placeholder="https://...">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Link GitHub (Source Code)</label>
-                                <input type="url" id="pCode" class="custom-input" placeholder="https://github.com/...">
-                            </div>
-                        </div>
-
-                        <label class="form-label">Upload Gambar Thumbnail</label>
-                        <input type="file" id="pImageFile" class="custom-input" accept="image/*" required>
-
-                        <button type="submit" class="btn-primary-custom mt-3" id="submitBtn">
-                            <i class="fas fa-upload me-2"></i> Upload Project ke Database
-                        </button>
-                    </form>
-                </div>
-
-            </div>
+        <div class="sidebar-footer">
+            <a href="index.html" class="nav-link text-warning">
+                <i class="fas fa-external-link-alt"></i> <span>Lihat Website</span>
+            </a>
         </div>
-    </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="container-fluid max-w-4xl">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h3 class="fw-bold mb-1">Pengaturan Profil</h3>
+                    <p class="text-muted small mb-0">Kelola informasi utama yang tampil di beranda website.</p>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <form id="profileForm">
+                    
+                    <!-- SECTION 1: DATA UTAMA -->
+                    <h5 class="section-title"><i class="fas fa-id-card me-2"></i> Data Utama & Hero Section</h5>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Tampilan</label>
+                            <input type="text" id="profName" class="custom-input" placeholder="Contoh: Herman Kosasi" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Teks Animasi (Typewriter)</label>
+                            <input type="text" id="profTypewriter" class="custom-input" placeholder="Pisahkan dgn koma, cth: Fullstack Developer, System Analyst" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label">Lokasi</label>
+                            <input type="text" id="profLocation" class="custom-input" placeholder="Contoh: Jakarta" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Status Ketersediaan</label>
+                            <input type="text" id="profStatus" class="custom-input" placeholder="Contoh: Open to Work / Freelance" required>
+                        </div>
+                    </div>
+
+                    <label class="form-label">Foto Profil (Hero Image)</label>
+                    <input type="file" id="profImageFile" class="custom-input" accept="image/*">
+                    <small class="text-muted d-block mb-3" style="margin-top:-15px;">*Abaikan jika tidak ingin mengubah foto saat ini.</small>
+
+                    <!-- SECTION 2: ABOUT ME -->
+                    <h5 class="section-title mt-4"><i class="fas fa-user-edit me-2"></i> Tentang Saya (About Me)</h5>
+                    
+                    <label class="form-label">Deskripsi Lengkap (Mendukung tag HTML seperti &lt;strong&gt;)</label>
+                    <textarea id="profAbout" class="custom-input" rows="5" placeholder="Ceritakan latar belakang, fokus, dan keahlian Anda..." required></textarea>
+
+                    <!-- SECTION 3: SOCIAL MEDIA -->
+                    <h5 class="section-title mt-4"><i class="fas fa-hashtag me-2"></i> Sosial Media & Kontak</h5>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label"><i class="fab fa-github me-1"></i> Link GitHub</label>
+                            <input type="url" id="profGithub" class="custom-input" placeholder="https://github.com/...">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label"><i class="fab fa-linkedin me-1"></i> Link LinkedIn</label>
+                            <input type="url" id="profLinkedin" class="custom-input" placeholder="https://linkedin.com/in/...">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label"><i class="fab fa-instagram me-1"></i> Link Instagram</label>
+                            <input type="url" id="profInstagram" class="custom-input" placeholder="https://instagram.com/...">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary-custom mt-4" id="submitBtn">
+                        <i class="fas fa-save me-2"></i> Simpan Perubahan Profil
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </main>
 
     <!-- Firebase SDK (Modular v10 - Firestore) & Cloudflare R2 Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
         // Konfigurasi Firebase Firestore Anda
         const firebaseConfig = {
@@ -123,75 +326,124 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Ganti URL di bawah ini dengan Endpoint Cloudflare Worker Anda untuk R2
+        // Endpoint Cloudflare Worker Anda untuk R2
         const R2_WORKER_URL = "https://pub-00e598f924e044c0a81fa8ed91a4d41f.r2.dev";
+        let existingImageUrl = ""; // Menyimpan URL gambar lama jika user tidak upload foto baru
 
-        const form = document.getElementById('uploadForm');
+        // REFERENSI DOKUMEN PROFIL
+        // Kita menggunakan collection "settings" dan document "profile" agar datanya spesifik
+        const profileDocRef = doc(db, "settings", "profile");
+
+        // FUNGSI UNTUK MEMUAT DATA YANG ADA SAAT HALAMAN DIBUKA
+        async function loadExistingProfile() {
+            try {
+                const docSnap = await getDoc(profileDocRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('profName').value = data.name || "";
+                    document.getElementById('profTypewriter').value = data.typewriter || "";
+                    document.getElementById('profLocation').value = data.location || "";
+                    document.getElementById('profStatus').value = data.status || "";
+                    document.getElementById('profAbout').value = data.about || "";
+                    document.getElementById('profGithub').value = data.github || "";
+                    document.getElementById('profLinkedin').value = data.linkedin || "";
+                    document.getElementById('profInstagram').value = data.instagram || "";
+                    
+                    if(data.imageUrl) {
+                        existingImageUrl = data.imageUrl;
+                    }
+                }
+            } catch (error) {
+                console.error("Gagal memuat data:", error);
+            }
+        }
+        
+        // Panggil fungsi muat data saat load
+        loadExistingProfile();
+
+        // FUNGSI SUBMIT FORM
+        const form = document.getElementById('profileForm');
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i> Mengunggah ke R2 & Database...`;
+            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i> Menyimpan Perubahan...`;
 
             try {
-                const title = document.getElementById('pTitle').value;
-                const category = document.getElementById('pCategory').value;
-                const desc = document.getElementById('pDesc').value;
-                const demo = document.getElementById('pDemo').value;
-                const code = document.getElementById('pCode').value;
-                const fileInput = document.getElementById('pImageFile').files[0];
+                // Ambil Data
+                const name = document.getElementById('profName').value;
+                const typewriter = document.getElementById('profTypewriter').value;
+                const location = document.getElementById('profLocation').value;
+                const status = document.getElementById('profStatus').value;
+                const about = document.getElementById('profAbout').value;
+                const github = document.getElementById('profGithub').value;
+                const linkedin = document.getElementById('profLinkedin').value;
+                const instagram = document.getElementById('profInstagram').value;
+                
+                const fileInput = document.getElementById('profImageFile').files[0];
+                let finalImageUrl = existingImageUrl;
 
-                if (!fileInput) throw new Error("Pilih gambar terlebih dahulu!");
+                // 1. Upload gambar ke Cloudflare R2 JIKA ada file baru yang dipilih
+                if (fileInput) {
+                    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i> Mengunggah Foto ke R2...`;
+                    const formData = new FormData();
+                    formData.append("file", fileInput);
 
-                // 1. Upload gambar ke Cloudflare R2 melalui Cloudflare Worker
-                const formData = new FormData();
-                formData.append("file", fileInput);
+                    const uploadResponse = await fetch(R2_WORKER_URL, {
+                        method: "POST",
+                        body: formData
+                    });
 
-                const uploadResponse = await fetch(R2_WORKER_URL, {
-                    method: "POST",
-                    body: formData
-                });
+                    if (!uploadResponse.ok) {
+                        throw new Error("Gagal mengunggah foto profil ke Cloudflare R2.");
+                    }
 
-                if (!uploadResponse.ok) {
-                    throw new Error("Gagal mengunggah gambar ke Cloudflare R2.");
+                    const uploadResult = await uploadResponse.json();
+                    finalImageUrl = uploadResult.url; // Update dengan URL gambar baru
                 }
 
-                const uploadResult = await uploadResponse.json();
-                const imageUrl = uploadResult.url; // URL publik gambar dari R2
-
-                // 2. Simpan data teks & URL gambar R2 ke Firestore Database
-                await addDoc(collection(db, "projects"), {
-                    title: title,
-                    category: category,
-                    description: desc,
-                    demoUrl: demo,
-                    codeUrl: code,
-                    imageUrl: imageUrl,
-                    createdAt: new Date()
-                });
+                // 2. Simpan Data ke Firestore (Gunakan setDoc untuk Update/Create 1 Dokumen spesifik)
+                submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i> Menyimpan ke Database...`;
+                await setDoc(profileDocRef, {
+                    name: name,
+                    typewriter: typewriter,
+                    location: location,
+                    status: status,
+                    about: about,
+                    github: github,
+                    linkedin: linkedin,
+                    instagram: instagram,
+                    imageUrl: finalImageUrl,
+                    updatedAt: new Date()
+                }, { merge: true }); // merge: true memastikan field lama yang tidak diubah tidak terhapus
 
                 Swal.fire({
                     icon: 'success',
-                    title: 'Berhasil!',
-                    text: 'Project baru berhasil disimpan ke database & R2.',
+                    title: 'Berhasil Disimpan!',
+                    text: 'Data profil berhasil diperbarui di database.',
                     background: '#1e293b',
                     color: '#fff',
                     confirmButtonColor: '#38bdf8'
                 });
 
-                form.reset();
+                // Perbarui existingImageUrl dengan gambar terbaru
+                existingImageUrl = finalImageUrl;
+                
+                // Kosongkan input file
+                document.getElementById('profImageFile').value = "";
+
             } catch (error) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Gagal',
+                    title: 'Gagal Menyimpan',
                     text: error.message,
                     background: '#1e293b',
                     color: '#fff'
                 });
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i class="fas fa-upload me-2"></i> Upload Project ke Database`;
+                submitBtn.innerHTML = `<i class="fas fa-save me-2"></i> Simpan Perubahan Profil`;
             }
         });
     </script>
