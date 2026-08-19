@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herman Kosasi - Admin Panel</title>
+    
+    <!-- Bootstrap 5 & FontAwesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root {
+            --bg-body: #0f172a;
+            --bg-card: rgba(15, 23, 42, 0.85);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --border-color: rgba(255, 255, 255, 0.15);
+            --input-bg: #1e293b;
+        }
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            background-attachment: fixed;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 0;
+        }
+        .admin-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .custom-input {
+            width: 100%; padding: 12px 15px; margin: 8px 0 20px 0;
+            background: var(--input-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; color: var(--text-main); font-size: 1rem;
+            outline: none; transition: 0.3s;
+        }
+        .custom-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2); }
+        .btn-primary-custom {
+            background: var(--accent); color: #0f172a; font-weight: 700;
+            border: none; border-radius: 50px; padding: 12px 30px; width: 100%;
+            transition: 0.3s; cursor: pointer;
+        }
+        .btn-primary-custom:hover { background: #0ea5e9; color: white; box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold mb-0"><i class="fas fa-tools text-info me-2"></i> Admin Panel Project</h3>
+                    <a href="index.html" class="btn btn-outline-light btn-sm rounded-pill px-3"><i class="fas fa-arrow-left me-1"></i> Kembali ke Web</a>
+                </div>
+
+                <div class="admin-card">
+                    <form id="uploadForm">
+                        <h5 class="mb-3 text-info"><i class="fas fa-plus-circle me-2"></i> Tambah Project Baru</h5>
+                        
+                        <label class="form-label">Judul Project</label>
+                        <input type="text" id="pTitle" class="custom-input" placeholder="Contoh: Yarch QMS" required>
+
+                        <label class="form-label">Kategori</label>
+                        <select id="pCategory" class="custom-input" required>
+                            <option value="js">JavaScript / React</option>
+                            <option value="php">PHP / Backend</option>
+                            <option value="design">HTML / Design</option>
+                        </select>
+
+                        <label class="form-label">Deskripsi Project</label>
+                        <textarea id="pDesc" class="custom-input" rows="4" placeholder="Tuliskan detail project..." required></textarea>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Link Demo (URL)</label>
+                                <input type="url" id="pDemo" class="custom-input" placeholder="https://...">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Link GitHub (Source Code)</label>
+                                <input type="url" id="pCode" class="custom-input" placeholder="https://github.com/...">
+                            </div>
+                        </div>
+
+                        <label class="form-label">Upload Gambar Thumbnail</label>
+                        <input type="file" id="pImageFile" class="custom-input" accept="image/*" required>
+
+                        <button type="submit" class="btn-primary-custom mt-3" id="submitBtn">
+                            <i class="fas fa-upload me-2"></i> Upload Project ke Database
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Modular v10 - Firestore) & Cloudflare R2 Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        // Konfigurasi Firebase Firestore Anda
+        const firebaseConfig = {
+  apiKey: "AIzaSyD6XyLd875R6WjnqyVNxBenUOg-aNFcdZc",
+  authDomain: "hermankosasi-me.firebaseapp.com",
+  projectId: "hermankosasi-me",
+  storageBucket: "hermankosasi-me.firebasestorage.app",
+  messagingSenderId: "1095896032966",
+  appId: "1:1095896032966:web:f2c791cebe142d812b59c7",
+  measurementId: "G-9E2F4YSVTM"
+};
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Ganti URL di bawah ini dengan Endpoint Cloudflare Worker Anda untuk R2
+        const R2_WORKER_URL = "https://pub-00e598f924e044c0a81fa8ed91a4d41f.r2.dev";
+
+        const form = document.getElementById('uploadForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i> Mengunggah ke R2 & Database...`;
+
+            try {
+                const title = document.getElementById('pTitle').value;
+                const category = document.getElementById('pCategory').value;
+                const desc = document.getElementById('pDesc').value;
+                const demo = document.getElementById('pDemo').value;
+                const code = document.getElementById('pCode').value;
+                const fileInput = document.getElementById('pImageFile').files[0];
+
+                if (!fileInput) throw new Error("Pilih gambar terlebih dahulu!");
+
+                // 1. Upload gambar ke Cloudflare R2 melalui Cloudflare Worker
+                const formData = new FormData();
+                formData.append("file", fileInput);
+
+                const uploadResponse = await fetch(R2_WORKER_URL, {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!uploadResponse.ok) {
+                    throw new Error("Gagal mengunggah gambar ke Cloudflare R2.");
+                }
+
+                const uploadResult = await uploadResponse.json();
+                const imageUrl = uploadResult.url; // URL publik gambar dari R2
+
+                // 2. Simpan data teks & URL gambar R2 ke Firestore Database
+                await addDoc(collection(db, "projects"), {
+                    title: title,
+                    category: category,
+                    description: desc,
+                    demoUrl: demo,
+                    codeUrl: code,
+                    imageUrl: imageUrl,
+                    createdAt: new Date()
+                });
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: 'Project baru berhasil disimpan ke database & R2.',
+                    background: '#1e293b',
+                    color: '#fff',
+                    confirmButtonColor: '#38bdf8'
+                });
+
+                form.reset();
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: error.message,
+                    background: '#1e293b',
+                    color: '#fff'
+                });
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="fas fa-upload me-2"></i> Upload Project ke Database`;
+            }
+        });
+    </script>
+</body>
+</html>
