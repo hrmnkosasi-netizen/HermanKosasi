@@ -354,6 +354,10 @@
         .modal-backdrop { z-index: 9999 !important; }
         
     </style>
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_CLOUDFLARE_TOKEN"}'></script>
+    <!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
@@ -1361,5 +1365,27 @@
         }());
 
     </script>
+    
+    <!-- Firebase SDK (Modular v10) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+        
+        // TODO: Ganti dengan konfigurasi Firebase Anda
+        const firebaseConfig = {
+  apiKey: "AIzaSyD6XyLd875R6WjnqyVNxBenUOg-aNFcdZc",
+  authDomain: "hermankosasi-me.firebaseapp.com",
+  projectId: "hermankosasi-me",
+  storageBucket: "hermankosasi-me.firebasestorage.app",
+  messagingSenderId: "1095896032966",
+  appId: "1:1095896032966:web:f2c791cebe142d812b59c7",
+  measurementId: "G-9E2F4YSVTM"
+};
+        
+        // Inisialisasi Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
+    <!-- End Firebase SDK -->
 </body>
 </html>
