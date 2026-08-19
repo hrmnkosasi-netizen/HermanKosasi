@@ -311,20 +311,22 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
         // Konfigurasi Firebase Firestore Anda
         const firebaseConfig = {
-  apiKey: "AIzaSyD6XyLd875R6WjnqyVNxBenUOg-aNFcdZc",
-  authDomain: "hermankosasi-me.firebaseapp.com",
-  projectId: "hermankosasi-me",
-  storageBucket: "hermankosasi-me.firebasestorage.app",
-  messagingSenderId: "1095896032966",
-  appId: "1:1095896032966:web:f2c791cebe142d812b59c7",
-  measurementId: "G-9E2F4YSVTM"
-};
+        apiKey: "AIzaSyD6XyLd875R6WjnqyVNxBenUOg-aNFcdZc",
+        authDomain: "hermankosasi-me.firebaseapp.com",
+        projectId: "hermankosasi-me",
+        storageBucket: "hermankosasi-me.firebasestorage.app",
+        messagingSenderId: "1095896032966",
+        appId: "1:1095896032966:web:f2c791cebe142d812b59c7",
+        measurementId: "G-9E2F4YSVTM"
+    };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
 
         // Endpoint Cloudflare Worker Anda untuk R2
         const R2_WORKER_URL = "https://pub-00e598f924e044c0a81fa8ed91a4d41f.r2.dev";
@@ -333,6 +335,34 @@
         // REFERENSI DOKUMEN PROFIL
         // Kita menggunakan collection "settings" dan document "profile" agar datanya spesifik
         const profileDocRef = doc(db, "settings", "profile");
+
+        // CHECK LOGIN STATUS
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                const { value: formValues } = await Swal.fire({
+                    title: 'Login Admin',
+                    html: '<input id="swal-email" class="custom-input" placeholder="Email">' +
+                          '<input type="password" id="swal-pass" class="custom-input" placeholder="Password">',
+                    showCancelButton: false,
+                    allowOutsideClick: false,
+                    confirmButtonText: 'Login',
+                    preConfirm: () => {
+                        const email = document.getElementById('swal-email').value;
+                        const pass = document.getElementById('swal-pass').value;
+                        return signInWithEmailAndPassword(auth, email, pass).catch(err => {
+                            Swal.showValidationMessage(err.message);
+                        });
+                    }
+                });
+            } else {
+                loadExistingProfile();
+            }
+        });
+
+        // LOGOUT
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            signOut(auth).then(() => location.reload());
+        });
 
         // FUNGSI UNTUK MEMUAT DATA YANG ADA SAAT HALAMAN DIBUKA
         async function loadExistingProfile() {
