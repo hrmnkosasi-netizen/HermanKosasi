@@ -238,7 +238,7 @@
             body { padding-bottom: 0; }
         }
 
-        /* --- 6. EXTRAS --- */
+        /* --- 6. EXTRAS & TIMELINE FIX --- */
         .skill-pill {
             background: rgba(255,255,255,0.03); padding: 6px 14px;
             border-radius: 50px; font-size: 0.85rem; display: inline-block;
@@ -247,8 +247,42 @@
         }
         .skill-pill:hover { border-color: var(--accent); color: var(--accent); background: rgba(56, 189, 248, 0.1); }
 
-        .timeline-item { position: relative; padding-left: 30px; margin-bottom: 25px; border-left: 2px solid var(--border-color); }
-        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 5px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
+        /* PERBAIKAN TIMELINE PROFESIONAL */
+        .timeline-wrapper {
+            position: relative;
+            padding-left: 25px;
+            margin-left: 10px;
+        }
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            bottom: 5px;
+            left: 0;
+            width: 2px;
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -31px; /* Center dot on line */
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            background: var(--bg-card);
+            border: 3px solid var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-glow);
+            z-index: 2;
+        }
 
         .modal-content-glass { background: var(--bg-modal); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 20px; }
         .modal-header, .modal-footer { border-color: var(--border-color); }
@@ -304,9 +338,9 @@
             border: 1px solid rgba(255,255,255,0.05);
         }
         
-        /* NEW: FULLSCREEN MODAL STYLE */
+        /* FULLSCREEN MODAL STYLE */
         .modal-fullscreen .modal-content {
-            background: var(--bg-body-1); /* Match body background */
+            background: var(--bg-body-1); 
             border: none;
             border-radius: 0;
         }
@@ -329,7 +363,7 @@
         }
         .btn-action-outline:hover { border-color: white; background: rgba(255,255,255,0.05); color: white; }
         
-        /* --- LIVE PREVIEW STYLES (NO PC MODE) --- */
+        /* --- LIVE PREVIEW STYLES --- */
         .preview-controls {
             display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
         }
@@ -345,7 +379,6 @@
             border: 1px solid var(--border-color); transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        /* Mode Sizes - Mobile & Tablet Only */
         .mode-tab { width: 768px; border-radius: 16px; border: 10px solid #333; }
         .mode-mobile { width: 375px; border-radius: 24px; border: 12px solid #333; height: 667px; }
         
@@ -496,47 +529,57 @@
                     <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="200">
                         <div class="bento-card">
                             <h4 class="mb-4"><i class="fas fa-briefcase text-info me-2"></i> <span data-i18n="exp_title">Pengalaman</span></h4>
-                            <div class="timeline-item">
-                                <h5 class="mb-1">Freelance</h5>
-                                <div class="text-info small mb-2">Yarch Studio | 2025 - Now</div>
-                                <p class="text-muted small mb-0" data-i18n="exp_yarch">Pengembangan aplikasi web komprehensif, dari front-end hingga back-end server dan manajemen database.</p>
+                            
+                            <!-- BUNGKUSAN TIMELINE PENGALAMAN -->
+                            <div class="timeline-wrapper">
+                                <div class="timeline-item">
+                                    <h5 class="mb-1">Freelance</h5>
+                                    <div class="text-info small mb-2">Yarch Studio | 2025 - Now</div>
+                                    <p class="text-muted small mb-0" data-i18n="exp_yarch">Pengembangan aplikasi web komprehensif, dari front-end hingga back-end server dan manajemen database.</p>
+                                </div>
+                                <div class="timeline-item">
+                                    <h5 class="mb-1">Property Advisor</h5>
+                                    <div class="text-info small mb-2">Brighton Titanium PIK - Jakarta | 2025 - Now</div>
+                                    <p class="text-muted small mb-0" data-i18n="exp_brighton">Menjembatani penjual dan pembeli properti, pemasaran online (Medsos, aplikasi) dan offline.</p>
+                                </div>
+                                <div class="timeline-item">
+                                    <h5 class="mb-1">Owner</h5>
+                                    <div class="text-info small mb-2">Acai Kopitiam (Seni Budaya Jelambar) | 2024 - Now</div>
+                                    <p class="text-muted small mb-0" data-i18n="exp_acai">Menjual berbagai makanan Chinese food dan minuman khas seperti kopi dan lainnya.</p>
+                                </div>
+                                <div class="timeline-item">
+                                    <h5 class="mb-1">Owner</h5>
+                                    <div class="text-info small mb-2">Quinsah Collection | 2018 - Now</div>
+                                    <p class="text-muted small mb-0" data-i18n="exp_quinsah">Menjual berbagai macam pakaian kebaya dan kemeja batik.</p>
+                                </div>
+                                <div class="timeline-item">
+                                    <h5 class="mb-1">Sales Executive</h5>
+                                    <div class="text-info small mb-2">PT Generasi Inspirasi Informatika (DealPOS) | 2016 - 2018</div>
+                                    <p class="text-muted small mb-0" data-i18n="exp_dealpos">Menjual solusi teknologi (Software POS), mencari klien, demonstrasi produk, dan closing deal.</p>
+                                </div>
                             </div>
-                            <div class="timeline-item">
-                                <h5 class="mb-1">Property Advisor</h5>
-                                <div class="text-info small mb-2">Brighton Titanium PIK - Jakarta | 2025 - Now</div>
-                                <p class="text-muted small mb-0" data-i18n="exp_brighton">Menjembatani penjual dan pembeli properti, pemasaran online (Medsos, aplikasi) dan offline.</p>
-                            </div>
-                            <div class="timeline-item">
-                                <h5 class="mb-1">Owner</h5>
-                                <div class="text-info small mb-2">Acai Kopitiam (Seni Budaya Jelambar) | 2024 - Now</div>
-                                <p class="text-muted small mb-0" data-i18n="exp_acai">Menjual berbagai makanan Chinese food dan minuman khas seperti kopi dan lainnya.</p>
-                            </div>
-                            <div class="timeline-item">
-                                <h5 class="mb-1">Owner</h5>
-                                <div class="text-info small mb-2">Quinsah Collection | 2018 - Now</div>
-                                <p class="text-muted small mb-0" data-i18n="exp_quinsah">Menjual berbagai macam pakaian kebaya dan kemeja batik.</p>
-                            </div>
-                            <div class="timeline-item">
-                                <h5 class="mb-1">Sales Executive</h5>
-                                <div class="text-info small mb-2">PT Generasi Inspirasi Informatika (DealPOS) | 2016 - 2018</div>
-                                <p class="text-muted small mb-0" data-i18n="exp_dealpos">Menjual solusi teknologi (Software POS), mencari klien, demonstrasi produk, dan closing deal.</p>
-                            </div>    
+                            
                         </div>
                     </div>
 
                     <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="300">
                         <div class="bento-card">
                             <h4 class="mb-4"><i class="fas fa-graduation-cap text-info me-2"></i> <span data-i18n="edu_title">Pendidikan</span></h4>
-                            <div class="timeline-item">
-                                <h5 class="mb-1">S1 Teknik Informatika</h5>
-                                <div class="text-info small mb-2">Universitas Tarumanagara | 2011 - 2016</div>
-                                <p class="text-muted small mb-0" data-i18n="edu_1_desc">Lulus (IPK 3.21).</p>
+                            
+                            <!-- BUNGKUSAN TIMELINE PENDIDIKAN -->
+                            <div class="timeline-wrapper">
+                                <div class="timeline-item">
+                                    <h5 class="mb-1">S1 Teknik Informatika</h5>
+                                    <div class="text-info small mb-2">Universitas Tarumanagara | 2011 - 2016</div>
+                                    <p class="text-muted small mb-0" data-i18n="edu_1_desc">Lulus (IPK 3.21).</p>
+                                </div>
+                                <div class="timeline-item">
+                                    <h5 class="mb-1">SD, SMP, SMA Bhinneka Tunggal Ika</h5>
+                                    <div class="text-info small mb-2">Jembatan 5, Jakarta Barat | 1998 - 2010</div>
+                                    <p class="text-muted small mb-0" data-i18n="edu_2_desc">SMA Jurusan IPA</p>
+                                </div>
                             </div>
-                            <div class="timeline-item">
-                                <h5 class="mb-1">SD, SMP, SMA Bhinneka Tunggal Ika</h5>
-                                <div class="text-info small mb-2">Jembatan 5, Jakarta Barat | 1998 - 2010</div>
-                                <p class="text-muted small mb-0" data-i18n="edu_2_desc">SMA Jurusan IPA</p>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
